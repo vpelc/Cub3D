@@ -1,79 +1,98 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/06 13:30:56 by vpelc             #+#    #+#              #
-#    Updated: 2025/02/06 14:20:42 by vpelc            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#############################################
+# Colors for output
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+NC = \033[0m
+Magenta = \033[0;35m
+CYAN = \033[0;36m
+GRAY = \033[0;90m
+RED = \033[0;31m
+SPINNERS = "🔄 🔁 ↩️ ↪️ 🔄 🔁"
 
-# Standard
-NAME                = cub3d
+#############################################
 
-# Directories
-INC                 = include/
-SRC_DIR             = src/
-OBJ_DIR             = obj/
-GNL_DIR             = include/get_next_line/
+NAME = cub3d
 
-# Compiler and CFlags
-CC                  = cc
-CFLAGS              = -Wall -Werror -Wextra -g
-RM                  = rm -f
+CC = cc
 
-# Additional flags
-INCLUDES            = -I/usr/include -Imlx_linux -O3
-LIBRARIES           = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+CFLAGS = -Wall -Wextra -Werror -g3
+MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lXext -lX11
+
+
+# Source directories
+SRC_DIR = src
+OBJ_DIR = .cache
+INCLUDES_DIR = includes
 
 # Source files
-SRCS                = main_test.c
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-# File paths
-SRC                 = $(addprefix $(SRC_DIR), $(SRCS))
-GNL_SRC             = $(addprefix $(GNL_DIR), $(GNL_SRCS))
-OBJ                 = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o) $(GNL_SRCS:.c=.o))
+# Librairies
+LIBFT_DIR = ./includes/libft
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX_DIR = ./includes/minilibx
+MLX = $(MLX_DIR)/libmlx.a
+#############################################
 
-all:                $(NAME)
+all: $(NAME)
 
-obj:
-	@if [ -d $(OBJ_DIR) ]; then \
-		echo "\033[1;31mDirectory already created.\033[0m"; \
-	else \
-		mkdir -p $(OBJ_DIR); \
-		echo "\033[1;36mDirectory obj/ with files .o is being created...\033[0m"; \
-	fi
+$(NAME): $(OBJ)
+	@echo "\033[38;5;33m ██████╗ ██╗   ██╗██████╗ ███████╗██████╗ ██████╗  \033[0m"
+	@echo "\033[38;5;37m██╔════╝ ██║   ██║██╔══██╗██╔════╝╚════██╗██╔══██╗ \033[0m"
+	@echo "\033[38;5;39m██║      ██║   ██║██████╔╝█████╗   █████╔╝██║  ██║ \033[0m"
+	@echo "\033[38;5;45m██║      ██║   ██║██╔══██╗██╔══╝   ╚═══██╗██║  ██║ \033[0m"
+	@echo "\033[38;5;51m╚██████╗ ╚██████╔╝██████╔╝███████╗██████╔╝██████╔╝ \033[0m"
+	@echo "\033[38;5;57m ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚═════╝  \033[0m"
+	@echo "                                                                       "
+	@echo "$(GREEN)Building the Cube3D project...$(NC)"
+	@make -C $(LIBFT_DIR)
+	@make -C $(MLX_DIR) || { echo "$(RED)Erreur: MiniLibX introuvable ou non compilée!$(NC)"; exit 1; }
+	@total=$(words $(OBJ)); \
+	count=0; \
+	for file in $(OBJ); do \
+		count=$$((count + 1)); \
+		percentage=$$((count * 100 / total)); \
+		progress=$$((percentage / 2)); \
+		spinner=$$(echo $(SPINNERS) | cut -d ' ' -f $$(($$count % 6 + 1))); \
+		bar=""; \
+		for i in $$(seq 1 $$progress); do bar="$${bar}█"; done; \
+		for i in $$(seq $$progress 49); do bar="$${bar}░"; done; \
+		if [ $$percentage -eq 100 ]; then \
+			bar="███████████████████████████████████████████████████"; \
+		fi; \
+		printf "\r$(YELLOW)Compiling : $${bar} %d%% $${spinner}" $$percentage; \
+		sleep 0.01; \
+	done; \
+	printf "\n"; \
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX) $(MLX_FLAGS)
+	@echo "$(GREEN)Compilation successful!$(NC)"
 
-# Compile object files from source files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(@D)
-	@$(CC) -g $(CFLAGS) -I$(INC) $(INCLUDES) -c $< -o $@
-#	@echo "\033[1;32mFile $@ created.\033[0m";
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(YELLOW)Compiling $<...$(NC)"
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@ -I./includes -I./libft -I$(MLX_DIR) 
+	@echo "$(GREEN)Compilation successful!$(NC)"
 
-$(OBJ_DIR)/%.o: $(GNL_DIR)/%.c
-	@mkdir -p $(@D)
-	@$(CC) -g $(CFLAGS) -I$(INC) -I$(GNL_DIR) $(INCLUDES) -c $< -o $@
-#	@echo "\033[1;32mFile $@ created.\033[0m";
-
-$(NAME): $(OBJ) 
-	@echo "\033[1;36mCompiling so_long...\033[0m"
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $(NAME) $(LIBRARIES)
-	@echo "\033[1;32mDone.\033[0m"
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	@echo "\033[1;35mRemoving obj/...\033[0m"
-	@$(RM) -r $(OBJ_DIR) 
-	@echo "\033[1;32mAll Done for clean.\033[0m"
+	@echo "$(YELLOW)Cleaning project...$(Magenta)"
+	@make clean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
+	@rm -rf $(OBJ_DIR)
+	@echo "$(GREEN)Clean successful!$(NC)"
 
 fclean: clean
-	@echo "\033[1;35mRemoving so_long...\033[0m"
-	@$(RM) $(NAME)
-	@echo "\033[1;32mDone.\033[0m"
+	@echo "$(YELLOW)Full clean of project...$(Magenta)"
+	@make fclean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
+	@rm -f $(NAME) *.o
+	@echo "$(GREEN)Fclean successful!$(NC)"
 
-re: fclean obj all
+re : fclean all
+	@echo "$(GREEN)Cleaned & rebuilt$(NC)"
 
-bonus: all
-
-.PHONY: all obj clean fclean re
+.PHONY: all fclean clean re libft minilibx

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/06 14:44:58 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/10 15:48:10 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mlx_linux/mlx.h"
+#include "../includes/cub3d.h"
 
 // int	deal_key(int key, t_map *map)
 // {

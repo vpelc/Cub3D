@@ -6,12 +6,11 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/07 16:59:31 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/10 17:24:44 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../mlx_linux/mlx.h"
+#include "../includes/cub3d.h"
 
 typedef struct	s_game
 {
@@ -112,14 +111,19 @@ int	key_release(int key, t_game *game)
 
 int	key_loop(t_game *game)
 {
-	if (game->up_key)
-		game->player->posy-= 5;
-	if (game->down_key)
-		game->player->posy+= 5;
-	if (game->left_key)
-		game->player->posx-= 5;
-	if (game->right_key)
-		game->player->posx+= 5;
+	static int frame_count = 0;
+
+	if (frame_count++ % 60 == 0)
+	{
+		if (game->up_key)
+			game->player->posy-= 5;
+		if (game->down_key)
+			game->player->posy+= 5;
+		if (game->left_key)
+			game->player->posx-= 5;
+		if (game->right_key)
+			game->player->posx+= 5;
+	}
 	mlx_clear_window(game->mlx, game->win);
 	draw_player(game, game->player);
 	return (0);

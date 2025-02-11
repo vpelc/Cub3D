@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/11 14:03:59 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/11 14:46:25 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ typedef struct s_game
 	struct s_keys	*keys;
 	struct s_map	*map;
 	struct s_player	*player;
+	void			*p_img;
+	void			*w_img;
+	void			*e_img;
 }					t_game;
 
 typedef struct s_keys
@@ -62,6 +65,13 @@ typedef struct s_map
 	t_game			*game;
 }					t_map;
 
+// typedef struct s_image
+// {
+// 	void			*image;
+// 	int				width;
+// 	int				height;
+// }					t_image;
+
 typedef struct s_free
 {
 	void			*content;
@@ -75,5 +85,7 @@ typedef struct s_free
 void				*ft_malloc(t_game *game, size_t size, size_t count);
 int					close_window(t_game *game);
 int					init_game(t_game *game);
+void				draw_map(t_game *game);
+void				draw_player(t_game *game);
 
 #endif

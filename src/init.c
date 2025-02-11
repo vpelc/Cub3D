@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/11 14:03:32 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/11 15:37:28 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	fake_init_map(t_map *map)
 {
 	char	**tab;
 	int		i;
-	
+
 	i = -1;
 	tab = ft_malloc(map->game, sizeof(char *), 9);
 	if (!tab)
@@ -41,19 +41,31 @@ int	init_game(t_game *game)
 	t_player	*player;
 	t_map		*map;
 	t_keys		*keys;
+	int			size_p;
+	int			size_s;
 
+	size_p = 12;
+	size_s = 63;
 	player = ft_malloc(game, sizeof(t_player *), 1);
 	keys = ft_malloc(game, sizeof(t_keys *), 1);
-	map = ft_malloc (game, sizeof(t_map *), 1);
+	map = ft_malloc(game, sizeof(t_map *), 1);
 	player->game = game;
 	game->player = player;
 	map->game = game;
 	game->map = map;
-	player->posx = 300; 							//change to proper value
-	player->posy = 300;								//same
+	player->posx = 300; // change to proper value
+	player->posy = 300; // same
 	keys->down_key = 0;
 	keys->left_key = 0;
 	keys->right_key = 0;
 	keys->up_key = 0;
+	game->keys = keys;
 	fake_init_map(map);
+	game->p_img = mlx_xpm_file_to_image(game->mlx, "images/player.xpm", &size_p,
+			&size_p);
+	game->w_img = mlx_xpm_file_to_image(game->mlx, "images/wall.xpm", &size_s,
+			&size_s);
+	game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty.xpm", &size_s,
+			&size_s);
+	return (0);
 }

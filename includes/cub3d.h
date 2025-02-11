@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/11 14:46:25 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/11 18:06:13 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include "libft/inc/libft.h"
 # include "minilibx/mlx.h"
+# include <math.h>
 
 /* ************************************************************************** */
 /*                                 MACRO                                      */
@@ -26,6 +27,11 @@
 
 # define TRUE 0
 # define FALSE 1
+# define PI 3.1415926535
+
+# define ZOOM 2
+# define SQR_SIZE 63
+# define P_SIZE 8
 
 /* ************************************************************************** */
 /*                                 STRUCT                                     */
@@ -54,8 +60,11 @@ typedef struct s_keys
 
 typedef struct s_player
 {
-	int				posx;
-	int				posy;
+	float			posx;
+	float			posy;
+	float			posdx;
+	float			posdy;
+	float			posa;
 	t_game			*game;
 }					t_player;
 

@@ -10,7 +10,7 @@
 		"program": "${workspaceFolder}/cub3d",
 		"args": [],
 		"stopAtEntry": true,
-		"cwd": "${fileDirname}",
+		"cwd": "${workspaceFolder}",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",

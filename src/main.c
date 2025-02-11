@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/11 15:44:33 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/11 18:02:29 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,32 @@ int	key_loop(t_game *game)
 
 	if (frame_count++ % 1024 == 0)
 	{
-		if (game->keys->up_key)
-			game->player->posy-= 5;
-		if (game->keys->down_key)
-			game->player->posy+= 5;
 		if (game->keys->left_key)
-			game->player->posx-= 5;
+		{
+			game->player->posa-=0.1;
+			if (game->player->posa < 0)
+				game->player->posa += 2 * PI;
+			game->player->posdx = cos(game->player->posa) * 5;
+			game->player->posdy = sin(game->player->posa) * 5;
+		}
 		if (game->keys->right_key)
-			game->player->posx+= 5;
+		{
+			game->player->posa+=0.1;
+			if (game->player->posa > 2 * PI)
+				game->player->posa -= 2 * PI;
+			game->player->posdx = cos(game->player->posa) * 5;
+			game->player->posdy = sin(game->player->posa) * 5;
+		}
+		if (game->keys->up_key)
+		{
+			game->player->posx+= game->player->posdx;
+			game->player->posy+= game->player->posdy;
+		}
+		if (game->keys->down_key)
+		{
+			game->player->posx-= game->player->posdx;
+			game->player->posy-= game->player->posdy;
+		}
 		mlx_clear_window(game->mlx, game->win);
 		draw_map(game);
 		draw_player(game);	
@@ -67,7 +85,7 @@ int	main(int argc, char *argv[])
 	(void)argc;
 	(void)argv;
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 1024, 512, "Cub3D");
+	game.win = mlx_new_window(game.mlx, 1024 * ZOOM, 512 * ZOOM, "Cub3D");
 	init_game(&game);
 	draw_player(&game);
 	mlx_hook(game.win, 17, 0, close_window, &game);

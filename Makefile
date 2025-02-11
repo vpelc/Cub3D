@@ -16,8 +16,8 @@ NAME = cub3d
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g3
-MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lXext -lX11
+CFLAGS = -Wall -Wextra -Werror -g3 
+MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 
 # Source directories

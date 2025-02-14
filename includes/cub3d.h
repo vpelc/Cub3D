@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/11 18:06:13 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/13 17:43:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 /*                                 INCLUDE                                    */
 /* ************************************************************************** */
 
+# include <stdio.h>
 # include "libft/inc/libft.h"
 # include "minilibx/mlx.h"
 # include <math.h>
@@ -28,8 +29,9 @@
 # define TRUE 0
 # define FALSE 1
 # define PI 3.1415926535
+# define EPSILON 1e-6
 
-# define ZOOM 2
+# define ZOOM 1
 # define SQR_SIZE 63
 # define P_SIZE 8
 
@@ -49,6 +51,7 @@ typedef struct s_game
 	void			*w_img;
 	void			*e_img;
 }					t_game;
+
 
 typedef struct s_keys
 {
@@ -74,6 +77,20 @@ typedef struct s_map
 	t_game			*game;
 }					t_map;
 
+typedef struct s_rays
+{
+	int				r;
+	int				mx;
+	int				my;
+	int				mp;
+	int				dof;
+	float			rx;
+	float			ry;
+	float			ra;
+	float			xo;
+	float			yo;
+}					t_rays;
+
 // typedef struct s_image
 // {
 // 	void			*image;
@@ -96,5 +113,6 @@ int					close_window(t_game *game);
 int					init_game(t_game *game);
 void				draw_map(t_game *game);
 void				draw_player(t_game *game);
+void				draw_rays(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/11 18:06:48 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/13 16:13:41 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int	init_game(t_game *game)
 	keys->up_key = 0;
 	game->keys = keys;
 	fake_init_map(map);
-	game->p_img = mlx_xpm_file_to_image(game->mlx, "images/player_big.xpm", &size_p,
+	game->p_img = mlx_xpm_file_to_image(game->mlx, "images/player.xpm", &size_p,
 			&size_p);
-	game->w_img = mlx_xpm_file_to_image(game->mlx, "images/wall_big.xpm", &size_s,
+	game->w_img = mlx_xpm_file_to_image(game->mlx, "images/wall.xpm", &size_s,
 			&size_s);
-	game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty_big.xpm", &size_s,
+	game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty.xpm", &size_s,
 			&size_s);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/13 18:29:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/14 19:08:51 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	draw_player(t_game *game)
 void	draw_rays(t_game *game)
 {
 	t_rays	ray;
+	double	drayx;
 	float	aTan;
 	double	j;
 
@@ -73,7 +74,7 @@ void	draw_rays(t_game *game)
 		aTan = -1 / tan(ray.ra);
 		if (ray.ra - PI > EPSILON)
 		{
-			ray.ry = (((int)game->player->posy >> 6) << 6);
+			ray.ry = (((int)game->player->posy >> 6) << 6) - 0.00001;
 			ray.rx = (game->player->posy - ray.ry) * aTan + game->player->posx;
 			ray.yo = -64;
 			ray.xo = -(ray.yo) * aTan;
@@ -98,7 +99,7 @@ void	draw_rays(t_game *game)
 			// if ((ray.mx < 8 && ray.my < 8) && (ray.mx > 0 && ray.my > 0))
 			// 	printf("my %i | mx %i | char %c\n", ray.my, ray.mx,
 			// game->map->tab[ray.my][ray.mx]);
-			if ((ray.mx < 8 && ray.my < 8) && (ray.mx > 0 && ray.my > 0)
+			if ((ray.mx < 8 && ray.my < 8) && (ray.mx >= 0 && ray.my >= 0)
 				&& game->map->tab[ray.my][ray.mx] == '1')
 				ray.dof = 8;
 			else
@@ -110,28 +111,13 @@ void	draw_rays(t_game *game)
 		}
 	}
 	j = 0;
-	if (ray.rx > game->player->posx)
-		ray.rx -= game->player->posx;
-	else if (ray.rx < game->player->posx)
-		ray.rx = game->player->posx - ray.rx;
-	if (game->player->posdx > 0)
-	{	
-		while ((game->player->posdx * j) <= ray.rx)
-		{
-			mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
-					+ game->player->posdx * j), ((game->player->posy)
-					+ game->player->posdy * j), 0x00FF00FF);
-			j += 0.1;
-		}
-	}
-	else
+	drayx = ray.rx - game->player->posx;
+	drayx = sqrt(pow(drayx, 2));
+	while (sqrt(pow((game->player->posdx * j), 2)) <= drayx && j < 3000)
 	{
-		while ((game->player->posdx * j) <= -ray.rx)
-		{
-			mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
-					+ game->player->posdx * j), ((game->player->posy)
-					+ game->player->posdy * j), 0x00FF00FF);
-			j += 0.1;
-		}
+		mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+				+ game->player->posdx * j), ((game->player->posy)
+				+ game->player->posdy * j), 0x00FF00FF);
+		j += 0.1;
 	}
 }

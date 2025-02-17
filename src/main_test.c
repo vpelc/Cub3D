@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 14:18:08 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 15:35:52 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,18 @@ void	draw_player(t_game *game)
 	t_player	*player;
 	void		*img;
 	int			size;
-	float		distH;
-	float		distV;
 
 	player = game->player;
 	img = game->p_img;
 	size = (P_SIZE * ZOOM) / 2;
 	mlx_put_image_to_window(game->mlx, game->win, img, (player->posx - size),
 		(player->posy - size));
-	distH = draw_rays_h(game);
-	distV = draw_rays_v(game);
-	if (distH > distV)
-		draw_ray_lines(game, distV, 'v');
-	else if (distH < distV)
-		draw_ray_lines(game, distH, 'h');
-	else
-	{
-		draw_ray_lines(game, distV, 'v');
-		draw_ray_lines(game, distH, 'h');
-	}
-	
+	draw_rays(game);
 }
 
 float	dist(float px, float py, float rx, float ry)
 {
-	return(sqrt(pow(px - rx, 2) + pow(py - ry, 2)));
+	return (sqrt(pow(px - rx, 2) + pow(py - ry, 2)));
 }
 
 void	draw_ray_lines(t_game *game, float dray, char c)
@@ -81,11 +68,11 @@ void	draw_ray_lines(t_game *game, float dray, char c)
 	float	j;
 	int		color;
 	int		offset;
-	
+
 	if (c == 'h')
 	{
 		color = 0x00FF0000;
-		offset = 1; 
+		offset = 1;
 	}
 	else if (c == 'v')
 	{
@@ -93,7 +80,8 @@ void	draw_ray_lines(t_game *game, float dray, char c)
 		offset = -1;
 	}
 	j = 0;
-	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy * j), 2)) <= dray && j < 10000000)
+	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
+					* j), 2)) <= dray && j < 10000000)
 	{
 		mlx_pixel_put(game->mlx, game->win, ((game->player->posx + offset)
 				+ game->player->posdx * j), ((game->player->posy)
@@ -102,15 +90,24 @@ void	draw_ray_lines(t_game *game, float dray, char c)
 	}
 }
 
-float	draw_rays_h(t_game *game)
+void	draw_rays(t_game *game)
 {
 	t_rays	ray;
-	// float	drayx;
+	float	j;
+	float	dray;
 	float	aTan;
+	float	nTan;
+	float	distH;
+	float	distV;
+
 
 	ray.r = -1;
-	ray.ra = game->player->posa;
-	while (++ray.r < 1)
+	ray.ra = game->player->posa - (RAD_DEG * 30);
+		if (ray.ra < 0)
+			ray.ra += 2 * PI;
+		if (ray.ra > 2 * PI)
+			ray.ra -= 2 * PI;
+	while (++ray.r < 60)
 	{
 		ray.dof = 0;
 		aTan = -1 / tan(ray.ra);
@@ -148,23 +145,7 @@ float	draw_rays_h(t_game *game)
 				ray.dof += 1;
 			}
 		}
-	}
-	// drayx = ray.rx - game->player->posx;
-	// drayx = sqrt(pow(drayx, 2));
-	// draw_ray_lines(game, drayx, 'h');
-	return (dist(game->player->posx, game->player->posy, ray.rx, ray.ry));
-}
-
-float	draw_rays_v(t_game *game)
-{
-	t_rays	ray;
-	// float	drayx;
-	float	nTan;
-
-	ray.r = -1;
-	ray.ra = game->player->posa;
-	while (++ray.r < 1)
-	{
+		distH = dist(game->player->posx, game->player->posy, ray.rx, ray.ry);
 		ray.dof = 0;
 		nTan = -tan(ray.ra);
 		if (ray.ra - (PI / 2) > EPSILON && ray.ra - ((3 * PI) / 2) < -EPSILON)
@@ -201,10 +182,69 @@ float	draw_rays_v(t_game *game)
 				ray.dof += 1;
 			}
 		}
+		distV = dist(game->player->posx, game->player->posy, ray.rx, ray.ry);
+		ray.ra += RAD_DEG;
+		if (ray.ra < 0)
+			ray.ra += 2 * PI;
+		if (ray.ra > 2 * PI)
+			ray.ra -= 2 * PI;
+		if (distH > distV)
+			dray = distV;
+		else
+			dray = distH;
+		j = 0;
+		while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
+					* j), 2)) <= dray && j < 10000000)
+			{
+				mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+						+ (cos(ray.ra) * 5) * j), ((game->player->posy)
+						+ (sin(ray.ra) * 5) * j), 0x00FF0000);
+				j += 0.5;
+			}
 	}
-	// drayx = ray.rx - game->player->posx;
-	// drayx = sqrt(pow(drayx, 2));
-	// draw_ray_lines(game, drayx, 'v');
-	return (dist(game->player->posx, game->player->posy, ray.rx, ray.ry));
-	
 }
+
+// float	draw_rays_v(t_game *game)
+// {
+// 	t_rays	ray;
+// 	float	nTan;
+
+// 	ray.dof = 0;
+// 	nTan = -tan(ra);
+// 	if (ra - (PI / 2) > EPSILON && ra - ((3 * PI) / 2) < -EPSILON)
+// 	{
+// 		ray.rx = (((int)game->player->posx >> 6) << 6) - 0.00002;
+// 		ray.ry = (game->player->posx - ray.rx) * nTan + game->player->posy;
+// 		ray.xo = -64;
+// 		ray.yo = -(ray.xo) * nTan;
+// 	}
+// 	if (ra - (PI / 2) < -EPSILON || ra - ((3 * PI) / 2) > EPSILON)
+// 	{
+// 		ray.rx = (((int)game->player->posx >> 6) << 6) + 64;
+// 		ray.ry = (game->player->posx - ray.rx) * nTan + game->player->posy;
+// 		ray.xo = 64;
+// 		ray.yo = -(ray.xo) * nTan;
+// 	}
+// 	if (ra == 0 || (ra - PI < EPSILON && ra - PI > -EPSILON))
+// 	{
+// 		ray.rx = game->player->posx;
+// 		ray.ry = game->player->posy;
+// 		ray.dof = 8;
+// 	}
+// 	while (ray.dof < 8)
+// 	{
+// 		ray.mx = (int)(ray.rx) >> 6;
+// 		ray.my = (int)(ray.ry) >> 6;
+// 		if ((ray.mx < 8 && ray.my < 8) && (ray.mx >= 0 && ray.my >= 0)
+// 			&& game->map->tab[ray.my][ray.mx] == '1')
+// 			ray.dof = 8;
+// 		else
+// 		{
+// 			ray.rx += ray.xo;
+// 			ray.ry += ray.yo;
+// 			ray.dof += 1;
+// 		}
+
+// 	}
+// 	return (dist(game->player->posx, game->player->posy, ray.rx, ray.ry));
+// }

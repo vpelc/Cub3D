@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/17 14:04:41 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 15:31:24 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define FALSE 1
 # define PI 3.1415926535
 # define EPSILON 1e-6
+# define RAD_DEG 0.0174532925
 
 # define ZOOM 1
 # define SQR_SIZE 63
@@ -112,8 +113,9 @@ int					close_window(t_game *game);
 int					init_game(t_game *game);
 void				draw_map(t_game *game);
 void				draw_player(t_game *game);
-float				draw_rays_h(t_game *game);
-float				draw_rays_v(t_game *game);
-void				draw_ray_lines(t_game *game, float dray, char c);
+void				draw_rays(t_game *game);
+// float				draw_rays_h(t_game *game, float ra);
+// float				draw_rays_v(t_game *game, float ra);
+// void				draw_ray_lines(t_game *game, float ra, float dray, char c);
 
 #endif

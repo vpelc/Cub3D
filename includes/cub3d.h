@@ -6,12 +6,12 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/14 15:25:39 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:03:29 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-# define CUB3D_h
+# define CUB3D_H
 
 /* ************************************************************************** */
 /*                                 INCLUDE                                    */
@@ -19,15 +19,15 @@
 
 # include "libft/inc/libft.h"
 # include "minilibx/mlx.h"
-# include <unistd.h>
 # include <fcntl.h>
+# include <unistd.h>
 
 /* ************************************************************************** */
 /*                                 MACCRO                                     */
 /* ************************************************************************** */
 
 # ifndef O_DIRECTORY
-# define O_DIRECTORY 00200000
+#  define O_DIRECTORY 00200000
 # endif
 # define FALSE 0
 # define TRUE 1
@@ -38,20 +38,40 @@
 /*                                 STRUCT                                     */
 /* ************************************************************************** */
 
+typedef struct s_texinfo
+{
+	char			*NO_path;
+	char			*SO_path;
+	char			*WE_path;
+	char			*EA_path;
+	int				floor[3];
+	int				ceiling[3];
+	unsigned long	hex_floor;
+	unsigned long	hex_ceiling;
+}					t_texinfo;
+typedef struct s_mapinfo
+{
+	int				fd;
+	int				index_file;
+	int				num_max_line_file;
+}					t_mapinfo;
+
 typedef struct s_game
 {
-    char *NO;
-    char *SO;
-    char *WE;
-    char *EA;
-    char *F;
-    char *C;
-    char **map;
-    
-}   t_game;
+	void			*mlx;
+	void			*win;
+	t_mapinfo		*mapinfo;
+	t_texinfo		*texinfo;
+
+}					t_game;
+
 /* ************************************************************************** */
 /*                                 FUNCTION                                   */
 /* ************************************************************************** */
 
-int	check_args(int argc, char **argv);
+int					check_args(int argc, char **argv, t_game *game);
+int					check_content_file(t_game *game);
+void				init_data(t_game *game);
+int					get_max_line_infile(int fd);
+int					ft_issspasce(char c);
 #endif

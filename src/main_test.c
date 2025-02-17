@@ -103,12 +103,12 @@
 int main(int argc, char **argv)
 {
 
-	if (check_args(argc,argv) == FALSE)
-	{
-		ft_printf("Error in check args");
+	t_game game;
+	
+	init_data(&game);
+	if (check_args(argc,argv,&game) == FALSE || check_content_file(&game) == FALSE)
 		return (FALSE);
-	}
-	if (check_args(argc,argv) == TRUE)
+	if (check_args(argc,argv,&game) == TRUE)
 	{
 		ft_printf("Prog Run");
 		return (TRUE);

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 12:15:19 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/14 15:26:01 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/16 02:11:58 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,23 @@ static int	check_extension(char *file_name)
 	int	i;
 
 	i = ft_strlen(file_name);
-	if (ft_strncmp(file_name + i - 4, EXT_CUB, 4) != 0 | i <= 4)
+	if ((ft_strncmp(file_name + i - 4, EXT_CUB, 4) != 0) | (i <= 4))
 		return (FALSE);
 	else
 		return (TRUE);
 }
 
-static int	check_filename(char *filename)
+static int	check_filename(char *filename,t_game *game)
 {
-	int	fd;
+	
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
+	game->mapinfo->fd = open(filename, O_RDONLY);
+	if (game->mapinfo->fd == -1)
 		return (FALSE);
-	close(fd);
 	return (TRUE);
 }
 
-int	check_args(int argc, char **argv)
+int	check_args(int argc, char **argv,t_game *game)
 {
 	if (argc != 2)
 	{
@@ -66,7 +65,7 @@ int	check_args(int argc, char **argv)
 		ft_putstr_fd("Error: Invalid file extension, expected '.cub'\n", 2);
 		return (FALSE);
 	}
-	if (check_filename(argv[1]) == FALSE)
+	if (check_filename(argv[1],game) == FALSE)
 	{
 		ft_putstr_fd("Error: File does not exist or cannot be opened\n", 2);
 		return (FALSE);

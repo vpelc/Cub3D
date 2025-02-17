@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 15:35:52 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 16:34:04 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void	draw_rays(t_game *game)
 	float	nTan;
 	float	distH;
 	float	distV;
+	float	lineH;
+	float	lineO;
+	float	ca;
 
 
 	ray.r = -1;
@@ -195,12 +198,29 @@ void	draw_rays(t_game *game)
 		j = 0;
 		while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
 					* j), 2)) <= dray && j < 10000000)
-			{
-				mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
-						+ (cos(ray.ra) * 5) * j), ((game->player->posy)
-						+ (sin(ray.ra) * 5) * j), 0x00FF0000);
-				j += 0.5;
-			}
+		{
+			mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+					+ (cos(ray.ra) * 5) * j), ((game->player->posy)
+					+ (sin(ray.ra) * 5) * j), 0x00FF0000);
+			j += 0.5;
+		}
+		ca = game->player->posa - ray.ra;
+		if (ca < 0)
+			ca += PI * 2;
+		else if (ca > 2 * PI)
+			ca -= PI * 2;
+		dray = dray * cos(ca);
+		lineH = (64 * 320) / dray;
+		if (lineH > 320)
+			lineH = 320;
+		lineO = 160 - lineH / 2;
+		j = 0;
+		while (j < lineH)
+		{
+			mlx_pixel_put(game->mlx, game->win, ray.r * 8 + 530, lineO + j, 0x00FF0000);
+			j += 0.5;
+		}
+			
 	}
 }
 

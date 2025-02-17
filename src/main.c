@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/11 18:02:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 18:20:10 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int	key_press(int key, t_game *game)
 	if (key == 119 || key == 65362)
 		game->keys->up_key = 1;
 	if (key == 115 || key == 65364)
-		game->keys->down_key = 1; 
+		game->keys->down_key = 1;
 	if (key == 97 || key == 65361)
 		game->keys->left_key = 1;
 	if (key == 100 || key == 65363)
 		game->keys->right_key = 1;
+	if (key == 65307)
+		close_window(game);
 	return (0);
 }
 
@@ -30,7 +32,7 @@ int	key_release(int key, t_game *game)
 	if (key == 119 || key == 65362)
 		game->keys->up_key = 0;
 	if (key == 115 || key == 65364)
-		game->keys->down_key = 0; 
+		game->keys->down_key = 0;
 	if (key == 97 || key == 65361)
 		game->keys->left_key = 0;
 	if (key == 100 || key == 65363)
@@ -40,13 +42,35 @@ int	key_release(int key, t_game *game)
 
 int	key_loop(t_game *game)
 {
-	static int frame_count = 0;
+	static int	frame_count = 0;
+	int			xo;
+	int			yo;
+	int			ipx;
+	int			ipx_add;
+	int			ipx_sub;
+	int			ipy;
+	int			ipy_add;
+	int			ipy_sub;
 
 	if (frame_count++ % 1024 == 0)
 	{
+		if (game->player->posdx < 0)
+			xo = -10;
+		else
+			xo = 10;
+		if (game->player->posdy < 0)
+			yo = -10;
+		else
+			yo = 10;
+		ipx = game->player->posx / 64.0;
+		ipx_add = (game->player->posx + xo) / 64.0;
+		ipx_sub = (game->player->posx - xo) / 64.0;
+		ipy = game->player->posy / 64.0;
+		ipy_add = (game->player->posy + yo) / 64.0;
+		ipy_sub = (game->player->posy - yo) / 64.0;
 		if (game->keys->left_key)
 		{
-			game->player->posa-=0.1;
+			game->player->posa -= 0.1;
 			if (game->player->posa < 0)
 				game->player->posa += 2 * PI;
 			game->player->posdx = cos(game->player->posa) * 5;
@@ -54,7 +78,7 @@ int	key_loop(t_game *game)
 		}
 		if (game->keys->right_key)
 		{
-			game->player->posa+=0.1;
+			game->player->posa += 0.1;
 			if (game->player->posa > 2 * PI)
 				game->player->posa -= 2 * PI;
 			game->player->posdx = cos(game->player->posa) * 5;
@@ -62,19 +86,22 @@ int	key_loop(t_game *game)
 		}
 		if (game->keys->up_key)
 		{
-			game->player->posx+= game->player->posdx;
-			game->player->posy+= game->player->posdy;
+			if (game->map->tab[ipy][ipx_add] == '0')
+				game->player->posx += game->player->posdx;
+			if (game->map->tab[ipy_add][ipx] == '0')
+				game->player->posy += game->player->posdy;
 		}
 		if (game->keys->down_key)
 		{
-			game->player->posx-= game->player->posdx;
-			game->player->posy-= game->player->posdy;
+			if (game->map->tab[ipy][ipx_sub] == '0')
+				game->player->posx -= game->player->posdx;
+			if (game->map->tab[ipy_sub][ipx] == '0')
+				game->player->posy -= game->player->posdy;
 		}
 		mlx_clear_window(game->mlx, game->win);
 		draw_map(game);
-		draw_player(game);	
+		draw_player(game);
 	}
-	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 16:52:33 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 18:51:12 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	init_game(t_game *game)
 
 	size_p = P_SIZE * ZOOM;
 	size_s = SQR_SIZE * ZOOM;
-	player = ft_malloc(game, sizeof(t_player *), 1);
-	keys = ft_malloc(game, sizeof(t_keys *), 1);
-	map = ft_malloc(game, sizeof(t_map *), 1);
+	player = ft_malloc(game, sizeof(t_player), 1);
+	keys = ft_malloc(game, sizeof(t_keys), 1);
+	map = ft_malloc(game, sizeof(t_map), 1);
 	player->game = game;
 	game->player = player;
 	map->game = game;

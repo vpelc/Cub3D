@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/13 17:43:18 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 14:04:41 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 /*                                 INCLUDE                                    */
 /* ************************************************************************** */
 
-# include <stdio.h>
 # include "libft/inc/libft.h"
 # include "minilibx/mlx.h"
 # include <math.h>
+# include <stdio.h>
 
 /* ************************************************************************** */
 /*                                 MACRO                                      */
@@ -51,7 +51,6 @@ typedef struct s_game
 	void			*w_img;
 	void			*e_img;
 }					t_game;
-
 
 typedef struct s_keys
 {
@@ -113,6 +112,8 @@ int					close_window(t_game *game);
 int					init_game(t_game *game);
 void				draw_map(t_game *game);
 void				draw_player(t_game *game);
-void				draw_rays(t_game *game);
+float				draw_rays_h(t_game *game);
+float				draw_rays_v(t_game *game);
+void				draw_ray_lines(t_game *game, float dray, char c);
 
 #endif

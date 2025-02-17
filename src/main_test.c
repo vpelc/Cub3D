@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 16:34:04 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/17 17:16:14 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,13 @@ void	draw_rays(t_game *game)
 			ray.ra += 2 * PI;
 		if (ray.ra > 2 * PI)
 			ray.ra -= 2 * PI;
-	while (++ray.r < 60)
+	while (++ray.r < 90)
 	{
 		ray.dof = 0;
 		aTan = -1 / tan(ray.ra);
 		if (ray.ra - PI > EPSILON)
 		{
-			ray.ry = (((int)game->player->posy >> 6) << 6) - 0.00001;
+			ray.ry = (((int)game->player->posy >> 6) << 6) - 0.00002;
 			ray.rx = (game->player->posy - ray.ry) * aTan + game->player->posx;
 			ray.yo = -64;
 			ray.xo = -(ray.yo) * aTan;
@@ -186,7 +186,7 @@ void	draw_rays(t_game *game)
 			}
 		}
 		distV = dist(game->player->posx, game->player->posy, ray.rx, ray.ry);
-		ray.ra += RAD_DEG;
+		ray.ra += (RAD_DEG / 3) * 2;
 		if (ray.ra < 0)
 			ray.ra += 2 * PI;
 		if (ray.ra > 2 * PI)
@@ -202,7 +202,7 @@ void	draw_rays(t_game *game)
 			mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
 					+ (cos(ray.ra) * 5) * j), ((game->player->posy)
 					+ (sin(ray.ra) * 5) * j), 0x00FF0000);
-			j += 0.5;
+			j += 0.8;
 		}
 		ca = game->player->posa - ray.ra;
 		if (ca < 0)
@@ -210,14 +210,14 @@ void	draw_rays(t_game *game)
 		else if (ca > 2 * PI)
 			ca -= PI * 2;
 		dray = dray * cos(ca);
-		lineH = (64 * 320) / dray;
-		if (lineH > 320)
-			lineH = 320;
-		lineO = 160 - lineH / 2;
+		lineH = (64 * 448) / dray;
+		if (lineH > 448)
+			lineH = 448;
+		lineO = 224 - lineH / 2;
 		j = 0;
 		while (j < lineH)
 		{
-			mlx_pixel_put(game->mlx, game->win, ray.r * 8 + 530, lineO + j, 0x00FF0000);
+			mlx_pixel_put(game->mlx, game->win, ray.r * 5 + 530, lineO + j, 0x00FF0000);
 			j += 0.5;
 		}
 			

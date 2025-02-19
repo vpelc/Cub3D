@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/17 15:03:29 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:39:23 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@
 /*                                 STRUCT                                     */
 /* ************************************************************************** */
 
+typedef struct s_file
+{
+	char			**map;
+	char			**texture;
+}					t_file;
 typedef struct s_texinfo
 {
 	char			*NO_path;
@@ -62,7 +67,7 @@ typedef struct s_game
 	void			*win;
 	t_mapinfo		*mapinfo;
 	t_texinfo		*texinfo;
-
+	t_file			*file
 }					t_game;
 
 /* ************************************************************************** */

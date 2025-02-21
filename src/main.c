@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 18:20:10 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/20 17:18:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	key_loop(t_game *game)
 	int			ipy_add;
 	int			ipy_sub;
 
-	if (frame_count++ % 1024 == 0)
+	if (frame_count++ % 1536 == 0)
 	{
 		if (game->player->posdx < 0)
 			xo = -10;
@@ -101,6 +101,7 @@ int	key_loop(t_game *game)
 		mlx_clear_window(game->mlx, game->win);
 		draw_map(game);
 		draw_player(game);
+		draw_ray(game);
 	}
 	return (0);
 }
@@ -112,9 +113,8 @@ int	main(int argc, char *argv[])
 	(void)argc;
 	(void)argv;
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 1024 * ZOOM, 512 * ZOOM, "Cub3D");
+	game.win = mlx_new_window(game.mlx, 1500 * ZOOM, 1000 * ZOOM, "Cub3D");
 	init_game(&game);
-	draw_player(&game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);

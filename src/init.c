@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 18:51:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/20 14:58:57 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	fake_init_map(t_map *map)
 	int		i;
 
 	i = -1;
-	tab = ft_malloc(map->game, sizeof(char *), 9);
+	tab = malloc(sizeof(char *) * 9);
 	if (!tab)
 		return (1);
 	while (++i < 8)
-		tab[i] = ft_malloc(map->game, sizeof(char), 9);
+		tab[i] = malloc(sizeof(char) * 9);
 	tab[i] = NULL;
 	tab[0] = "11111111";
 	tab[1] = "10011001";

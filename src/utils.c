@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:38:04 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/17 18:46:19 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/20 13:54:54 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	close_window(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
 	mlx_destroy_window(game->mlx, game->win);
-	free_list(game);
+	// free_list(game);
 	return (1);
 }

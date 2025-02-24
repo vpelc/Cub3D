@@ -1,116 +1,85 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   main_test.c                                        :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-// /*   Updated: 2025/02/10 15:48:10 by dbajeux          ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
-
-// #include "../includes/cub3d.h"
-
-// // int	deal_key(int key, t_map *map)
-// // {
-// // 	if (key == 53)
-// // 		// close_window(map);
-// // 	if (key == 13 || key == 126)
-// // 		move_up(map);
-// // 	if (key == 1 || key == 125)
-// // 		move_down(map);
-// // 	if (key == 0 || key == 123)
-// // 		move_left(map);
-// // 	if (key == 2 || key == 124)
-// // 		move_right(map);
-// // 	return (0);
-// // }
-
-// typedef struct	s_game
-// {
-// 	void	*mlx;
-// 	void	*win;
-// }	t_game;
-
-// typedef struct s_player
-// {
-// 	int posx;
-// 	int posy;
-// }	t_player;
-
-// typedef struct	s_map
-// {
-// 	char	*name;
-// 	t_game	*game;
-// }	t_map;
-
-// int	close_window(t_game *game)
-// {
-// 	mlx_clear_window(game->mlx, game->win);
-// 	mlx_destroy_window(game->mlx, game->win);
-// 	// free_img(map->game);
-// 	// free_map(map);
-	
-// 	return 1;
-// }
-
-// void	draw_player(t_game *game, t_player *player)
-// {
-// 	int i;
-// 	int j;
-	
-// 	i = 0;
-// 	while (i < 10)
-// 	{
-// 		j = 0;
-// 		while (j < 10)
-// 		{
-// 			mlx_pixel_put(game->mlx, game->win, player->posx + i, player->posy + j, 0x00112233);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// int	main(int argc, char *argv[])
-// {
-// 	t_game	game;
-// 	t_player player;
-// 	// t_map	map;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	player.posx = 300;
-// 	player.posy = 300;
-// 	// check_args(argc, argv);
-// 	// map.name = argv[1];
-// 	// map.game = &game;
-// 	// fill_map(&map);
-// 	// check_map(&map);
-// 	game.mlx = mlx_init();
-// 	game.win = mlx_new_window(game.mlx, 1024, 512, "Cub3D");
-// 	draw_player(&game, &player);
-// 	// assign_img(&game);
-// 	// display_map(&map, &game);
-// 	// mlx_key_hook(game.win, deal_key, &map);
-// 	mlx_hook(game.win, 17, 0, close_window, &game);
-// 	mlx_loop(game.mlx);
-// }
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_test.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 09:45:22 by dbajeux           #+#    #+#             */
+/*   Updated: 2025/02/21 14:39:41 by dbajeux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <stdio.h>
+
+#include <stdio.h>
+
+void print_texinfo(t_texinfo *texinfo)
+{
+    if (!texinfo)
+    {
+        printf("Texinfo is NULL\n");
+        return;
+    }
+    printf("--- t_texinfo ---\n");
+    printf("NO_path: %s\n", texinfo->NO_path ? texinfo->NO_path : "NULL");
+    printf("SO_path: %s\n", texinfo->SO_path ? texinfo->SO_path : "NULL");
+    printf("WE_path: %s\n", texinfo->WE_path ? texinfo->WE_path : "NULL");
+    printf("EA_path: %s\n", texinfo->EA_path ? texinfo->EA_path : "NULL");
+    
+    printf("Floor RGB: [%d, %d, %d]\n",
+           texinfo->floor[0], texinfo->floor[1], texinfo->floor[2]);
+
+    printf("Ceiling RGB: [%d, %d, %d]\n",
+           texinfo->ceiling[0], texinfo->ceiling[1], texinfo->ceiling[2]);
+
+    printf("Hex Floor: %lx\n", texinfo->hex_floor);
+    printf("Hex Ceiling: %lx\n", texinfo->hex_ceiling);
+}
+
+void print_mapinfo(t_mapinfo *mapinfo)
+{
+    if (!mapinfo)
+    {
+        printf("Mapinfo is NULL\n");
+        return;
+    }
+    printf("--- t_mapinfo ---\n");
+    printf("File Descriptor: %d\n", mapinfo->fd);
+    printf("Index File: %d\n", mapinfo->index_file);
+    printf("Max Line in File: %d\n", mapinfo->num_max_line_file);
+}
+
+void print_game(t_game *game)
+{
+    if (!game)
+    {
+        printf("Game is NULL\n");
+        return;
+    }
+    printf("--- t_game ---\n");
+    printf("MLX Pointer: %p\n", game->mlx);
+    printf("Window Pointer: %p\n", game->win);
+    
+    printf("\n");
+    print_mapinfo(game->mapinfo);
+    printf("\n");
+    print_texinfo(game->texinfo);
+}
 
 int main(int argc, char **argv)
 {
-
 	t_game game;
-	
+
+
 	init_data(&game);
 	if (check_args(argc,argv,&game) == FALSE || check_content_file(&game) == FALSE)
 		return (FALSE);
 	if (check_args(argc,argv,&game) == TRUE)
 	{
-		ft_printf("Prog Run");
+		ft_printf("Prog Run\n");
+		print_game(&game);
 		return (TRUE);
 	}
 }

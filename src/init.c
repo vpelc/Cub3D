@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 23:24:36 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/17 15:10:18 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:37:39 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ static void	init_mapinfo(t_game *game)
 }
 void	init_data(t_game *game)
 {
-	game = malloc(sizeof(t_game));
-	if (!game)
-		return (ft_putstr_fd("Error : Malloc init_data",2));
 	game->mlx = NULL;
 	game->win = NULL;
 	init_mapinfo(game);

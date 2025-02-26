@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/20 14:58:57 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/26 15:16:07 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	init_game(t_game *game)
 	int			size_p;
 	int			size_s;
 
-	size_p = P_SIZE * ZOOM;
-	size_s = SQR_SIZE * ZOOM;
+	size_p = P_SIZE;
+	size_s = SQR_SIZE;
 	player = ft_malloc(game, sizeof(t_player), 1);
 	keys = ft_malloc(game, sizeof(t_keys), 1);
 	map = ft_malloc(game, sizeof(t_map), 1);
@@ -58,6 +58,8 @@ int	init_game(t_game *game)
 	// player->posa = 2 * PI;
 	player->posdx = cos(player->posa) * 5;
 	player->posdy = sin(player->posa) * 5;
+	game->player->posdxp = cos(game->player->posa + (90 * RAD_DEG)) * 5;
+	game->player->posdyp = sin(game->player->posa + (90 * RAD_DEG)) * 5;
 	keys->down_key = 0;
 	keys->left_key = 0;
 	keys->right_key = 0;
@@ -70,5 +72,6 @@ int	init_game(t_game *game)
 			&size_s);
 	game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty.xpm", &size_s,
 			&size_s);
+	load_win_texture(game);
 	return (0);
 }

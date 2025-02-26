@@ -1,0 +1,108 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movement.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:33:04 by vpelc             #+#    #+#             */
+/*   Updated: 2025/02/26 17:26:55 by vpelc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/cub3d.h"
+
+void	check_offset (t_game *game, int *xo, int *yo, char dir)
+{
+	if (dir == 'v')
+	{	
+		if (game->player->posdx < 0)
+			*xo = -10;
+		else
+			*xo = 10;
+		if (game->player->posdy < 0)
+			*yo = -10;
+		else
+			*yo = 10;
+	}
+	if (dir == 'h')
+	{	
+		if (game->player->posdxp < 0)
+			*xo = -10;
+		else
+			*xo = 10;
+		if (game->player->posdyp < 0)
+			*yo = -10;
+		else
+			*yo = 10;
+	}
+}
+
+void	move_up(t_game *game)
+{
+	int xo;
+	int yo;
+
+	check_offset(game, &xo, &yo, 'v');
+	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
+		game->player->posx += game->player->posdx;
+	if (game->map->tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy += game->player->posdy;
+}
+void	move_down(t_game *game)
+{
+	int xo;
+	int yo;
+
+	check_offset(game, &xo, &yo, 'v');
+	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
+		game->player->posx -= game->player->posdx;
+	if (game->map->tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy -= game->player->posdy;
+}
+
+void	move_left(t_game *game)
+{
+	int xo;
+	int yo;
+
+	check_offset(game, &xo, &yo, 'h');
+	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
+		game->player->posx -= game->player->posdxp;
+	if (game->map->tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy -= game->player->posdyp;
+}
+
+void	move_right(t_game *game)
+{
+	int xo;
+	int yo;
+
+	check_offset(game, &xo, &yo, 'h');
+	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
+		game->player->posx += game->player->posdxp;
+	if (game->map->tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy += game->player->posdyp;
+}
+
+void	rotate_left(t_game *game)
+{
+	game->player->posa -= 0.1;
+	if (game->player->posa < 0)
+		game->player->posa += 2 * PI;
+	game->player->posdx = cos(game->player->posa) * 5;
+	game->player->posdy = sin(game->player->posa) * 5;
+	game->player->posdxp = cos(game->player->posa + (90 * RAD_DEG)) * 5;
+	game->player->posdyp = sin(game->player->posa + (90 * RAD_DEG)) * 5;;
+}
+
+void	rotate_right(t_game *game)
+{
+	game->player->posa += 0.1;
+	if (game->player->posa > 2 * PI)
+		game->player->posa -= 2 * PI;
+	game->player->posdx = cos(game->player->posa) * 5;
+	game->player->posdy = sin(game->player->posa) * 5;
+	game->player->posdxp = cos(game->player->posa + (90 * RAD_DEG)) * 5;
+	game->player->posdyp = sin(game->player->posa + (90 * RAD_DEG)) * 5;
+}

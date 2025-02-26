@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/20 17:24:25 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/26 23:19:14 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void	draw_2dray(t_game *game, t_rays *ray, float dray)
 	
 	j = 0;
 	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
-					* j), 2)) <= dray && j < 10000000)
+					* j), 2)) <= dray && j < 200)
 	{
 		mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
 				+ (cos(ray->ra) * 5) * j), ((game->player->posy)
-				+ (sin(ray->ra) * 5) * j), 0x00FF0000);
-		j += 1.3;
+				+ (sin(ray->ra) * 5) * j), 0x0000FF00);
+		j += 1.5;
 	}
 }
 
-void	draw_3dray(t_game *game, t_rays *ray, float dray)
+void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 {
 	float	j;
 	float	ca;
@@ -71,17 +71,37 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray)
 	else if (ca > 2 * PI)
 		ca -= PI * 2;
 	dray = dray * cos(ca);
-	lineH = (64 * 896) / dray;
-	if (lineH > 896)
-		lineH = 896;
-	lineO = 448 - lineH / 2;
+	lineH = (64 * SCR_HEIGHT) / dray;
+	if (lineH > SCR_HEIGHT)
+		lineH = SCR_HEIGHT;
+	lineO = (SCR_HEIGHT / 2) - lineH / 2;
+	j = 0;
+	while (j < lineO)
+	{
+		put_pixel_to_image(game->win_img, ray->r, j, 0x002222AA);
+		j += 0.9;
+	}
+	while (j > 0)
+	{
+		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, 0x00228822);
+		j -= 0.9;
+	}
 	j = 0;
 	while (j < lineH)
 	{
-		mlx_pixel_put(game->mlx, game->win, ray->r * 5 + 545, lineO + j + 30,
-			0x00FF0000);
-		j += 0.7;
+		// mlx_pixel_put(game->mlx, game->win, ray->r + 545, lineO + j + 30,
+		// 	0x00FF0000);
+		if (dir == 'v')
+			put_pixel_to_image(game->win_img, ray->r, (lineO + j), 0x00FF0000);
+		if (dir == 'h')
+			put_pixel_to_image(game->win_img, ray->r, (lineO + j), 0x00CC0000);
+		j += 0.9;
 	}
+// 	while (j < SCR_HEIGHT)
+// 	{
+// 		put_pixel_to_image(game->win_img, ray->r,  j, 0x00006600);
+// 		j += 0.9;
+// 	}
 }
 
 
@@ -153,24 +173,33 @@ void	draw_ray(t_game *game)
 	float	distH;
 	float	distV;
 	float	dray;
-	
+	char	dir;
 
-	ray.r = -1;
+	clear_image(game->win_img);
+	ray.r = 0;
 	ray.ra = game->player->posa - (RAD_DEG * 30);
 	check_ra(&ray);
-	while (++ray.r < 180)
+	while (ray.r < 1000)
 	{
 		distH = ray_hor(game, &ray, distH);
 		distV = ray_ver(game, &ray, distV);
-		ray.ra += (RAD_DEG / 3);
+		ray.ra += ((60 * RAD_DEG) / 1000);
 		check_ra(&ray);
 		if (distH > distV)
+		{
 			dray = distV;
+			dir = 'v';
+		}
 		else
+		{
 			dray = distH;
+			dir = 'h';
+		}
 		draw_2dray(game, &ray, dray);
-		draw_3dray(game, &ray, dray);
+		draw_3dray(game, &ray, dray, dir);
+		ray.r ++;
 	}
+	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, 512, 48);
 }
 
 // void	draw_rays(t_game *game)

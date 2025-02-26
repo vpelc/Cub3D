@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_content_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/26 19:00:25 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/26 23:18:44 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	check_doublon_flag(char *flag, t_game *game)
 // 	if (!values)
 // 		return (-1);
 // 	while (values[i])
-// 		i++;	
+// 		i++;
 // 	if (i != 3)
 // 		return (free_tab(values), -1);
 // 	i = 0;
@@ -123,47 +123,36 @@ int	is_valid_rgb_format(char *line)
 	int		i;
 	int		j;
 	int		num;
+	char	*trimmed;
 
 	if (!line || *line == '\0')
 		return (-1);
-
-	// Supprimer le \r à la fin si présent (Windows)
-	if (line[ft_strlen(line) - 1] == '\r')
-		line[ft_strlen(line) - 1] = '\0';
-
 	values = ft_split(line, ',');
 	if (!values)
 		return (-1);
-
-	// Supprimer les espaces autour des valeurs
 	i = 0;
 	while (values[i])
 	{
-		char *trimmed = ft_strtrim(values[i], " ");
+		trimmed = ft_strtrim(values[i], " ");
 		free(values[i]);
 		values[i] = trimmed;
 		i++;
 	}
-
 	if (i != 3)
 		return (free_tab(values), -1);
-
 	i = 0;
 	while (i < 3)
 	{
 		j = 0;
 		while (values[i][j])
 		{
-			if (values[i][j] == '\n' || values[i][j] == '\r') // Ignorer '\n' et '\r'
-   			{
-        		j++;
-        		continue;
-    		}
-			if (!ft_isdigit(values[i][j]))
+			if (values[i][j] == '\n')
 			{
-				ft_printf("test");
-				return (free_tab(values), -1);
+				j++;
+				continue ;
 			}
+			if (!ft_isdigit(values[i][j]))
+				return (free_tab(values), -1);
 			j++;
 		}
 		num = ft_atoi(values[i]);
@@ -171,11 +160,9 @@ int	is_valid_rgb_format(char *line)
 			return (free_tab(values), -1);
 		i++;
 	}
-
 	free_tab(values);
 	return (TRUE);
 }
-
 
 char	*extract_colour(char *line)
 {
@@ -244,6 +231,23 @@ int	parse_rgb(char *path, int index)
 	return (result);
 }
 
+int	rgb_to_hex(int r, int g, int b)
+{
+	return ((r << 16) | (g << 8) | b);
+}
+
+int	fill_hexa(t_game *game)
+{
+	game->texinfo->hex_floor = rgb_to_hex(game->texinfo->floor[0],
+			game->texinfo->floor[1], game->texinfo->floor[2]);
+	game->texinfo->hex_ceiling = rgb_to_hex(game->texinfo->ceiling[0],
+			game->texinfo->ceiling[1], game->texinfo->ceiling[2]);
+	if (game->texinfo->hex_ceiling == 0x0 || game->texinfo->hex_floor == 0x0)
+		return (FALSE);
+	else
+		return (TRUE);
+}
+
 int	fill_color_data(char *flag, char *path, t_game *game)
 {
 	if (flag[0] == 'F')
@@ -259,6 +263,8 @@ int	fill_color_data(char *flag, char *path, t_game *game)
 		game->texinfo->ceiling[2] = parse_rgb(path, 2);
 	}
 	else
+		return (FALSE);
+	if (fill_hexa(game) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
@@ -314,7 +320,7 @@ int	check_line_contain_map(char *line)
 
 int	check_tab_empty(int tab[3])
 {
-	if (tab[0] == -1 || tab[1] == -1 || tab[2] == -1 )
+	if (tab[0] == -1 || tab[1] == -1 || tab[2] == -1)
 		return (FALSE);
 	return (TRUE);
 }
@@ -354,7 +360,6 @@ static int	check_texture(int fd, t_game *game)
 			free(line);
 			continue ;
 		}
-		ft_printf("%s\n", line);
 		if (check_line_contain_flag(line) == TRUE)
 		{
 			flag = identify_flag(line);
@@ -410,6 +415,30 @@ int	count_line_map(int fd)
 	return (map_number_line);
 }
 
+// int check_char_map(t_game *game)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+
+// 	while (game->mapinfo->map[i]) 
+// 	{
+// 		while (game->mapinfo->map[i][j])
+// 		{
+// 			if (game->mapinfo->map[i][j] != '0' || game->mapinfo->map[i][j] != '1' || game->mapinfo->map[i][j] != 'N' || game->mapinfo->map[i][j] != 'S' || game->mapinfo->map[i][j] != 'E' || game->mapinfo->map[i][j] != 'W')  )
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+// int check_validity_map(t_game *game)
+// {
+// 	if (check_char_map (game) == FALSE)
+// 		return (ft_putstr_fd("Invalid Char in Map", 2),FALSE);
+// }
 int	check_content_file(t_game *game, char *filename)
 {
 	if (check_empty_file(game, filename) == FALSE)
@@ -426,6 +455,8 @@ int	check_content_file(t_game *game, char *filename)
 		close(game->mapinfo->fd);
 		return (FALSE);
 	}
+	// if (check_validity_map(game) == FALSE)
+	// 	return(ft_putstr_fd("Map Invalid", 2),FALSE);
 	close(game->mapinfo->fd);
 	return (TRUE);
 }

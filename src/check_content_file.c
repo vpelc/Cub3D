@@ -6,21 +6,16 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/24 13:53:05 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/26 19:00:25 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	check_empty_file(int fd)
+static int	check_empty_file(t_game *game, char *filename)
 {
-	char	buffer[1];
-
-	if (read(fd, buffer, 1) <= 0)
-	{
-		close(fd);
+	if ((game->mapinfo->fd = open(filename, O_RDONLY)) == -1)
 		return (FALSE);
-	}
 	return (TRUE);
 }
 
@@ -86,6 +81,42 @@ int	check_doublon_flag(char *flag, t_game *game)
 	return (FALSE);
 }
 
+// int	is_valid_rgb_format(char *line)
+// {
+// 	char	**values;
+// 	int		i;
+// 	int		j;
+// 	int		num;
+
+// 	i = 0;
+// 	j = 0;
+// 	values = ft_split(line, ',');
+// 	if (!values)
+// 		return (-1);
+// 	while (values[i])
+// 		i++;	
+// 	if (i != 3)
+// 		return (free_tab(values), -1);
+// 	i = 0;
+// 	while (i < 3)
+// 	{
+// 		j = 0;
+// 		while (values[i][j])
+// 		{
+// 			ft_printf("%c\n",values[i][j]);
+// 			if (!ft_isdigit(values[i][j]))
+// 				return (free_tab(values), -1);
+// 			j++;
+// 		}
+// 		num = ft_atoi(values[i]);
+// 		if (num < 0 || num > 255)
+// 			return (free_tab(values), -1);
+// 		i++;
+// 	}
+// 	free_tab(values);
+// 	return (TRUE);
+// }
+
 int	is_valid_rgb_format(char *line)
 {
 	char	**values;
@@ -93,28 +124,58 @@ int	is_valid_rgb_format(char *line)
 	int		j;
 	int		num;
 
-	i = 0;
-	j = 0;
+	if (!line || *line == '\0')
+		return (-1);
+
+	// Supprimer le \r à la fin si présent (Windows)
+	if (line[ft_strlen(line) - 1] == '\r')
+		line[ft_strlen(line) - 1] = '\0';
+
 	values = ft_split(line, ',');
 	if (!values)
-		return (FALSE);
+		return (-1);
+
+	// Supprimer les espaces autour des valeurs
+	i = 0;
 	while (values[i])
+	{
+		char *trimmed = ft_strtrim(values[i], " ");
+		free(values[i]);
+		values[i] = trimmed;
 		i++;
+	}
+
 	if (i != 3)
-		return (free_tab(values), FALSE);
+		return (free_tab(values), -1);
+
 	i = 0;
 	while (i < 3)
 	{
-		if (!ft_isdigit(values[i][j]))
-			return (free_tab(values), FALSE);
+		j = 0;
+		while (values[i][j])
+		{
+			if (values[i][j] == '\n' || values[i][j] == '\r') // Ignorer '\n' et '\r'
+   			{
+        		j++;
+        		continue;
+    		}
+			if (!ft_isdigit(values[i][j]))
+			{
+				ft_printf("test");
+				return (free_tab(values), -1);
+			}
+			j++;
+		}
 		num = ft_atoi(values[i]);
 		if (num < 0 || num > 255)
-			return (free_tab(values), FALSE);
+			return (free_tab(values), -1);
 		i++;
 	}
+
 	free_tab(values);
 	return (TRUE);
 }
+
 
 char	*extract_colour(char *line)
 {
@@ -128,7 +189,7 @@ char	*extract_colour(char *line)
 	while (ft_isspace(line[i]))
 		i++;
 	start = i;
-	if (!is_valid_rgb_format(line + start))
+	if (is_valid_rgb_format(line + start) == -1)
 	{
 		ft_putstr_fd("Error: Invalid RGB format.\n", 2);
 		return (NULL);
@@ -188,8 +249,8 @@ int	fill_color_data(char *flag, char *path, t_game *game)
 	if (flag[0] == 'F')
 	{
 		game->texinfo->floor[0] = parse_rgb(path, 0);
-		game->texinfo->floor[2] = parse_rgb(path, 1);
-		game->texinfo->floor[3] = parse_rgb(path, 2);
+		game->texinfo->floor[1] = parse_rgb(path, 1);
+		game->texinfo->floor[2] = parse_rgb(path, 2);
 	}
 	else if (flag[0] == 'C')
 	{
@@ -251,29 +312,31 @@ int	check_line_contain_map(char *line)
 	return (TRUE);
 }
 
-int check_tab_empty(int tab[3])
+int	check_tab_empty(int tab[3])
 {
-	int i;
-
-	i = 0;
-	while(i < 3)
-	{
-		if(tab[i] == 0)
-			return (FALSE);
-		i++;
-	}
+	if (tab[0] == -1 || tab[1] == -1 || tab[2] == -1 )
+		return (FALSE);
 	return (TRUE);
 }
 int	check_texture_is_fill(t_game *game)
 {
 	if (!game || !game->texinfo->NO_path || !game->texinfo->SO_path
-		|| !game->texinfo->WE_path || !game->texinfo->EA_path
-		|| !game->texinfo->floor || !game->texinfo->ceiling)
+		|| !game->texinfo->WE_path || !game->texinfo->EA_path)
 		return (FALSE);
 	if (check_tab_empty(game->texinfo->floor) == FALSE
 		|| check_tab_empty(game->texinfo->ceiling) == FALSE)
 		return (FALSE);
 	return (TRUE);
+}
+
+void	fill_map(char *line, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (game->mapinfo->map[i])
+		i++;
+	game->mapinfo->map[i] = ft_strdup(line);
 }
 
 static int	check_texture(int fd, t_game *game)
@@ -286,12 +349,12 @@ static int	check_texture(int fd, t_game *game)
 	flag = NULL;
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		ft_printf("%s\n",line);
 		if (check_is_empty_line(line) == TRUE)
 		{
 			free(line);
 			continue ;
 		}
+		ft_printf("%s\n", line);
 		if (check_line_contain_flag(line) == TRUE)
 		{
 			flag = identify_flag(line);
@@ -311,10 +374,10 @@ static int	check_texture(int fd, t_game *game)
 			}
 			continue ;
 		}
-		if (check_line_contain_map(line)
-			&& (check_texture_is_fill(game) == TRUE))
+		if ((check_texture_is_fill(game) == TRUE)
+			&& (check_line_contain_map(line) == TRUE))
 		{
-			// fill_map(line);
+			fill_map(line, game);
 			continue ;
 		}
 		else
@@ -329,15 +392,35 @@ static int	check_texture(int fd, t_game *game)
 	return (TRUE);
 }
 
-int	check_content_file(t_game *game)
+int	count_line_map(int fd)
 {
-	if (check_empty_file(game->mapinfo->fd) == FALSE)
+	char	*line;
+	int		map_number_line;
+
+	line = NULL;
+	map_number_line = 0;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		if (check_line_contain_map(line) == TRUE)
+			map_number_line++;
+		free(line);
+		continue ;
+	}
+	close(fd);
+	return (map_number_line);
+}
+
+int	check_content_file(t_game *game, char *filename)
+{
+	if (check_empty_file(game, filename) == FALSE)
 	{
 		ft_putstr_fd("Error: File empty\n", 2);
-		close(game->mapinfo->fd);
 		return (FALSE);
 	}
-	lseek(game->mapinfo->fd, 0, SEEK_SET);
+	game->mapinfo->map_number_line = count_line_map(game->mapinfo->fd);
+	game->mapinfo->fd = open(filename, O_RDONLY);
+	game->mapinfo->map = malloc((sizeof(char *)
+				* game->mapinfo->map_number_line) + 1);
 	if (check_texture(game->mapinfo->fd, game) == FALSE)
 	{
 		close(game->mapinfo->fd);

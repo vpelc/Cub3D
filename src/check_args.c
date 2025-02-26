@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 12:15:19 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/21 12:22:35 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/24 21:11:19 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ static int	check_extension(char *file_name)
 		return (TRUE);
 }
 
-static int	check_filename(char *filename,t_game *game)
+static int	check_filename(char *filename)
 {
-	
+	int	fd;
 
-	game->mapinfo->fd = open(filename, O_RDONLY);
-	if (game->mapinfo->fd == -1)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 		return (FALSE);
+	close(fd);
 	return (TRUE);
 }
 
-int	check_args(int argc, char **argv,t_game *game)
+int	check_args(int argc, char **argv)
 {
 	if (argc != 2)
 	{
@@ -65,7 +66,7 @@ int	check_args(int argc, char **argv,t_game *game)
 		ft_putstr_fd("Error: Invalid file extension, expected '.cub'\n", 2);
 		return (FALSE);
 	}
-	if (check_filename(argv[1],game) == FALSE)
+	if (check_filename(argv[1]) == FALSE)
 	{
 		ft_putstr_fd("Error: File does not exist or cannot be opened\n", 2);
 		return (FALSE);

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/24 10:53:41 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/24 22:31:16 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 /*                                 STRUCT                                     */
 /* ************************************************************************** */
 
-
 typedef struct s_texinfo
 {
 	char			*NO_path;
@@ -53,8 +52,8 @@ typedef struct s_texinfo
 typedef struct s_mapinfo
 {
 	int				fd;
-	int				index_file;
-	int				num_max_line_file;
+	char			**map;
+	int				map_number_line;
 }					t_mapinfo;
 
 typedef struct s_game
@@ -69,10 +68,11 @@ typedef struct s_game
 /*                                 FUNCTION                                   */
 /* ************************************************************************** */
 
-int					check_args(int argc, char **argv, t_game *game);
-int					check_content_file(t_game *game);
+int					check_args(int argc, char **argv);
+int					check_content_file(t_game *game, char *filename);
 void				init_data(t_game *game);
 int					get_max_line_infile(int fd);
 int					ft_isspace(char c);
 void				free_tab(char **tab);
+void				print_game(t_game *game);
 #endif

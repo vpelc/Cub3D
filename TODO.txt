@@ -1,0 +1,6 @@
+a Finir 
+
+j'ai fini par calculer le nombre total de ligne pour le malloc de game.mapinfo.map 
+reste plus qu'a le malloc et le remplir dans la fonction pour se faire je dois refermer le fichier dans 
+puis reouvrir un fd dans check_texture pour apres venir remplir toute les donner et faire le check des texture 
+apres je vais pouvoir passer au fill data et une fois tous bien enregistrer je passerai au check de map 

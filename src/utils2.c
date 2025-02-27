@@ -1,49 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_content_file_utils.c                         :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 00:50:51 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/21 12:31:09 by dbajeux          ###   ########.fr       */
+/*   Created: 2025/02/27 16:40:39 by dbajeux           #+#    #+#             */
+/*   Updated: 2025/02/27 16:41:02 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// int	get_max_line_infile(int fd)
-// {
-// 	char	*line;
-// 	int		i;
-
-// 	i = 0;
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		i++;
-// 		free(line);
-// 	}
-// 	return (i);
-// }
-
-int	ft_isspace(char c)
+int	rgb_to_hex(int r, int g, int b)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (TRUE);
-	else
-		return (FALSE);
-}
-void free_tab(char **tab)
-{
-	int i;
-
-	i= 0;
-	if(!tab)
-		return;
-	while (tab[i])
-	{
-		free (tab[i]);
-		i++;
-	}
-	free(tab);
+	return ((r << 16) | (g << 8) | b);
 }

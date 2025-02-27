@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/24 22:31:16 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/02/27 16:54:17 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,44 @@ typedef struct s_game
 /*                                 FUNCTION                                   */
 /* ************************************************************************** */
 
+// check_args
 int					check_args(int argc, char **argv);
+
+// check content file
 int					check_content_file(t_game *game, char *filename);
+
+// check map
+int					check_double_pos_start(t_game *game);
+int					check_char_map(t_game *game);
+
+// check texture
+int					check_line_contain_map(char *line);
+int					check_texture_is_fill(t_game *game);
+int					check_doublon_flag(char *flag, t_game *game);
+int					check_line_contain_flag(char *line);
+int					check_is_empty_line(char *line);
+
+// extract path
+char				*extract_path(char *line, char *flag);
+
+// fill data
+void				fill_map(char *line, t_game *game);
+int					fill_texture(char *path, char *flag, t_game *game);
+
+// init
 void				init_data(t_game *game);
-int					get_max_line_infile(int fd);
+
+// utils
 int					ft_isspace(char c);
 void				free_tab(char **tab);
+int					count_line_map(int fd);
+int					check_tab_empty(int tab[3]);
+char				*identify_flag(char *line);
+int					rgb_to_hex(int r, int g, int b);
+
+// print !!only test!!
 void				print_game(t_game *game);
+void				print_mapinfo(t_mapinfo *mapinfo);
+void				print_texinfo(t_texinfo *texinfo);
+
 #endif

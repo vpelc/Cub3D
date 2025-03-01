@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/27 18:22:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/01 15:48:59 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ void	load_win_texture(t_game *game)
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
 	game->win_img = tex;
+}
+
+void	load_texture(t_game *game)
+{
+	t_texture	*tex;
+
+	tex = malloc(sizeof(t_texture) * 1);
+	tex->width = 32;
+	tex->height = 32;
+	tex->bpp = 32;
+	tex->size_line = 32;
+	tex->endian = 0;
+	tex->img = mlx_xpm_file_to_image(game->mlx, "images/wall_3d.xpm", &tex->width, &tex->height);
+	if (!tex->img)
+		return ;
+	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
+			&tex->endian);
+	game->img_list = malloc(sizeof(t_image) * 1);
+	game->img_list->texture = tex;
+	game->img_list->name = ft_strdup("NO");
 }
 
 void	clear_image(t_texture *tex)

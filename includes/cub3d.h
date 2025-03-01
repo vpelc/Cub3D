@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/27 18:16:46 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/01 15:47:35 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_game
 	struct s_map		*map;
 	struct s_player		*player;
 	struct s_texture	*win_img;
+	struct s_image		*img_list;
 	void				*p_img;
 	void				*w_img;
 	void				*e_img;
@@ -109,12 +110,12 @@ typedef struct s_texture
 	int					endian;
 }						t_texture;
 
-// typedef struct s_image
-// {
-// 	void			*image;
-// 	int				width;
-// 	int				height;
-// }					t_image;
+typedef struct s_image
+{
+	char				*name;
+	t_texture			*texture;
+	struct s_image		next;
+}						t_image;
 
 typedef struct s_free
 {
@@ -135,6 +136,7 @@ void					draw_ray(t_game *game);
 void					put_pixel_to_image(t_texture *tex, float x, float y,
 							int color);
 void					load_win_texture(t_game *game);
+void					load_texture(t_game *game);
 void					clear_image(t_texture *tex);
 void					move_up(t_game *game);
 void					move_down(t_game *game);
@@ -142,5 +144,7 @@ void					move_left(t_game *game);
 void					move_right(t_game *game);
 void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
+int						get_pixel_color(t_game *game, t_texture *tex, int x,
+							int y);
 
 #endif

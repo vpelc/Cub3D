@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/26 23:19:14 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/27 18:06:53 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	draw_2dray(t_game *game, t_rays *ray, float dray)
 
 void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 {
-	float	j;
+	int		j;
 	float	ca;
 	float	lineH;
 	float	lineO;
@@ -75,33 +75,19 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 	if (lineH > SCR_HEIGHT)
 		lineH = SCR_HEIGHT;
 	lineO = (SCR_HEIGHT / 2) - lineH / 2;
-	j = 0;
-	while (j < lineO)
-	{
+	j = -1;
+	while (++j < lineO)
 		put_pixel_to_image(game->win_img, ray->r, j, 0x002222AA);
-		j += 0.9;
-	}
-	while (j > 0)
-	{
+	while (--j > 0)
 		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, 0x00228822);
-		j -= 0.9;
-	}
-	j = 0;
-	while (j < lineH)
+	j = -1;
+	while (++j < lineH)
 	{
-		// mlx_pixel_put(game->mlx, game->win, ray->r + 545, lineO + j + 30,
-		// 	0x00FF0000);
 		if (dir == 'v')
 			put_pixel_to_image(game->win_img, ray->r, (lineO + j), 0x00FF0000);
 		if (dir == 'h')
 			put_pixel_to_image(game->win_img, ray->r, (lineO + j), 0x00CC0000);
-		j += 0.9;
 	}
-// 	while (j < SCR_HEIGHT)
-// 	{
-// 		put_pixel_to_image(game->win_img, ray->r,  j, 0x00006600);
-// 		j += 0.9;
-// 	}
 }
 
 

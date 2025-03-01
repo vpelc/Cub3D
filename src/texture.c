@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/25 15:21:45 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/27 18:22:29 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ void	clear_image(t_texture *tex)
 			put_pixel_to_image(tex, x, y, color);
 		}
 	}
+}
+int	get_pixel_color(t_game *game, t_texture *tex, int x, int y)
+{
+	int	color;
+	int	img_x;
+	int	img_y;
+	int	pixel_index;
+
+	img_x = x % 64;
+	img_y = y % 64;
+	pixel_index = img_y * tex->size_line + img_x * (tex->bpp / 8);
+	color = *(unsigned int *)tex->addr + pixel_index;
+	
+	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/26 22:43:09 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/27 18:03:54 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	key_loop(t_game *game)
 {
 	static int	frame_count = 0;
 
-	if (++frame_count % 1536 == 0)
+	if (++frame_count % 512 == 0)
 	{
 		if (game->keys->rotl_key)
 			rotate_left(game);

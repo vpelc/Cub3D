@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/26 22:41:13 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/02/27 18:16:46 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_player
 typedef struct s_map
 {
 	char				**tab;
+	int					*width;
+	int					*heigth;
 	t_game				*game;
 }						t_map;
 

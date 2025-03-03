@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/01 15:47:35 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/03 19:10:20 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ typedef struct s_rays
 	int					my;
 	int					mp;
 	int					dof;
+	float				hrx;
+	float				hry;
+	float				vrx;
+	float				vry;
 	float				rx;
 	float				ry;
 	float				ra;
@@ -114,7 +118,7 @@ typedef struct s_image
 {
 	char				*name;
 	t_texture			*texture;
-	struct s_image		next;
+	struct s_image		*next;
 }						t_image;
 
 typedef struct s_free
@@ -144,7 +148,9 @@ void					move_left(t_game *game);
 void					move_right(t_game *game);
 void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
-int						get_pixel_color(t_game *game, t_texture *tex, int x,
+int						get_pixel_color(t_texture *tex, int x,
+							int y);
+int						get_pixel_color_r(t_texture *tex, int x,
 							int y);
 
 #endif

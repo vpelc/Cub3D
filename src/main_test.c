@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:45:22 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/24 21:56:13 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:55:43 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ int	main(int argc, char **argv)
 		|| check_content_file(&game,argv[1]) == FALSE)
 		return (FALSE);
 	ft_printf("Prog Run\n");
-	print_game(&game);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/27 16:48:00 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/04 18:28:33 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,22 @@ static int	check_validity_map(t_game *game)
 		return (ft_putstr_fd("Invalid Char in Map\n", 2), FALSE);
 	if (check_double_pos_start(game) == FALSE)
 		return (FALSE);
+	if (check_map_fully_enclosed(game) == FALSE)
+		return (FALSE);
 	return (TRUE);
+}
+
+void	init_map(t_game *game,int height)
+{
+	int	i;
+
+	i = 0;
+	while (i < height)
+	{
+		
+		game->mapinfo->map[i] = NULL;
+		i++;
+	}
 }
 
 int	check_content_file(t_game *game, char *filename)
@@ -87,15 +102,19 @@ int	check_content_file(t_game *game, char *filename)
 		ft_putstr_fd("Error: File empty\n", 2);
 		return (FALSE);
 	}
-	game->mapinfo->map_number_line = count_line_map(game->mapinfo->fd);
 	game->mapinfo->fd = open(filename, O_RDONLY);
+	game->mapinfo->map_number_line = count_line_map(game->mapinfo->fd);
 	game->mapinfo->map = malloc((sizeof(char *)
-				* game->mapinfo->map_number_line) + 1);
+				* (game->mapinfo->map_number_line + 1)));
+	close (game->mapinfo->fd);
+	game->mapinfo->fd = open(filename,O_RDONLY);
+	init_map(game,game->mapinfo->map_number_line);
 	if (check_texture(game->mapinfo->fd, game) == FALSE)
 	{
 		close(game->mapinfo->fd);
 		return (FALSE);
 	}
+	print_game(game);
 	if (check_validity_map(game) == FALSE)
 		return (ft_putstr_fd("Map Invalid\n", 2), FALSE);
 	close(game->mapinfo->fd);

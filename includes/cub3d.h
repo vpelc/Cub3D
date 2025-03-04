@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/27 16:54:17 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/03 16:47:44 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int					check_content_file(t_game *game, char *filename);
 // check map
 int					check_double_pos_start(t_game *game);
 int					check_char_map(t_game *game);
+int					check_map_fully_enclosed(t_game *game);
 
 // check texture
 int					check_line_contain_map(char *line);
@@ -107,5 +108,6 @@ int					rgb_to_hex(int r, int g, int b);
 void				print_game(t_game *game);
 void				print_mapinfo(t_mapinfo *mapinfo);
 void				print_texinfo(t_texinfo *texinfo);
+void print_map(char **map);
 
 #endif

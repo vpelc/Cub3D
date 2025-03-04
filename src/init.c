@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/01 15:48:00 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 14:35:53 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@ int	fake_init_map(t_map *map)
 	int		i;
 
 	i = -1;
-	tab = malloc(sizeof(char *) * 9);
+	tab = malloc(sizeof(char *) * 10);
 	if (!tab)
 		return (1);
 	while (++i < 8)
-		tab[i] = malloc(sizeof(char) * 9);
+		tab[i] = malloc(sizeof(char) * 10);
 	tab[i] = NULL;
-	tab[0] = "11111111";
-	tab[1] = "10011001";
-	tab[2] = "10011001";
-	tab[3] = "10001001";
-	tab[4] = "10000001";
-	tab[5] = "11001001";
-	tab[6] = "11011001";
-	tab[7] = "11111111";
+	tab[0] = "111111111";
+	tab[1] = "100110001";
+	tab[2] = "100110001";
+	tab[3] = "100010011";
+	tab[4] = "100000011";
+	tab[5] = "110010001";
+	tab[6] = "110110001";
+	tab[7] = "100000011";
+	tab[8] = "111111111";
+	map->heigth = 9;
+	map->width = 9;
 	map->tab = tab;
 	return (0);
 }

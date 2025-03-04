@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:32:22 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/26 22:42:15 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 14:36:31 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	draw_map(t_game *game)
 	int	j;
 
 	i = 0;
-	while (i < 8)
+	while (i < game->map->heigth)
 	{
 		j = 0;
-		while (j < 8)
+		while (j < game->map->width)
 		{
 			display(game, j, i, game->map->tab[i][j]);
 			j++;

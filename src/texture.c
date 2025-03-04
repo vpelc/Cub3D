@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/03 19:20:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 15:36:16 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	load_texture(t_game *game)
 	tex->width = 64;
 	tex->height = 64;
 	tex->bpp = 32;
-	tex->size_line = 32;
+	tex->size_line = 128;
 	tex->endian = 0;
 	tex->img = mlx_xpm_file_to_image(game->mlx, "images/test_wall2.xpm", &tex->width, &tex->height);
 	if (!tex->img)
@@ -72,8 +72,8 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 	int	img_y;
 	int	pixel_index;
 
-	img_x = x % 64;
-	img_y = y % 64;
+	img_x = (x % SQR_SIZE) / (SQR_SIZE / tex->width);
+	img_y = (y % tex->height);
 	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
 	
@@ -87,8 +87,8 @@ int	get_pixel_color_r(t_texture *tex, int x, int y)
 	int	img_y;
 	int	pixel_index;
 
-	img_x =  63 - (x % 64);
-	img_y = y % 64;
+	img_x =  (tex->width - 1) - ((x % SQR_SIZE) / (SQR_SIZE / tex->width));
+	img_y = (y % tex->height);
 	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
 	

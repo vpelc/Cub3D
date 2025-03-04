@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 14:35:53 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 19:14:31 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	fake_init_map(t_map *map)
 	tab[6] = "110110001";
 	tab[7] = "100000011";
 	tab[8] = "111111111";
-	map->heigth = 9;
+	map->height = 9;
 	map->width = 9;
 	map->tab = tab;
 	return (0);
@@ -78,5 +78,7 @@ int	init_game(t_game *game)
 			&size_s);
 	load_win_texture(game);
 	load_texture(game);
+	create_map_img(game);
+	create_mini_map_img(game);
 	return (0);
 }

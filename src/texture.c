@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 15:36:16 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 18:32:40 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	load_win_texture(t_game *game)
 	tex->bpp = 32;
 	tex->size_line = 1028;
 	tex->endian = 0;
-	tex->img = mlx_new_image(game->mlx, 1000, 1000);
+	tex->img = mlx_new_image(game->mlx, tex->width, tex->height);
 	if (!tex->img)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
@@ -33,6 +33,7 @@ void	load_win_texture(t_game *game)
 void	load_texture(t_game *game)
 {
 	t_texture	*tex;
+	t_image		*img;
 
 	tex = malloc(sizeof(t_texture) * 1);
 	tex->width = 64;
@@ -45,9 +46,10 @@ void	load_texture(t_game *game)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
-	game->img_list = malloc(sizeof(t_image) * 1);
-	game->img_list->texture = tex;
-	game->img_list->name = ft_strdup("NO");
+	img = malloc(sizeof(t_image) * 1);
+	img->texture = tex;
+	img->name = ft_strdup("NO");
+	game->img_list = img; 
 }
 
 void	clear_image(t_texture *tex)
@@ -57,12 +59,12 @@ void	clear_image(t_texture *tex)
 	int color;
 
 	color = 0x00000000;
-	for (y = 0; y < tex->height; y++)
+	y = -1;
+	while (++y < tex->height)
 	{
-		for (x = 0; x < tex->width; x++)
-		{
+		x = -1;
+		while (++x < tex->width)
 			put_pixel_to_image(tex, x, y, color);
-		}
 	}
 }
 int	get_pixel_color(t_texture *tex, int x, int y)

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:32:22 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 14:36:31 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 17:31:30 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,36 @@ void	display(t_game *game, int i, int j, char sqr_type)
 			* ((SQR_SIZE))));
 }
 
-void	draw_map(t_game *game)
-{
-	int	i;
-	int	j;
+// void	draw_map(t_game *game)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (i < game->map->heigth)
-	{
-		j = 0;
-		while (j < game->map->width)
-		{
-			display(game, j, i, game->map->tab[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < game->map->heigth)
+// 	{
+// 		j = 0;
+// 		while (j < game->map->width)
+// 		{
+// 			display(game, j, i, game->map->tab[i][j]);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
-void	draw_player(t_game *game)
-{
-	t_player	*player;
-	void		*img;
-	int			size;
+// void	draw_player(t_game *game)
+// {
+// 	t_player	*player;
+// 	void		*img;
+// 	int			size;
 
-	player = game->player;
-	img = game->p_img;
-	size = (P_SIZE) / 2;
-	mlx_put_image_to_window(game->mlx, game->win, img, (player->posx - size),
-		(player->posy - size));
-}
+// 	player = game->player;
+// 	img = game->p_img;
+// 	size = (P_SIZE) / 2;
+// 	mlx_put_image_to_window(game->mlx, game->win, img, (player->posx - size),
+// 		(player->posy - size));
+// }
 
 void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
 {

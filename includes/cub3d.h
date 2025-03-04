@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/04 14:31:28 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 19:06:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_game
 	struct s_map		*map;
 	struct s_player		*player;
 	struct s_texture	*win_img;
+	struct s_texture	*map_img;
+	struct s_texture	*minimap_img;
 	struct s_image		*img_list;
 	void				*p_img;
 	void				*w_img;
@@ -82,7 +84,7 @@ typedef struct s_map
 {
 	char				**tab;
 	int					width;
-	int					heigth;
+	int					height;
 	t_game				*game;
 }						t_map;
 
@@ -148,9 +150,10 @@ void					move_left(t_game *game);
 void					move_right(t_game *game);
 void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
-int						get_pixel_color(t_texture *tex, int x,
-							int y);
-int						get_pixel_color_r(t_texture *tex, int x,
-							int y);
+int						get_pixel_color(t_texture *tex, int x, int y);
+int						get_pixel_color_r(t_texture *tex, int x, int y);
+void					create_map_img(t_game *game);
+void					create_mini_map_img(t_game *game);
+void					draw_mini_map(t_game *game);
 
 #endif

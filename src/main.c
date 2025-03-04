@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/27 18:03:54 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 19:29:11 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	key_loop(t_game *game)
 		if (game->keys->right_key)
 			move_right(game);
 		// mlx_clear_window(game->mlx, game->win);
-		draw_map(game);
-		draw_player(game);
+		// draw_player(game);
 		draw_ray(game);
+		draw_mini_map(game);
 	}
 	return (0);
 }

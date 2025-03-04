@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 15:35:41 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/04 19:32:15 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ float	dist(float px, float py, float rx, float ry)
 
 void	delta_loop_h(t_game *game, t_rays *ray)
 {
-	while (ray->dof < game->map->heigth)
+	while (ray->dof < game->map->height)
 	{
 		ray->mx = (int)(ray->hrx) >> 6;
 		ray->my = (int)(ray->hry) >> 6;
-		if ((ray->mx < game->map->heigth && ray->my < game->map->heigth) && (ray->mx >= 0 && ray->my >= 0)
+		if ((ray->mx < game->map->height && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
 			&& game->map->tab[ray->my][ray->mx] == '1')
-			ray->dof = game->map->heigth;
+			ray->dof = game->map->height;
 		else
 		{
 			ray->hrx += ray->xo;
@@ -65,6 +65,21 @@ void	draw_2dray(t_game *game, t_rays *ray, float dray)
 {
 	float	j;
 
+	// j = 0;
+	// (void)dray;
+	// if (ray->r == 500)
+	// {
+	// 	while (j < 8)
+	// 	{
+	// 		put_pixel_to_image(game->map_img, ((game->player->posx)
+	// 				+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
+	// 					* 5) * j), 0x000000FF);
+	// 		// mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+	// 		// 		+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
+	// 		// 			* 5) * j), 0x000000FF);
+	// 		j += 0.5;
+	// 	}
+	// }
 	j = 0;
 	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
 					* j), 2)) <= dray && j < 200)
@@ -159,7 +174,7 @@ float	ray_hor(t_game *game, t_rays *ray, float distH)
 	{
 		ray->hrx = game->player->posx;
 		ray->hry = game->player->posy;
-		ray->dof = game->map->heigth;
+		ray->dof = game->map->height;
 	}
 	delta_loop_h(game, ray);
 	distH = dist(game->player->posx, game->player->posy, ray->hrx, ray->hry);
@@ -233,6 +248,5 @@ void	draw_ray(t_game *game)
 		draw_3dray(game, &ray, dray, dir);
 		ray.r++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, SQR_SIZE
-		* game->map->width, 48);
+	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, 512, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 19:32:15 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 12:25:05 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 		ca -= PI * 2;
 	dray = dray * cos(ca);
 	lineH = (SCR_HEIGHT << 6) / dray;
-	ty_step = game->img_list->texture->height / lineH;
+	ty_step =  64 / lineH;					//game->img_list->texture->height / lineH;
 	if (lineH > SCR_HEIGHT)
 	{
 		ty_off = (lineH - SCR_HEIGHT) / 2.0;
@@ -129,20 +129,20 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 		if (dir == 'h')
 		{
 			if (ray->ra > (180 * RAD_DEG))
-				color = get_pixel_color(game->img_list->texture, (int)ray->rx,
+				color = get_pixel_color(game->img_no->texture, (int)ray->rx,
 						(int)ty);
 			else
-				color = get_pixel_color_r(game->img_list->texture, (int)ray->rx,
+				color = get_pixel_color_r(game->img_so->texture, (int)ray->rx,
 						(int)ty);
 			color *= 0.7;
 		}
 		if (dir == 'v')
 		{
 			if (ray->ra < (90 * RAD_DEG) || ray->ra > (270 * RAD_DEG))
-				color = get_pixel_color(game->img_list->texture, (int)ray->ry,
+				color = get_pixel_color(game->img_we->texture, (int)ray->ry,
 						(int)ty);
 			else
-				color = get_pixel_color_r(game->img_list->texture, (int)ray->ry,
+				color = get_pixel_color_r(game->img_ea->texture, (int)ray->ry,
 						(int)ty);
 		}
 		put_pixel_to_image(game->win_img, ray->r, (lineO + j), color);
@@ -158,7 +158,7 @@ float	ray_hor(t_game *game, t_rays *ray, float distH)
 	aTan = -1 / tan(ray->ra);
 	if (ray->ra - PI > EPSILON)
 	{
-		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.00002;
+		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.00005;
 		ray->hrx = (game->player->posy - ray->hry) * aTan + game->player->posx;
 		ray->yo = -64;
 		ray->xo = -(ray->yo) * aTan;
@@ -189,7 +189,7 @@ float	ray_ver(t_game *game, t_rays *ray, float distV)
 	nTan = -tan(ray->ra);
 	if (ray->ra - (PI / 2) > EPSILON && ray->ra - ((3 * PI) / 2) < -EPSILON)
 	{
-		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.00002;
+		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.00005;
 		ray->vry = (game->player->posx - ray->vrx) * nTan + game->player->posy;
 		ray->xo = -64;
 		ray->yo = -(ray->xo) * nTan;
@@ -244,9 +244,10 @@ void	draw_ray(t_game *game)
 			dray = distH;
 			dir = 'h';
 		}
-		draw_2dray(game, &ray, dray);
+		// draw_2dray(game, &ray, dray);
 		draw_3dray(game, &ray, dray, dir);
 		ray.r++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, 512, 0);
+	// mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, game->map->width * SQR_SIZE, 0);
 }

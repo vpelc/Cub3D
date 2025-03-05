@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 19:14:31 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 12:29:26 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,25 @@ int	fake_init_map(t_map *map)
 	int		i;
 
 	i = -1;
-	tab = malloc(sizeof(char *) * 10);
+	tab = malloc(sizeof(char *) * 12);
 	if (!tab)
 		return (1);
 	while (++i < 8)
-		tab[i] = malloc(sizeof(char) * 10);
+		tab[i] = malloc(sizeof(char) * 12);
 	tab[i] = NULL;
-	tab[0] = "111111111";
-	tab[1] = "100110001";
-	tab[2] = "100110001";
-	tab[3] = "100010011";
-	tab[4] = "100000011";
-	tab[5] = "110010001";
-	tab[6] = "110110001";
-	tab[7] = "100000011";
-	tab[8] = "111111111";
-	map->height = 9;
-	map->width = 9;
+	tab[0] = "11111111111";
+	tab[1] = "1001  10001";
+	tab[2] = "10011 10001";
+	tab[3] = "10001110011";
+	tab[4] = "10000000011";
+	tab[5] = "11001000101";
+	tab[6] = "11011000001";
+	tab[7] = "10000000011";
+	tab[8] = "10000110011";
+	tab[9] = "10110000011";
+	tab[10] = "11111111111";
+	map->height = 11;
+	map->width = 11;
 	map->tab = tab;
 	return (0);
 }
@@ -70,14 +72,17 @@ int	init_game(t_game *game)
 	keys->up_key = 0;
 	game->keys = keys;
 	fake_init_map(map);
-	game->p_img = mlx_xpm_file_to_image(game->mlx, "images/player.xpm", &size_p,
-			&size_p);
-	game->w_img = mlx_xpm_file_to_image(game->mlx, "images/wall.xpm", &size_s,
-			&size_s);
-	game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty.xpm", &size_s,
-			&size_s);
+	// game->p_img = mlx_xpm_file_to_image(game->mlx, "images/player.xpm", &size_p,
+	// 		&size_p);
+	// game->w_img = mlx_xpm_file_to_image(game->mlx, "images/wall.xpm", &size_s,
+	// 		&size_s);
+	// game->e_img = mlx_xpm_file_to_image(game->mlx, "images/empty.xpm", &size_s,
+	// 		&size_s);
 	load_win_texture(game);
-	load_texture(game);
+	load_texture(game, &game->img_no, "NO", "images/no.xpm");
+	load_texture(game, &game->img_so, "SO", "images/so.xpm");
+	load_texture(game, &game->img_we, "WE", "images/we.xpm");
+	load_texture(game, &game->img_ea, "EA", "images/ea.xpm");
 	create_map_img(game);
 	create_mini_map_img(game);
 	return (0);

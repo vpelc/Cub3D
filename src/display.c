@@ -6,25 +6,25 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:32:22 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 17:31:30 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 12:23:36 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	display(t_game *game, int i, int j, char sqr_type)
-{
-	void	*img;
+// void	display(t_game *game, int i, int j, char sqr_type)
+// {
+// 	void	*img;
 
-	if (sqr_type == '1')
-		img = game->w_img;
-	else if (sqr_type == '0')
-		img = game->e_img;
-	else
-		return ;
-	mlx_put_image_to_window(game->mlx, game->win, img, (i * ((SQR_SIZE))), (j
-			* ((SQR_SIZE))));
-}
+// 	if (sqr_type == '1')
+// 		img = game->w_img;
+// 	else if (sqr_type == '0')
+// 		img = game->e_img;
+// 	else
+// 		return ;
+// 	mlx_put_image_to_window(game->mlx, game->win, img, (i * ((SQR_SIZE))), (j
+// 			* ((SQR_SIZE))));
+// }
 
 // void	draw_map(t_game *game)
 // {
@@ -56,6 +56,9 @@ void	display(t_game *game, int i, int j, char sqr_type)
 // 	mlx_put_image_to_window(game->mlx, game->win, img, (player->posx - size),
 // 		(player->posy - size));
 // }
+
+
+/* fonction qui remplace mlx_put_pixel place la couleur sur le pixel de l'image*/
 
 void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
 {

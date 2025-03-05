@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/04 19:06:18 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 13:39:45 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ typedef struct s_game
 	struct s_texture	*win_img;
 	struct s_texture	*map_img;
 	struct s_texture	*minimap_img;
-	struct s_image		*img_list;
-	void				*p_img;
-	void				*w_img;
-	void				*e_img;
+	struct s_image		*img_no;
+	struct s_image		*img_so;
+	struct s_image		*img_we;
+	struct s_image		*img_ea;
 }						t_game;
 
 typedef struct s_keys
@@ -120,7 +120,6 @@ typedef struct s_image
 {
 	char				*name;
 	t_texture			*texture;
-	struct s_image		*next;
 }						t_image;
 
 typedef struct s_free
@@ -142,7 +141,8 @@ void					draw_ray(t_game *game);
 void					put_pixel_to_image(t_texture *tex, float x, float y,
 							int color);
 void					load_win_texture(t_game *game);
-void					load_texture(t_game *game);
+void					load_texture(t_game *game, t_image **img, char *name,
+							char *path);
 void					clear_image(t_texture *tex);
 void					move_up(t_game *game);
 void					move_down(t_game *game);
@@ -155,5 +155,6 @@ int						get_pixel_color_r(t_texture *tex, int x, int y);
 void					create_map_img(t_game *game);
 void					create_mini_map_img(t_game *game);
 void					draw_mini_map(t_game *game);
+void					mouse_rotate(t_game *game, int move);
 
 #endif

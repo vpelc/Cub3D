@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 18:32:40 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 12:29:39 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	load_win_texture(t_game *game)
 	game->win_img = tex;
 }
 
-void	load_texture(t_game *game)
+void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 {
 	t_texture	*tex;
 	t_image		*img;
@@ -41,16 +41,18 @@ void	load_texture(t_game *game)
 	tex->bpp = 32;
 	tex->size_line = 128;
 	tex->endian = 0;
-	tex->img = mlx_xpm_file_to_image(game->mlx, "images/test_wall2.xpm", &tex->width, &tex->height);
+	tex->img = mlx_xpm_file_to_image(game->mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
 	img = malloc(sizeof(t_image) * 1);
 	img->texture = tex;
-	img->name = ft_strdup("NO");
-	game->img_list = img; 
+	img->name = ft_strdup(name);
+	*img_g = img; 
 }
+
+
 
 void	clear_image(t_texture *tex)
 {

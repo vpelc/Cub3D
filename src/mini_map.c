@@ -6,12 +6,13 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 19:20:24 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:28:59 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* cree l'image qui prendra la map dans sa totalite  */
 void	create_map_img(t_game *game)
 {
 	t_texture	*tex;
@@ -29,6 +30,8 @@ void	create_map_img(t_game *game)
 			&tex->endian);
 	game->map_img = tex;
 }
+
+/* cree l'image qui prendra la partie qui sera affiche de la map */
 void	create_mini_map_img(t_game *game)
 {
 	t_texture	*tex;
@@ -47,12 +50,14 @@ void	create_mini_map_img(t_game *game)
 	game->minimap_img = tex;
 }
 
+/* dessine le joueur sur la minimap */
 void	draw_player(t_game *game)
 {
 	t_player	*player;
 	int			size;
 	int			i;
 	int			j;
+	float		k;
 
 	player = game->player;
 	size = (P_SIZE) / 2;
@@ -68,8 +73,17 @@ void	draw_player(t_game *game)
 		}
 		i++;
 	}
+	k = 0;
+	while (k < 6)
+	{
+		put_pixel_to_image(game->map_img, ((game->player->posx)
+				+ (game->player->posdx) * k), ((game->player->posy)
+				+ (game->player->posdy) * k), 0x000000FF);
+		k += 0.2;
+	}
 }
 
+/* dessine les differentes cases (murs ou sol) pour la map */
 void	draw_square(t_game *game, int x, int y, char sqr_type)
 {
 	t_player	*player;
@@ -79,6 +93,7 @@ void	draw_square(t_game *game, int x, int y, char sqr_type)
 
 	player = game->player;
 	i = 0;
+	color = 0x000000;
 	if (sqr_type == '0')
 		color = 0xFFFFFF;
 	if (sqr_type == '1')
@@ -100,6 +115,7 @@ void	draw_square(t_game *game, int x, int y, char sqr_type)
 	}
 }
 
+/* dessine la map dans sa totalite (joueur + cases) */
 void	draw_map(t_game *game)
 {
 	int	i;
@@ -120,7 +136,7 @@ void	draw_map(t_game *game)
 	draw_player(game);
 	// mlx_put_image_to_window(game->mlx, game->win, game->map_img->img, 0, 0);
 }
-
+/*  */
 int	get_pixel_color_mini(t_texture *tex, int x, int y)
 {
 	int	color;
@@ -131,6 +147,7 @@ int	get_pixel_color_mini(t_texture *tex, int x, int y)
 	return (color);
 }
 
+/* decoupe la partie de la map qui sera affichee et affiche */
 void	draw_mini_map(t_game *game)
 {
 	float	img_x;

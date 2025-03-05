@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/04 19:29:11 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/05 13:40:07 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,27 @@ int	key_loop(t_game *game)
 		// mlx_clear_window(game->mlx, game->win);
 		// draw_player(game);
 		draw_ray(game);
+		// draw_map(game);
 		draw_mini_map(game);
 	}
 	return (0);
+}
+
+int mouse_move(int x, int y, t_game *game)
+{
+    int delta_x;
+	int center_x = 512 + (game->win_img->width / 2);
+    int center_y = game->win_img->height / 2;
+
+    // printf("Mouse: %d, %d\n", x, y);
+
+    if (x != center_x || y != center_y) // Reset position if mouse moves away
+        mlx_mouse_move(game->mlx, game->win, center_x, center_y);
+    (void)y;
+	delta_x = x - center_x;
+	// printf("Mouse movement: %d\n", delta_x);
+	mouse_rotate(game, delta_x);
+    return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -81,11 +99,13 @@ int	main(int argc, char *argv[])
 	(void)argc;
 	(void)argv;
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 1512, 1000, "Cub3D");
+	game.win = mlx_new_window(game.mlx, 1750, 1000, "Cub3D");
 	init_game(&game);
+	mlx_mouse_hide(game.mlx, game.win);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
+	mlx_hook(game.win, 6, (1L << 6), mouse_move, &game);
 	mlx_loop_hook(game.mlx, key_loop, &game);
 	mlx_loop(game.mlx);
 }

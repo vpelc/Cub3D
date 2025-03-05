@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/04 18:28:33 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/05 16:42:15 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,24 @@
 
 static int	check_empty_file(t_game *game, char *filename)
 {
-	if ((game->mapinfo->fd = open(filename, O_RDONLY)) == -1)
+	char *line;
+	
+	game->mapinfo->fd = open(filename,O_RDONLY);
+	line = get_next_line(game->mapinfo->fd);
+	close(game->mapinfo->fd);
+	if (line == NULL)
 		return (FALSE);
 	return (TRUE);
 }
 
-static int	check_texture(int fd, t_game *game)
+static int	check_texture(t_game *game,char *filename)
 {
 	char	*line;
 	char	*path;
 	char	*flag;
+	int fd;
 
+	fd = open(filename,O_RDONLY);
 	path = NULL;
 	flag = NULL;
 	while ((line = get_next_line(fd)) != NULL)
@@ -102,21 +109,17 @@ int	check_content_file(t_game *game, char *filename)
 		ft_putstr_fd("Error: File empty\n", 2);
 		return (FALSE);
 	}
-	game->mapinfo->fd = open(filename, O_RDONLY);
+	game->mapinfo->fd = open(filename,O_RDONLY);
 	game->mapinfo->map_number_line = count_line_map(game->mapinfo->fd);
+	close(game->mapinfo->fd);
 	game->mapinfo->map = malloc((sizeof(char *)
 				* (game->mapinfo->map_number_line + 1)));
-	close (game->mapinfo->fd);
-	game->mapinfo->fd = open(filename,O_RDONLY);
+	if (!game->mapinfo->map)
+		return (ft_putstr_fd("Error :malloc map",2),FALSE);
 	init_map(game,game->mapinfo->map_number_line);
-	if (check_texture(game->mapinfo->fd, game) == FALSE)
-	{
-		close(game->mapinfo->fd);
+	if (check_texture(game,filename) == FALSE)
 		return (FALSE);
-	}
-	print_game(game);
 	if (check_validity_map(game) == FALSE)
 		return (ft_putstr_fd("Map Invalid\n", 2), FALSE);
-	close(game->mapinfo->fd);
 	return (TRUE);
 }

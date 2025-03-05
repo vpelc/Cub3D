@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 23:24:36 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/26 18:22:56 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/05 18:16:37 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	init_texinfo(t_game *game)
 {
 	game->texinfo = malloc(sizeof(t_texinfo));
 	if (!game->texinfo)
-		return (ft_putstr_fd("Error : Mallox init_texinfo\n",2));
+		return (ft_putstr_fd("Error : Mallox init_texinfo\n", 2));
 	game->texinfo->NO_path = NULL;
 	game->texinfo->SO_path = NULL;
 	game->texinfo->WE_path = NULL;
@@ -35,7 +35,7 @@ static void	init_mapinfo(t_game *game)
 {
 	game->mapinfo = malloc(sizeof(t_mapinfo));
 	if (!game->mapinfo)
-		return (ft_putstr_fd("Error : Malloc init_mapinfo\n",2));
+		return (ft_putstr_fd("Error : Malloc init_mapinfo\n", 2));
 	game->mapinfo->fd = 0;
 	game->mapinfo->map = NULL;
 }

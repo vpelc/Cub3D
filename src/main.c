@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 13:40:07 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:53:52 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int mouse_move(int x, int y, t_game *game)
 int	main(int argc, char *argv[])
 {
 	t_game	game;
+
 
 	(void)argc;
 	(void)argv;

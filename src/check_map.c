@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 15:28:36 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:47:55 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	check_map_fully_enclosed(t_game *game)
 		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
+	game->player->posy = start_y << 6;
+	game->player->posy = start_x << 6;
 	fill_flood(map_copy, start_y, start_x, &flag, game);
 	if (flag == 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 16:16:25 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:54:43 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_player
 	float				posdxp;
 	float				posdyp;
 	float				posa;
-	t_game				*game;
 }						t_player;
 
 typedef struct s_map
@@ -106,7 +105,6 @@ typedef struct s_map
 	char				**tab;
 	int					width;
 	int					height;
-	t_game				*game;
 }						t_map;
 
 typedef struct s_rays

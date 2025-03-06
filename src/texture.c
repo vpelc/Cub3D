@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 12:29:39 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:37:25 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	load_win_texture(t_game *game)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
+	tex->game = game;
 	game->win_img = tex;
 }
 
@@ -46,6 +47,7 @@ void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
+	tex->game = game;
 	img = malloc(sizeof(t_image) * 1);
 	img->texture = tex;
 	img->name = ft_strdup(name);

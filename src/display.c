@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:32:22 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 12:23:36 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:38:39 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,9 @@ void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
 	pixel_x = (int)(x + 0.5);
 	pixel_y = (int)(y + 0.5);
 	// Check if within screen bounds to prevent memory errors
-	// if (pixel_x >= 0 && pixel_x < 800 && pixel_y >= 0 && pixel_y < 600)
-	// {
+	if (pixel_x >= 0 && pixel_x < tex->width && pixel_y >= 0 && pixel_y < tex->height)
+	{
 	pixel = tex->addr + (pixel_y * tex->size_line) + (pixel_x * (tex->bpp / 8));
 	*(int *)pixel = color;
-	// }
+	}
 }
-
-// void	draw_floor(t_game *game)
-// {
-
-// }

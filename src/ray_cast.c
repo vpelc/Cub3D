@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 12:25:05 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/06 16:33:26 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 	lineO = (SCR_HEIGHT >> 1) - lineH / 2;
 	j = -1;
 	while (++j < lineO)
-		put_pixel_to_image(game->win_img, ray->r, j, 0x003333AA);
+		put_pixel_to_image(game->win_img, ray->r, j, game->texinfo->hex_ceiling);
 	while (--j > 0)
-		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, 0x00338833);
+		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, game->texinfo->hex_ceiling);
 	ty = ty_off * ty_step;
 	j = -1;
 	while (++j < lineH)

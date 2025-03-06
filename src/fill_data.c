@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 15:22:15 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:36:10 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	fill_map(char *line, t_game *game)
 
 	i = 0;
 	str_trim = NULL;
-	while (game->mapinfo->map[i])
+	while (game->map->tab[i])
 		i++;
 	str_trim = ft_strtrim(line, "\n");
-	game->mapinfo->map[i] = ft_strdup(str_trim);
-	game->mapinfo->map[i + 1] = NULL;
+	game->map->tab[i] = ft_strdup(str_trim);
+	game->map->tab[i + 1] = NULL;
 }

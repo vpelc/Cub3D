@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 15:28:36 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:34:27 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int	check_char_map(t_game *game)
 	int	j;
 
 	i = 0;
-	while (game->mapinfo->map[i])
+	while (game->map->tab[i])
 	{
 		j = 0;
-		while (game->mapinfo->map[i][j])
+		while (game->map->tab[i][j])
 		{
-			if (game->mapinfo->map[i][j] != '0'
-				&& game->mapinfo->map[i][j] != '1'
-				&& game->mapinfo->map[i][j] != 'N'
-				&& game->mapinfo->map[i][j] != 'S'
-				&& game->mapinfo->map[i][j] != 'E'
-				&& game->mapinfo->map[i][j] != 'W'
-				&& !ft_isspace(game->mapinfo->map[i][j]))
+			if (game->map->tab[i][j] != '0'
+				&& game->map->tab[i][j] != '1'
+				&& game->map->tab[i][j] != 'N'
+				&& game->map->tab[i][j] != 'S'
+				&& game->map->tab[i][j] != 'E'
+				&& game->map->tab[i][j] != 'W'
+				&& !ft_isspace(game->map->tab[i][j]))
 				return (FALSE);
 			j++;
 		}
@@ -46,15 +46,15 @@ int	check_double_pos_start(t_game *game)
 
 	i = 0;
 	flag = -1;
-	while (game->mapinfo->map[i])
+	while (game->map->tab[i])
 	{
 		j = 0;
-		while (game->mapinfo->map[i][j])
+		while (game->map->tab[i][j])
 		{
-			if (game->mapinfo->map[i][j] == 'N'
-				|| game->mapinfo->map[i][j] == 'S'
-				|| game->mapinfo->map[i][j] == 'E'
-				|| game->mapinfo->map[i][j] == 'W')
+			if (game->map->tab[i][j] == 'N'
+				|| game->map->tab[i][j] == 'S'
+				|| game->map->tab[i][j] == 'E'
+				|| game->map->tab[i][j] == 'W')
 			{
 				if (flag == 1)
 					return (ft_putstr_fd("Error : Found mutilple start pos\n",
@@ -72,17 +72,17 @@ int	check_double_pos_start(t_game *game)
 
 void	fill_flood(char **map, int y, int x, int *flag, t_game *game)
 {
-	if (y < 0 || y >= game->mapinfo->map_number_line || x < 0
+	if (y < 0 || y >= game->map->height || x < 0
 		|| x >= (int)ft_strlen(map[y]))
 		return ;
 	if (*flag == 1 && map[y][x] == ' ')
 		*flag = 0;
 	if (*flag == 1 && map[y][x] == '0' && (y == 0
-			|| y == game->mapinfo->map_number_line - 1 || x == 0
+			|| y == game->map->height - 1 || x == 0
 			|| x == (int)ft_strlen(map[y]) - 1))
 		*flag = 0;
 	map[y][x] = 'F';
-	if (y + 1 < game->mapinfo->map_number_line && (int)ft_strlen(map[y + 1]) > x
+	if (y + 1 < game->map->height && (int)ft_strlen(map[y + 1]) > x
 		&& map[y + 1][x] != 'F' && map[y + 1][x] != '1')
 		fill_flood(map, y + 1, x, flag, game);
 	if (y > 0 && (int)ft_strlen(map[y - 1]) > x && map[y - 1][x] != 'F' && map[y
@@ -102,7 +102,7 @@ int	check_map_fully_enclosed(t_game *game)
 	int		start_y;
 	int		start_x;
 
-	map_copy = copy_map(game->mapinfo->map, game->mapinfo->map_number_line);
+	map_copy = copy_map(game->map->tab, game->map->height);
 	flag = 1;
 	if (!map_copy)
 		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:04 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/04 17:03:25 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:21:18 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	free_tab(char **tab)
 
 int	count_line_map(int fd)
 {
-	char *line;
-	int map_number_line;
+	char	*line;
+	int		map_number_line;
 
 	line = NULL;
 	map_number_line = 0;

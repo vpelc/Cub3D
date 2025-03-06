@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 23:24:36 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/05 18:16:37 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:17:52 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	init_mapinfo(t_game *game)
 	game->mapinfo->fd = 0;
 	game->mapinfo->map = NULL;
 }
+
 void	init_data(t_game *game)
 {
 	game->mlx = NULL;

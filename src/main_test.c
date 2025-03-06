@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:45:22 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/04 15:55:43 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:17:21 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int	main(int argc, char **argv)
 {
-	t_game game;
+	t_game	game;
 
 	init_data(&game);
-	if (check_args(argc, argv) == FALSE
-		|| check_content_file(&game,argv[1]) == FALSE)
+	if (check_args(argc, argv) == FALSE || check_content_file(&game,
+			argv[1]) == FALSE)
 		return (FALSE);
 	ft_printf("Prog Run\n");
 	return (TRUE);

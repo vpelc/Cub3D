@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/27 16:46:20 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:19:48 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static char	*extract_texture(char *line)
 
 char	*extract_path(char *line, char *flag)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ft_isspace(line[i]) == TRUE)

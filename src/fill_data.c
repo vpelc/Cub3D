@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 00:05:23 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:22:15 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int	fill_texture(char *path, char *flag, t_game *game)
 
 void	fill_map(char *line, t_game *game)
 {
-	int i;
-	char *str_trim;
+	int		i;
+	char	*str_trim;
+
 	i = 0;
-	
 	str_trim = NULL;
 	while (game->mapinfo->map[i])
 		i++;

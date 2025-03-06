@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/05 16:12:42 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:26:34 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,15 @@ int					count_line_map(int fd);
 int					check_tab_empty(int tab[3]);
 char				*identify_flag(char *line);
 int					rgb_to_hex(int r, int g, int b);
+int					get_pos_y_player(char **map);
+int					get_pos_x_player(char **map);
+char				**copy_map(char **map, int height);
+int					get_map_width(char **map);
 
 // print !!only test!!
 void				print_game(t_game *game);
 void				print_mapinfo(t_mapinfo *mapinfo);
 void				print_texinfo(t_texinfo *texinfo);
-void print_map(char **map);
+void				print_map(char **map);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/05 18:16:45 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/06 00:19:42 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,26 +178,23 @@ int	get_map_width(char **map)
 //     return TRUE; // Tout est valide, tout est correctement enfermé et aucune case vide n'a été trouvée
 // }
 
-int	fill_flood(char **map, int y, int x)
+void fill_flood(char **map, int y, int x,int *flag,t_game *game)
 {
-	int max_y = 0;
-	while (map[max_y])
-		max_y++;
-	if (y < 0 || y >= max_y)
-		return (-1);
-	int max_x = ft_strlen(map[y]);
-	if (x < 0 || x >= max_x)
-		return (-1);
-	if (map[y][x] == '1' || map[y][x] == 'F')
-		return (0);
-	if (map[y][x] == ' ')
-		return (-1);
+	if (y < 0 || y >= game->mapinfo->map_number_line || x < 0 || x >= (int)ft_strlen(map[y]))
+		return;
+	if (*flag == 1 && map[y][x] == ' ')
+		*flag = 0;
+	if (*flag == 1 && map[y][x] == '0' && (y == 0 || y == game->mapinfo->map_number_line - 1 || x == 0 || x == (int)ft_strlen(map[y]) - 1))
+		*flag = 0;
 	map[y][x] = 'F';
-	fill_flood(map, y + 1, x);
-	fill_flood(map, y - 1, x);
-	fill_flood(map, y, x + 1);
-	fill_flood(map, y, x - 1);
-	return (1);
+	if (y  + 1< game->mapinfo->map_number_line && (int)ft_strlen(map[y + 1]) > x && map[y+1][x] != 'F' && map[y+1][x] != '1')
+		fill_flood(map, y + 1, x,flag,game);
+	if (y > 0 && (int)ft_strlen(map[y - 1]) > x && map[y - 1][x] != 'F' && map[y - 1][x] != '1')
+		fill_flood(map, y - 1, x,flag,game);
+	if (x + 1 < (int)ft_strlen(map[y]) && map[y][x + 1] != 'F' && map[y][x + 1] != '1')
+		fill_flood(map, y, x + 1,flag,game);
+	if (x > 0 && map[y][x - 1] != 'F' && map[y][x - 1] != '1')
+		fill_flood(map, y, x - 1,flag,game);
 }
 
 char	**copy_map(char **map, int height)
@@ -282,18 +279,17 @@ int	get_pos_y_player(char **map)
 int	check_map_fully_enclosed(t_game *game)
 {
 	char **map_copy;
-	int max_y;
+	int flag;
 	int start_y;
 	int start_x;
 	map_copy = copy_map(game->mapinfo->map, game->mapinfo->map_number_line);
-	max_y = game->mapinfo->map_number_line;
+	flag = 1;
 	if (!map_copy)
 		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
-	fill_flood(map_copy, start_x,start_y);
-	print_map(map_copy);
-	if (fill_flood(map_copy,start_y,start_x) == -1)
+	fill_flood(map_copy, start_y,start_x,&flag,game);
+	if (flag == 0)
 	{
 		free_tab(map_copy);
 		return (ft_putstr_fd("Error map not fully enclosed\n", 2), FALSE);

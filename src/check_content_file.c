@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_content_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 15:19:09 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/07 14:24:45 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	check_empty_file(t_game *game, char *filename)
 {
 	char	*line;
 
-	game->mapinfo->fd = open(filename, O_RDONLY);
-	line = get_next_line(game->mapinfo->fd);
-	close(game->mapinfo->fd);
+	game->map->fd = open(filename, O_RDONLY);
+	line = get_next_line(game->map->fd);
+	close(game->map->fd);
 	if (line == NULL)
 		return (FALSE);
 	return (TRUE);
@@ -96,7 +96,7 @@ void	init_map(t_game *game, int height)
 	i = 0;
 	while (i < height)
 	{
-		game->mapinfo->map[i] = NULL;
+		game->map->tab[i] = NULL;
 		i++;
 	}
 }
@@ -108,14 +108,14 @@ int	check_content_file(t_game *game, char *filename)
 		ft_putstr_fd("Error: File empty\n", 2);
 		return (FALSE);
 	}
-	game->mapinfo->fd = open(filename, O_RDONLY);
-	game->mapinfo->map_number_line = count_line_map(game->mapinfo->fd);
-	close(game->mapinfo->fd);
-	game->mapinfo->map = malloc((sizeof(char *)
+	game->map->fd = open(filename, O_RDONLY);
+	game->mapinfo->map_number_line = count_line_map(game->map->fd);
+	close(game->map->fd);
+	game->map->tab = malloc((sizeof(char *)
 				* (game->mapinfo->map_number_line + 1)));
-	if (!game->mapinfo->map)
+	if (!game->map->tab)
 		return (ft_putstr_fd("Error :malloc map", 2), FALSE);
-	init_map(game, game->mapinfo->map_number_line);
+	init_map(game, game->map->map_number_line);
 	if (check_texture(game, filename) == FALSE)
 		return (FALSE);
 	if (check_validity_map(game) == FALSE)

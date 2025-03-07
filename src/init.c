@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/06 17:01:31 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 14:22:38 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ static void	init_texinfo(t_game *game)
 	game->texinfo->hex_ceiling = 0x0;
 }
 
-
+void	get_player_dir(t_game *game)
+{
+	if (game->texinfo->dir == 'N')
+		game->player->posa = 270 * RAD_DEG;
+	if (game->texinfo->dir == 'S')
+		game->player->posa = 90 * RAD_DEG;
+	if (game->texinfo->dir == 'E')
+		game->player->posa = 0 * RAD_DEG;
+	if (game->texinfo->dir == 'W')
+		game->player->posa = 180 * RAD_DEG;
+}
 
 void	init_player(t_game *game)
 {
@@ -39,6 +49,7 @@ void	init_player(t_game *game)
 
 	player = ft_malloc(game, sizeof(t_player), 1);
 	game->player = player;
+	get_player_dir(game);
 	// player->posa = 2 * PI;
 	player->posdx = cos(player->posa) * 5;
 	player->posdy = sin(player->posa) * 5;

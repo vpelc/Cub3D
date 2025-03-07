@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 16:54:43 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 13:52:01 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@
 
 typedef struct s_texinfo
 {
+	unsigned long		hex_floor;
+	unsigned long		hex_ceiling;
+	int					floor[3];
+	int					ceiling[3];
 	char				*NO_path;
 	char				*SO_path;
 	char				*WE_path;
 	char				*EA_path;
-	int					floor[3];
-	int					ceiling[3];
-	unsigned long		hex_floor;
-	unsigned long		hex_ceiling;
+	char				dir;
 }						t_texinfo;
 
 typedef struct s_game

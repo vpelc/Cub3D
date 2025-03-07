@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 14:28:45 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 17:06:23 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int	check_map_fully_enclosed(t_game *game)
 		free_tab(map_copy);
 		return (ft_putstr_fd("Error map not fully enclosed\n", 2), FALSE);
 	}
+	game->texinfo->dir = game->map->tab[start_y][start_x];
+	game->map->tab[start_y][start_x] = '0';
 	free_tab(map_copy);
 	return (TRUE);
 }

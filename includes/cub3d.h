@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 14:28:16 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 15:52:17 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,5 +218,7 @@ void					create_map_img(t_game *game);
 void					create_mini_map_img(t_game *game);
 void					draw_mini_map(t_game *game);
 void					mouse_rotate(t_game *game, int move);
+void					init_player(t_game *game);
+void					init_texture(t_game *game);
 
 #endif

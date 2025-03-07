@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/07 14:30:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 17:05:20 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,10 @@ void	get_player_dir(t_game *game)
 
 void	init_player(t_game *game)
 {
-	t_player	*player;
-
-	player = ft_malloc(game, sizeof(t_player), 1);
-	game->player = player;
-	get_player_dir(game);
-	// player->posa = 2 * PI;
-	player->posdx = cos(player->posa) * 5;
-	player->posdy = sin(player->posa) * 5;
+	// get_player_dir(game);
+	game->player->posa = 0;
+	game->player->posdx = cos(game->player->posa) * 5;
+	game->player->posdy = sin(game->player->posa) * 5;
 	game->player->posdxp = cos(game->player->posa + (90 * RAD_DEG)) * 5;
 	game->player->posdyp = sin(game->player->posa + (90 * RAD_DEG)) * 5;
 }
@@ -60,10 +56,10 @@ void	init_player(t_game *game)
 void	init_texture(t_game *game)
 {
 	load_win_texture(game);
-	load_texture(game, &game->img_no, "NO", "images/no.xpm");
-	load_texture(game, &game->img_so, "SO", "images/so.xpm");
-	load_texture(game, &game->img_we, "WE", "images/we.xpm");
-	load_texture(game, &game->img_ea, "EA", "images/ea.xpm");
+	load_texture(game, &game->img_no, "NO", game->texinfo->NO_path);
+	load_texture(game, &game->img_so, "SO", game->texinfo->SO_path);
+	load_texture(game, &game->img_we, "WE", game->texinfo->WE_path);
+	load_texture(game, &game->img_ea, "EA", game->texinfo->EA_path);
 	create_map_img(game);
 	create_mini_map_img(game);
 }
@@ -83,7 +79,10 @@ void	init_keys(t_game *game)
 int	init_game(t_game *game)
 {
 	t_map		*map;
-	
+	t_player	*player;
+
+	player = ft_malloc(game, sizeof(t_player), 1);
+	game->player = player;
 	map = ft_malloc(game, sizeof(t_map), 1);
 	game->map = map;
 	init_texinfo(game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:34:32 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/03 16:47:53 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/07 15:49:31 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ void	print_texinfo(t_texinfo *texinfo)
 	printf("Hex Ceiling: %lx\n", texinfo->hex_ceiling);
 }
 
-void	print_mapinfo(t_mapinfo *mapinfo)
+void	print_mapinfo(t_game *game)
 {
 	int	i;
 
 	i = 0;
-	if (!mapinfo)
+	if (!game->map)
 	{
 		printf("Mapinfo is NULL\n");
 		return ;
 	}
 	printf("--- t_mapinfo ---\n");
-	printf("File Descriptor: %d\n", mapinfo->fd);
-	printf("Map Number Line : %d\n", mapinfo->map_number_line);
+	printf("File Descriptor: %d\n", game->map->fd);
+	printf("Map Number Line : %d\n", game->map->height);
 	printf("MAP\n");
-	while (mapinfo->map[i])
+	while (game->map->tab[i])
 	{
-		printf("%s\n", mapinfo->map[i]);
+		printf("%s\n", game->map->tab[i]);
 		i++;
 	}
 }
@@ -79,7 +79,7 @@ void	print_game(t_game *game)
 	printf("Window Pointer: %p\n", game->win);
 
 	printf("\n");
-	print_mapinfo(game->mapinfo);
+	print_mapinfo(game);
 	printf("\n");
 	print_texinfo(game->texinfo);
 }

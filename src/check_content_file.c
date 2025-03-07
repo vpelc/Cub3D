@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 14:29:54 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/07 15:48:03 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int	check_content_file(t_game *game, char *filename)
 		return (FALSE);
 	}
 	game->map->fd = open(filename, O_RDONLY);
-	game->mapinfo->map_number_line = count_line_map(game->map->fd);
+	game->map->height = count_line_map(game->map->fd);
 	close(game->map->fd);
 	game->map->tab = malloc((sizeof(char *)
-				* (game->mapinfo->map_number_line + 1)));
+				* (game->map->height + 1)));
 	if (!game->map->tab)
 		return (ft_putstr_fd("Error :malloc map", 2), FALSE);
-	init_map(game, game->map->map_number_line);
+	init_map(game, game->map->height);
 	if (check_texture(game, filename) == FALSE)
 		return (FALSE);
 	if (check_validity_map(game) == FALSE)

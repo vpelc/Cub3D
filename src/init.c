@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/07 17:05:20 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 15:40:51 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_player_dir(t_game *game)
 
 void	init_player(t_game *game)
 {
-	// get_player_dir(game);
+	get_player_dir(game);
 	game->player->posa = 0;
 	game->player->posdx = cos(game->player->posa) * 5;
 	game->player->posdy = sin(game->player->posa) * 5;
@@ -56,6 +56,7 @@ void	init_player(t_game *game)
 void	init_texture(t_game *game)
 {
 	load_win_texture(game);
+	convert_map(game);
 	load_texture(game, &game->img_no, "NO", game->texinfo->NO_path);
 	load_texture(game, &game->img_so, "SO", game->texinfo->SO_path);
 	load_texture(game, &game->img_we, "WE", game->texinfo->WE_path);
@@ -85,6 +86,7 @@ int	init_game(t_game *game)
 	game->player = player;
 	map = ft_malloc(game, sizeof(t_map), 1);
 	game->map = map;
+	game->map->width = 0;
 	init_texinfo(game);
 	init_keys(game);
 	return (0);

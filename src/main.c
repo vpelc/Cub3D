@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/07 16:00:33 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:29:42 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	key_loop(t_game *game)
 {
 	static int	frame_count = 0;
 
-	if (++frame_count % 512 == 0)
+	if (++frame_count % 24 == 0)
 	{
 		if (game->keys->rotl_key)
 			rotate_left(game);
@@ -107,6 +107,7 @@ int	main(int argc, char *argv[])
 		return (FALSE);
 	init_player(&game);
 	init_texture(&game);
+	// print_map(game.map->cv_tab);
 	mlx_mouse_hide(game.mlx, game.win);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);

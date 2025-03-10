@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:34:32 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 15:49:31 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 15:58:05 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ void	print_map(char **map)
 	printf("MAP\n");
 	while (map[i])
 	{
-		printf("%s\n", map[i]);
+		printf("<%s>\n", map[i]);
 		i++;
 	}
+	ft_printf("test");
 }
 
 void	print_game(t_game *game)

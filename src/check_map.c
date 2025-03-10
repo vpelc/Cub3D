@@ -6,11 +6,34 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 17:06:23 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:20:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int	convert_map(t_game *game)
+{
+	char	**cv_map;
+	int		i;
+	
+	cv_map = malloc(sizeof(char *) * (game->map->height + 1));
+	if (!cv_map)
+		return (FALSE);
+	i = 0;
+	while (i < game->map->height)
+	{
+		cv_map[i] = malloc(sizeof(char) * (game->map->width + 1));
+		if (!cv_map[i])
+			return (FALSE);
+		ft_memset(cv_map[i], ' ', game->map->width);
+		cv_map[i][game->map->width] = '\0';
+		ft_strcpy(cv_map[i], game->map->tab[i]);
+		i++;
+	}
+	game->map->cv_tab = cv_map;
+	return (TRUE);
+}
 
 int	check_char_map(t_game *game)
 {
@@ -33,6 +56,8 @@ int	check_char_map(t_game *game)
 				return (FALSE);
 			j++;
 		}
+		if (game->map->width < j)
+			game->map->width = j;
 		i++;
 	}
 	return (TRUE);
@@ -108,8 +133,8 @@ int	check_map_fully_enclosed(t_game *game)
 		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
-	game->player->posy = start_y << 6;
-	game->player->posy = start_x << 6;
+	game->player->posy = start_y * 64;
+	game->player->posx = start_x * 64;
 	fill_flood(map_copy, start_y, start_x, &flag, game);
 	if (flag == 0)
 	{

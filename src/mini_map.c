@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 11:28:59 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 15:29:32 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	draw_map(t_game *game)
 		j = 0;
 		while (j < game->map->width)
 		{
-			draw_square(game, j, i, game->map->tab[i][j]);
+			draw_square(game, j, i, game->map->cv_tab[i][j]);
 			j++;
 		}
 		i++;

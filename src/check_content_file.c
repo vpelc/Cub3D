@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/07 15:48:03 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:24:14 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ int	check_content_file(t_game *game, char *filename)
 		return (FALSE);
 	if (check_validity_map(game) == FALSE)
 		return (ft_putstr_fd("Map Invalid\n", 2), FALSE);
+	close(game->map->fd);
 	return (TRUE);
 }

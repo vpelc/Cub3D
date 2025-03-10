@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:33:04 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/05 13:41:17 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:27:43 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	move_up(t_game *game)
 	int yo;
 
 	check_offset(game, &xo, &yo, 'v');
-	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
-		game->player->posx += game->player->posdx;
-	if (game->map->tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
-		game->player->posy += game->player->posdy;
+	if (game->map->cv_tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
+		game->player->posx += game->player->posdx * 2;
+	if (game->map->cv_tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy += game->player->posdy * 2;
 }
 void	move_down(t_game *game)
 {
@@ -55,10 +55,10 @@ void	move_down(t_game *game)
 	int yo;
 
 	check_offset(game, &xo, &yo, 'v');
-	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
-		game->player->posx -= game->player->posdx;
-	if (game->map->tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
-		game->player->posy -= game->player->posdy;
+	if (game->map->cv_tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
+		game->player->posx -= game->player->posdx * 2;
+	if (game->map->cv_tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy -= game->player->posdy * 2;
 }
 
 void	move_left(t_game *game)
@@ -67,10 +67,10 @@ void	move_left(t_game *game)
 	int yo;
 
 	check_offset(game, &xo, &yo, 'h');
-	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
-		game->player->posx -= game->player->posdxp;
-	if (game->map->tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
-		game->player->posy -= game->player->posdyp;
+	if (game->map->cv_tab[(int)game->player->posy / 64][((int)game->player->posx - xo) / 64] == '0')
+		game->player->posx -= game->player->posdxp * 2;
+	if (game->map->cv_tab[((int)game->player->posy - yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy -= game->player->posdyp * 2;
 }
 
 void	move_right(t_game *game)
@@ -79,10 +79,10 @@ void	move_right(t_game *game)
 	int yo;
 
 	check_offset(game, &xo, &yo, 'h');
-	if (game->map->tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
-		game->player->posx += game->player->posdxp;
-	if (game->map->tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
-		game->player->posy += game->player->posdyp;
+	if (game->map->cv_tab[(int)game->player->posy / 64][((int)game->player->posx + xo) / 64] == '0')
+		game->player->posx += game->player->posdxp * 2;
+	if (game->map->cv_tab[((int)game->player->posy + yo) / 64][(int)game->player->posx / 64] == '0')
+		game->player->posy += game->player->posdyp * 2;
 }
 
 void	rotate_left(t_game *game)

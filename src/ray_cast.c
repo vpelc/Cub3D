@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/06 16:33:26 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 16:16:32 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	delta_loop_h(t_game *game, t_rays *ray)
 	{
 		ray->mx = (int)(ray->hrx) >> 6;
 		ray->my = (int)(ray->hry) >> 6;
-		if ((ray->mx < game->map->height && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
-			&& game->map->tab[ray->my][ray->mx] == '1')
+		if ((ray->mx < game->map->width && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
+			&& game->map->cv_tab[ray->my][ray->mx] == '1')
 			ray->dof = game->map->height;
 		else
 		{
@@ -41,8 +41,8 @@ void	delta_loop_v(t_game *game, t_rays *ray)
 	{
 		ray->mx = (int)(ray->vrx) >> 6;
 		ray->my = (int)(ray->vry) >> 6;
-		if ((ray->mx < game->map->width && ray->my < game->map->width) && (ray->mx >= 0 && ray->my >= 0)
-			&& game->map->tab[ray->my][ray->mx] == '1')
+		if ((ray->mx < game->map->width && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
+			&& game->map->cv_tab[ray->my][ray->mx] == '1')
 			ray->dof = game->map->width;
 		else
 		{
@@ -121,7 +121,7 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 	while (++j < lineO)
 		put_pixel_to_image(game->win_img, ray->r, j, game->texinfo->hex_ceiling);
 	while (--j > 0)
-		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, game->texinfo->hex_ceiling);
+		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, game->texinfo->hex_floor);
 	ty = ty_off * ty_step;
 	j = -1;
 	while (++j < lineH)
@@ -158,7 +158,7 @@ float	ray_hor(t_game *game, t_rays *ray, float distH)
 	aTan = -1 / tan(ray->ra);
 	if (ray->ra - PI > EPSILON)
 	{
-		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.00005;
+		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.005;
 		ray->hrx = (game->player->posy - ray->hry) * aTan + game->player->posx;
 		ray->yo = -64;
 		ray->xo = -(ray->yo) * aTan;
@@ -189,7 +189,7 @@ float	ray_ver(t_game *game, t_rays *ray, float distV)
 	nTan = -tan(ray->ra);
 	if (ray->ra - (PI / 2) > EPSILON && ray->ra - ((3 * PI) / 2) < -EPSILON)
 	{
-		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.00005;
+		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.005;
 		ray->vry = (game->player->posx - ray->vrx) * nTan + game->player->posy;
 		ray->xo = -64;
 		ray->yo = -(ray->xo) * nTan;

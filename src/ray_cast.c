@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 16:16:32 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 19:11:12 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 			else
 				color = get_pixel_color_r(game->img_so->texture, (int)ray->rx,
 						(int)ty);
-			color *= 0.7;
+			color += 0x020202;
 		}
 		if (dir == 'v')
 		{
@@ -150,9 +150,9 @@ void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
 	}
 }
 
-float	ray_hor(t_game *game, t_rays *ray, float distH)
+double	ray_hor(t_game *game, t_rays *ray, double distH)
 {
-	float	aTan;
+	double	aTan;
 
 	ray->dof = 0;
 	aTan = -1 / tan(ray->ra);
@@ -181,9 +181,9 @@ float	ray_hor(t_game *game, t_rays *ray, float distH)
 	return (distH);
 }
 
-float	ray_ver(t_game *game, t_rays *ray, float distV)
+double	ray_ver(t_game *game, t_rays *ray, double distV)
 {
-	float	nTan;
+	double	nTan;
 
 	ray->dof = 0;
 	nTan = -tan(ray->ra);
@@ -215,13 +215,14 @@ float	ray_ver(t_game *game, t_rays *ray, float distV)
 void	draw_ray(t_game *game)
 {
 	t_rays	ray;
-	float	distH;
-	float	distV;
+	double	distH;
+	double	distV;
 	float	dray;
 	char	dir;
 
 	clear_image(game->win_img);
 	ray.r = 0;
+	ray.prev_dir = 0;
 	ray.ra = game->player->posa - (RAD_DEG * 30);
 	check_ra(&ray);
 	while (ray.r < 1000)
@@ -230,14 +231,15 @@ void	draw_ray(t_game *game)
 		distV = ray_ver(game, &ray, distV);
 		ray.ra += ((60 * RAD_DEG) / 1000);
 		check_ra(&ray);
-		if (distH > distV)
+		if (floor(distH) >floor(distV))
+		// if(distH > distV)
 		{
 			ray.rx = ray.vrx;
 			ray.ry = ray.vry;
 			dray = distV;
 			dir = 'v';
 		}
-		else
+		if (floor(distV) >floor(distH))
 		{
 			ray.rx = ray.hrx;
 			ray.ry = ray.hry;
@@ -246,6 +248,7 @@ void	draw_ray(t_game *game)
 		}
 		// draw_2dray(game, &ray, dray);
 		draw_3dray(game, &ray, dray, dir);
+		ray.prev_dir = dir;
 		ray.r++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, 512, 0);

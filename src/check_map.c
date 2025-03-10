@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/10 16:20:18 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 18:07:17 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ int	check_map_fully_enclosed(t_game *game)
 		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
-	game->player->posy = start_y * 64;
-	game->player->posx = start_x * 64;
+	game->player->posy = (start_y * 64) + 32;
+	game->player->posx = (start_x * 64) + 32;
 	fill_flood(map_copy, start_y, start_x, &flag, game);
 	if (flag == 0)
 	{

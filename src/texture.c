@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/07 15:49:50 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 18:58:52 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 	int	img_y;
 	int	pixel_index;
 
-	img_x = (x % SQR_SIZE) / (SQR_SIZE / tex->width);
-	img_y = (y % tex->height);
+	img_x = (x % SQR_SIZE) / (SQR_SIZE / (float)tex->width);
+	img_y = (y % SQR_SIZE) / (SQR_SIZE / (float)tex->height);
 	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
 	
@@ -92,7 +92,7 @@ int	get_pixel_color_r(t_texture *tex, int x, int y)
 	int	pixel_index;
 
 	img_x =  (tex->width - 1) - ((x % SQR_SIZE) / (SQR_SIZE / tex->width));
-	img_y = (y % tex->height);
+	img_y = (y % SQR_SIZE) / (SQR_SIZE / (float)tex->height);
 	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
 	

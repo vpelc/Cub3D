@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 16:29:42 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/10 18:34:59 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int argc, char *argv[])
 	(void)argc;
 	(void)argv;
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 1750, 1000, "Cub3D");
+	game.win = mlx_new_window(game.mlx, 1512, 1000, "Cub3D");
 	init_game(&game);
 	if (check_args(argc, argv) == FALSE
 		|| check_content_file(&game,argv[1]) == FALSE)
@@ -112,7 +112,7 @@ int	main(int argc, char *argv[])
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
-	mlx_hook(game.win, 6, (1L << 6), mouse_move, &game);
+	// mlx_hook(game.win, 6, (1L << 6), mouse_move, &game);
 	mlx_loop_hook(game.mlx, key_loop, &game);
 	mlx_loop(game.mlx);
 }

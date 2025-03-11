@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 19:11:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:49:01 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	delta_loop_h(t_game *game, t_rays *ray)
 	{
 		ray->mx = (int)(ray->hrx) >> 6;
 		ray->my = (int)(ray->hry) >> 6;
-		if ((ray->mx < game->map->width && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
+		if ((ray->mx < game->map->width && ray->my < game->map->height)
+			&& (ray->mx >= 0 && ray->my >= 0)
 			&& game->map->cv_tab[ray->my][ray->mx] == '1')
 			ray->dof = game->map->height;
 		else
@@ -41,7 +42,8 @@ void	delta_loop_v(t_game *game, t_rays *ray)
 	{
 		ray->mx = (int)(ray->vrx) >> 6;
 		ray->my = (int)(ray->vry) >> 6;
-		if ((ray->mx < game->map->width && ray->my < game->map->height) && (ray->mx >= 0 && ray->my >= 0)
+		if ((ray->mx < game->map->width && ray->my < game->map->height)
+			&& (ray->mx >= 0 && ray->my >= 0)
 			&& game->map->cv_tab[ray->my][ray->mx] == '1')
 			ray->dof = game->map->width;
 		else
@@ -61,196 +63,218 @@ void	check_ra(t_rays *ray)
 		ray->ra -= 2 * PI;
 }
 
-void	draw_2dray(t_game *game, t_rays *ray, float dray)
-{
-	float	j;
+// void	draw_2dray(t_game *game, t_rays *ray, float dray)
+// {
+// 	float	j;
 
-	// j = 0;
-	// (void)dray;
-	// if (ray->r == 500)
-	// {
-	// 	while (j < 8)
-	// 	{
-	// 		put_pixel_to_image(game->map_img, ((game->player->posx)
-	// 				+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
-	// 					* 5) * j), 0x000000FF);
-	// 		// mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
-	// 		// 		+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
-	// 		// 			* 5) * j), 0x000000FF);
-	// 		j += 0.5;
-	// 	}
-	// }
-	j = 0;
-	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
-					* j), 2)) <= dray && j < 200)
-	{
-		mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
-				+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
-					* 5) * j), 0x0000FF00);
-		j += 1.5;
-	}
-}
+// 	// j = 0;
+// 	// (void)dray;
+// 	// if (ray->r == 500)
+// 	// {
+// 	// 	while (j < 8)
+// 	// 	{
+// 	// 		put_pixel_to_image(game->map_img, ((game->player->posx)
+// 	// 				+ (cos(ray->ra) * 5) * j), ((game->player->posy)
+// 						+ (sin(ray->ra)
+// 	// 					* 5) * j), 0x000000FF);
+// 	// 		// mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+// 	// 		// 		+ (cos(ray->ra) * 5) * j), ((game->player->posy)
+// 						+ (sin(ray->ra)
+// 	// 		// 			* 5) * j), 0x000000FF);
+// 	// 		j += 0.5;
+// 	// 	}
+// 	// }
+// 	j = 0;
+// 	while (sqrt(pow((game->player->posdx * j), 2) + pow((game->player->posdy
+// 					* j), 2)) <= dray && j < 200)
+// 	{
+// 		mlx_pixel_put(game->mlx, game->win, ((game->player->posx)
+// 				+ (cos(ray->ra) * 5) * j), ((game->player->posy) + (sin(ray->ra)
+// 					* 5) * j), 0x0000FF00);
+// 		j += 1.5;
+// 	}
+// }
 
-void	draw_3dray(t_game *game, t_rays *ray, float dray, char dir)
+void	calc_draw(t_game *game, t_rays *ray, t_draw *draw)
 {
-	int		j;
-	float	ty;
-	float	ty_step;
-	float	ty_off;
-	int		color;
 	float	ca;
-	float	lineH;
-	float	lineO;
 
-	ty_off = 0;
+	draw->ty_off = 0;
 	ca = game->player->posa - ray->ra;
 	if (ca < 0)
 		ca += PI * 2;
 	else if (ca > PI * 2)
 		ca -= PI * 2;
-	dray = dray * cos(ca);
-	lineH = (SCR_HEIGHT << 6) / dray;
-	ty_step =  64 / lineH;					//game->img_list->texture->height / lineH;
-	if (lineH > SCR_HEIGHT)
+	ray->dray = ray->dray * cos(ca);
+	draw->lineH = (SCR_HEIGHT << 6) / ray->dray;
+	draw->ty_step = 64 / draw->lineH;
+	if (draw->lineH > SCR_HEIGHT)
 	{
-		ty_off = (lineH - SCR_HEIGHT) / 2.0;
-		lineH = SCR_HEIGHT;
+		draw->ty_off = (draw->lineH - SCR_HEIGHT) / 2.0;
+		draw->lineH = SCR_HEIGHT;
 	}
-	lineO = (SCR_HEIGHT >> 1) - lineH / 2;
-	j = -1;
-	while (++j < lineO)
-		put_pixel_to_image(game->win_img, ray->r, j, game->texinfo->hex_ceiling);
-	while (--j > 0)
-		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j, game->texinfo->hex_floor);
-	ty = ty_off * ty_step;
-	j = -1;
-	while (++j < lineH)
+	draw->lineO = (SCR_HEIGHT >> 1) - draw->lineH / 2;
+	draw->ty = draw->ty_off * draw->ty_step;
+}
+
+int	draw_walls(t_game *game, t_rays *ray, t_draw *draw)
+{
+	int	color;
+
+	if (ray->dir == 'h')
 	{
-		if (dir == 'h')
-		{
-			if (ray->ra > (180 * RAD_DEG))
-				color = get_pixel_color(game->img_no->texture, (int)ray->rx,
-						(int)ty);
-			else
-				color = get_pixel_color_r(game->img_so->texture, (int)ray->rx,
-						(int)ty);
-			color += 0x020202;
-		}
-		if (dir == 'v')
-		{
-			if (ray->ra < (90 * RAD_DEG) || ray->ra > (270 * RAD_DEG))
-				color = get_pixel_color(game->img_we->texture, (int)ray->ry,
-						(int)ty);
-			else
-				color = get_pixel_color_r(game->img_ea->texture, (int)ray->ry,
-						(int)ty);
-		}
-		put_pixel_to_image(game->win_img, ray->r, (lineO + j), color);
-		ty += ty_step;
+		if (ray->ra > (180 * RAD_DEG))
+			color = get_pixel_color(game->img_no->texture, (int)ray->rx,
+					(int)draw->ty);
+		else
+			color = get_pixel_color_r(game->img_so->texture, (int)ray->rx,
+					(int)draw->ty);
+		color += 0x020202;
+	}
+	if (ray->dir == 'v')
+	{
+		if (ray->ra < (90 * RAD_DEG) || ray->ra > (270 * RAD_DEG))
+			color = get_pixel_color(game->img_we->texture, (int)ray->ry,
+					(int)draw->ty);
+		else
+			color = get_pixel_color_r(game->img_ea->texture, (int)ray->ry,
+					(int)draw->ty);
+	}
+	return (color);
+}
+
+void	draw_3dray(t_game *game, t_rays *ray)
+{
+	int		j;
+	int		color;
+	t_draw	draw;
+
+	calc_draw(game, ray, &draw);
+	j = -1;
+	while (++j < draw.lineO)
+		put_pixel_to_image(game->win_img, ray->r, j,
+			game->texinfo->hex_ceiling);
+	while (--j > 0)
+		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j,
+			game->texinfo->hex_floor);
+	j = -1;
+	while (++j < draw.lineH)
+	{
+		color = draw_walls(game, ray, &draw);
+		put_pixel_to_image(game->win_img, ray->r, (draw.lineO + j), color);
+		draw.ty += draw.ty_step;
 	}
 }
 
-double	ray_hor(t_game *game, t_rays *ray, double distH)
+void	ray_on_line(t_game *game, t_rays *ray, char dir)
 {
-	double	aTan;
-
-	ray->dof = 0;
-	aTan = -1 / tan(ray->ra);
-	if (ray->ra - PI > EPSILON)
+	if (dir == 'v')
 	{
-		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.005;
-		ray->hrx = (game->player->posy - ray->hry) * aTan + game->player->posx;
-		ray->yo = -64;
-		ray->xo = -(ray->yo) * aTan;
+		ray->vrx = game->player->posx;
+		ray->vry = game->player->posy;
+		ray->dof = game->map->height;
 	}
-	if (ray->ra - PI < -EPSILON)
-	{
-		ray->hry = (((int)game->player->posy >> 6) << 6) + 64;
-		ray->hrx = (game->player->posy - ray->hry) * aTan + game->player->posx;
-		ray->yo = 64;
-		ray->xo = -(ray->yo) * aTan;
-	}
-	if (ray->ra == 0 || (ray->ra - PI < EPSILON && ray->ra - PI > -EPSILON))
+	if (dir == 'h')
 	{
 		ray->hrx = game->player->posx;
 		ray->hry = game->player->posy;
 		ray->dof = game->map->height;
 	}
-	delta_loop_h(game, ray);
-	distH = dist(game->player->posx, game->player->posy, ray->hrx, ray->hry);
-	return (distH);
 }
 
-double	ray_ver(t_game *game, t_rays *ray, double distV)
+double	ray_hor(t_game *game, t_rays *ray, double dist_h)
 {
-	double	nTan;
+	double	a_tan;
 
 	ray->dof = 0;
-	nTan = -tan(ray->ra);
+	a_tan = -1 / tan(ray->ra);
+	if (ray->ra - PI > EPSILON)
+	{
+		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.005;
+		ray->hrx = (game->player->posy - ray->hry) * a_tan + game->player->posx;
+		ray->yo = -64;
+		ray->xo = -(ray->yo) * a_tan;
+	}
+	if (ray->ra - PI < -EPSILON)
+	{
+		ray->hry = (((int)game->player->posy >> 6) << 6) + 64;
+		ray->hrx = (game->player->posy - ray->hry) * a_tan + game->player->posx;
+		ray->yo = 64;
+		ray->xo = -(ray->yo) * a_tan;
+	}
+	if (ray->ra == 0 || (ray->ra - PI < EPSILON && ray->ra - PI > -EPSILON))
+		ray_on_line(game, ray, 'h');
+	delta_loop_h(game, ray);
+	dist_h = dist(game->player->posx, game->player->posy, ray->hrx, ray->hry);
+	return (dist_h);
+}
+
+double	ray_ver(t_game *game, t_rays *ray, double dist_v)
+{
+	double	n_tan;
+
+	ray->dof = 0;
+	n_tan = -tan(ray->ra);
 	if (ray->ra - (PI / 2) > EPSILON && ray->ra - ((3 * PI) / 2) < -EPSILON)
 	{
 		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.005;
-		ray->vry = (game->player->posx - ray->vrx) * nTan + game->player->posy;
-		ray->xo = -64;
-		ray->yo = -(ray->xo) * nTan;
+		ray->vry = (game->player->posx - ray->vrx) * n_tan + game->player->posy;
+		ray->xo = -SQR_SIZE;
+		ray->yo = -(ray->xo) * n_tan;
 	}
 	if (ray->ra - (PI / 2) < -EPSILON || ray->ra - ((3 * PI) / 2) > EPSILON)
 	{
-		ray->vrx = (((int)game->player->posx >> 6) << 6) + 64;
-		ray->vry = (game->player->posx - ray->vrx) * nTan + game->player->posy;
-		ray->xo = 64;
-		ray->yo = -(ray->xo) * nTan;
+		ray->vrx = (((int)game->player->posx >> 6) << 6) + SQR_SIZE;
+		ray->vry = (game->player->posx - ray->vrx) * n_tan + game->player->posy;
+		ray->xo = SQR_SIZE;
+		ray->yo = -(ray->xo) * n_tan;
 	}
 	if (ray->ra == 0 || (ray->ra - PI < EPSILON && ray->ra - PI > -EPSILON))
-	{
-		ray->vrx = game->player->posx;
-		ray->vry = game->player->posy;
-		ray->dof = game->map->width;
-	}
+		ray_on_line(game, ray, 'v');
 	delta_loop_v(game, ray);
-	distV = dist(game->player->posx, game->player->posy, ray->vrx, ray->vry);
-	return (distV);
+	dist_v = dist(game->player->posx, game->player->posy, ray->vrx, ray->vry);
+	return (dist_v);
+}
+
+void	check_ver_hor(t_rays *ray, double dist_h, double dist_v)
+{
+	if (floor(dist_h) > floor(dist_v))
+		ray->dir = 'v';
+	if (floor(dist_v) > floor(dist_h))
+		ray->dir = 'h';
+	if (dist_h > dist_v)
+	{
+		ray->rx = ray->vrx;
+		ray->ry = ray->vry;
+		ray->dray = dist_v;
+	}
+	else
+	{
+		ray->rx = ray->hrx;
+		ray->ry = ray->hry;
+		ray->dray = dist_h;
+	}
 }
 
 void	draw_ray(t_game *game)
 {
 	t_rays	ray;
-	double	distH;
-	double	distV;
-	float	dray;
-	char	dir;
+	double	dist_h;
+	double	dist_v;
 
 	clear_image(game->win_img);
 	ray.r = 0;
-	ray.prev_dir = 0;
 	ray.ra = game->player->posa - (RAD_DEG * 30);
 	check_ra(&ray);
 	while (ray.r < 1000)
 	{
-		distH = ray_hor(game, &ray, distH);
-		distV = ray_ver(game, &ray, distV);
+		dist_h = ray_hor(game, &ray, dist_h);
+		dist_v = ray_ver(game, &ray, dist_v);
 		ray.ra += ((60 * RAD_DEG) / 1000);
 		check_ra(&ray);
-		if (floor(distH) >floor(distV))
-		// if(distH > distV)
-		{
-			ray.rx = ray.vrx;
-			ray.ry = ray.vry;
-			dray = distV;
-			dir = 'v';
-		}
-		if (floor(distV) >floor(distH))
-		{
-			ray.rx = ray.hrx;
-			ray.ry = ray.hry;
-			dray = distH;
-			dir = 'h';
-		}
-		// draw_2dray(game, &ray, dray);
-		draw_3dray(game, &ray, dray, dir);
-		ray.prev_dir = dir;
+		check_ver_hor(&ray, dist_h, dist_v);
+		draw_3dray(game, &ray);
 		ray.r++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, 512, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->win_img->img, game->map->width * SQR_SIZE, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 18:58:52 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:50:39 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 	tex->bpp = 32;
 	tex->size_line = 128;
 	tex->endian = 0;
-	tex->img = mlx_xpm_file_to_image(game->mlx, path, &tex->width, &tex->height);
+	tex->img = mlx_xpm_file_to_image(game->mlx, path, &tex->width,
+			&tex->height);
 	if (!tex->img)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
@@ -49,16 +50,14 @@ void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 	img = malloc(sizeof(t_image) * 1);
 	img->texture = tex;
 	img->name = ft_strdup(name);
-	*img_g = img; 
+	*img_g = img;
 }
-
-
 
 void	clear_image(t_texture *tex)
 {
-	int x;
-	int y;
-	int color;
+	int	x;
+	int	y;
+	int	color;
 
 	color = 0x00000000;
 	y = -1;
@@ -69,6 +68,7 @@ void	clear_image(t_texture *tex)
 			put_pixel_to_image(tex, x, y, color);
 	}
 }
+
 int	get_pixel_color(t_texture *tex, int x, int y)
 {
 	int	color;
@@ -78,9 +78,8 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 
 	img_x = (x % SQR_SIZE) / (SQR_SIZE / (float)tex->width);
 	img_y = (y % SQR_SIZE) / (SQR_SIZE / (float)tex->height);
-	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
+	pixel_index = img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
-	
 	return (color);
 }
 
@@ -91,10 +90,9 @@ int	get_pixel_color_r(t_texture *tex, int x, int y)
 	int	img_y;
 	int	pixel_index;
 
-	img_x =  (tex->width - 1) - ((x % SQR_SIZE) / (SQR_SIZE / tex->width));
+	img_x = (tex->width - 1) - ((x % SQR_SIZE) / (SQR_SIZE / tex->width));
 	img_y = (y % SQR_SIZE) / (SQR_SIZE / (float)tex->height);
-	pixel_index =  img_y * tex->size_line + img_x * (tex->bpp / 8);
+	pixel_index = img_y * tex->size_line + img_x * (tex->bpp / 8);
 	color = *(unsigned int *)(tex->addr + pixel_index);
-	
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 15:40:51 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:51:36 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	init_texture(t_game *game)
 
 void	init_keys(t_game *game)
 {
-	t_keys		*keys;
-	
-	keys = ft_malloc(game, sizeof(t_keys), 1);	
+	t_keys	*keys;
+
+	keys = ft_malloc(game, sizeof(t_keys), 1);
 	keys->down_key = 0;
 	keys->left_key = 0;
 	keys->right_key = 0;

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/10 18:59:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/11 15:23:58 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,19 @@ typedef struct s_rays
 	float				ra;
 	float				xo;
 	float				yo;
-	char				prev_dir;
+	float				dray;
+	char				dir;
 }						t_rays;
+
+typedef struct s_draw
+{
+	float				ty;
+	float				ty_step;
+	float				ty_off;
+	float				lineH;
+	float				lineO;
+}						t_draw;
+
 typedef struct s_texture
 {
 	void				*img;
@@ -161,7 +172,7 @@ int						check_args(int argc, char **argv);
 int						check_content_file(t_game *game, char *filename);
 
 // check map
-int						check_float_pos_start(t_game *game);
+int						check_double_pos_start(t_game *game);
 int						check_char_map(t_game *game);
 int						check_map_fully_enclosed(t_game *game);
 

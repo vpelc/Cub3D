@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:38:04 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/06 16:26:04 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/11 16:43:34 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,21 @@ void	free_list(t_game *game)
 	}
 }
 
+void	free_img(t_game *game)
+{
+	mlx_destroy_image(game->mlx, game->img_ea->texture->img);
+	mlx_destroy_image(game->mlx, game->img_no->texture->img);
+	mlx_destroy_image(game->mlx, game->img_so->texture->img);
+	mlx_destroy_image(game->mlx, game->img_we->texture->img);
+	mlx_destroy_image(game->mlx, game->win_img->img);
+	mlx_destroy_image(game->mlx, game->map_img->img);
+	mlx_destroy_image(game->mlx, game->minimap_img->img);
+}
+
 int	close_window(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
+	free_img(game);
 	mlx_destroy_window(game->mlx, game->win);
 	// free_list(game);
 	return (1);

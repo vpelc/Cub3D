@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/11 15:50:39 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/11 18:02:35 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ int	get_pixel_color(t_texture *tex, int x, int y)
 	int	img_y;
 	int	pixel_index;
 
+	color = 0;
 	img_x = (x % SQR_SIZE) / (SQR_SIZE / (float)tex->width);
 	img_y = (y % SQR_SIZE) / (SQR_SIZE / (float)tex->height);
 	pixel_index = img_y * tex->size_line + img_x * (tex->bpp / 8);
-	color = *(unsigned int *)(tex->addr + pixel_index);
+	if (pixel_index >= 0)
+		color = *(unsigned int *)(tex->addr + pixel_index);
 	return (color);
 }
 

@@ -1,10 +1,10 @@
-NO ./images/wall_3d.xpm
+NO ./images/no_cool.xpm
  
-SO ./images/so.xpm
+SO ./images/so_cool.xpm
 
-WE ./images/we.xpm
+WE ./images/we_cool.xpm
 
-EA ./images/ea.xpm
+EA ./images/ea_cool.xpm
  
 F 196,154,111
 C 165,194,239

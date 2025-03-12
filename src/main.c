@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 18:34:59 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/12 17:33:55 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	key_press(int key, t_game *game)
 		game->keys->rotl_key = 1;
 	if (key == 65363)
 		game->keys->rotr_key = 1;
+	if (key == 65505 || key == 65506)
+		game->keys->shift_key = 1;
 	if (key == 65307)
 		close_window(game);
 	return (0);
@@ -45,6 +47,8 @@ int	key_release(int key, t_game *game)
 		game->keys->rotl_key = 0;
 	if (key == 65363)
 		game->keys->rotr_key = 0;
+	if (key == 65505 || key == 65506)
+		game->keys->shift_key = 0;
 	return (0);
 }
 

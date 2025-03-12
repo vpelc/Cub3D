@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/11 15:23:58 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:38:07 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_keys
 	int					down_key;
 	int					rotl_key;
 	int					rotr_key;
+	int					shift_key;
 }						t_keys;
 
 typedef struct s_player

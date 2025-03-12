@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/11 15:49:01 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/12 13:54:45 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ double	ray_hor(t_game *game, t_rays *ray, double dist_h)
 	a_tan = -1 / tan(ray->ra);
 	if (ray->ra - PI > EPSILON)
 	{
-		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.005;
+		ray->hry = (((int)game->player->posy >> 6) << 6) - 0.0005;
 		ray->hrx = (game->player->posy - ray->hry) * a_tan + game->player->posx;
 		ray->yo = -64;
 		ray->xo = -(ray->yo) * a_tan;
@@ -217,7 +217,7 @@ double	ray_ver(t_game *game, t_rays *ray, double dist_v)
 	n_tan = -tan(ray->ra);
 	if (ray->ra - (PI / 2) > EPSILON && ray->ra - ((3 * PI) / 2) < -EPSILON)
 	{
-		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.005;
+		ray->vrx = (((int)game->player->posx >> 6) << 6) - 0.0005;
 		ray->vry = (game->player->posx - ray->vrx) * n_tan + game->player->posy;
 		ray->xo = -SQR_SIZE;
 		ray->yo = -(ray->xo) * n_tan;
@@ -238,21 +238,23 @@ double	ray_ver(t_game *game, t_rays *ray, double dist_v)
 
 void	check_ver_hor(t_rays *ray, double dist_h, double dist_v)
 {
-	if (floor(dist_h) > floor(dist_v))
-		ray->dir = 'v';
-	if (floor(dist_v) > floor(dist_h))
-		ray->dir = 'h';
+	// if (floor(dist_h) > floor(dist_v))
+	// 	ray->dir = 'v';
+	// if (floor(dist_v) > floor(dist_h))
+	// 	ray->dir = 'h';
 	if (dist_h > dist_v)
 	{
 		ray->rx = ray->vrx;
 		ray->ry = ray->vry;
 		ray->dray = dist_v;
+		ray->dir = 'v';
 	}
 	else
 	{
 		ray->rx = ray->hrx;
 		ray->ry = ray->hry;
 		ray->dray = dist_h;
+		ray->dir = 'h';
 	}
 }
 

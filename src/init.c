@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/11 15:51:36 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:38:39 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	init_keys(t_game *game)
 	keys->left_key = 0;
 	keys->right_key = 0;
 	keys->up_key = 0;
+	keys->rotl_key = 0;
+	keys->rotr_key = 0;
+	keys->shift_key = 0;
 	game->keys = keys;
 }
 

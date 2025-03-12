@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/10 18:58:49 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:21:46 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,19 +158,19 @@ void	draw_mini_map(t_game *game)
 	draw_map(game);
 	img_x = game->player->posx - 256;
 	img_y = game->player->posy - 256;
-	if (game->player->posx < 256)
-		img_x = 0;
-	if (game->player->posy < 256)
-		img_y = 0;
 	if (game->player->posx > (game->map->width * SQR_SIZE) - 256)
 		img_x = (game->map->width * SQR_SIZE) - 512;
 	if (game->player->posy > (game->map->height * SQR_SIZE) - 256)
 		img_y = (game->map->height * SQR_SIZE) - 512;
+	if (game->player->posx < 256 || (game->map->width * SQR_SIZE) < 512)
+		img_x = 0;
+	if (game->player->posy < 256 || (game->map->height * SQR_SIZE) < 512)
+		img_y = 0;
 	i = -1;
-	while (++i < 512)
+	while (++i < 512 && i < game->map->height * SQR_SIZE)
 	{
 		j = -1;
-		while (++j < 512)
+		while (++j < 512 && j < game->map->width * SQR_SIZE)
 			put_pixel_to_image(game->minimap_img, j, i,
 				get_pixel_color_mini(game->map_img, img_x + j, img_y + i));
 	}

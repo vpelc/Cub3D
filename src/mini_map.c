@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/12 14:21:46 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:53:44 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	create_map_img(t_game *game)
 {
 	t_texture	*tex;
 
-	tex = malloc(sizeof(t_texture) * 1);
+	// tex = malloc(sizeof(t_texture) * 1);
+	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = game->map->width << 6;
 	tex->height = game->map->height << 6;
 	tex->bpp = 32;
@@ -36,7 +37,8 @@ void	create_mini_map_img(t_game *game)
 {
 	t_texture	*tex;
 
-	tex = malloc(sizeof(t_texture) * 1);
+	// tex = malloc(sizeof(t_texture) * 1);
+	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = 512;
 	tex->height = 512;
 	tex->bpp = 32;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:32:31 by vpelc             #+#    #+#             */
-/*   Updated: 2025/02/10 16:47:42 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:33:27 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	*ft_fill_nextbuff(char *buffer)
 		return (ft_free_gnl(&buffer), NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (buffer[i] == '\n')
+	if (buffer[i] == '\n' || ft_strlen(buffer) - i + j == 0)
 		j++;
 	next_buffer = malloc(ft_strlen(buffer) - i + j);
 	if (!next_buffer)

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:14:09 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/11 15:35:12 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:51:31 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ int	convert_map(t_game *game)
 	char	**cv_map;
 	int		i;
 	
-	cv_map = malloc(sizeof(char *) * (game->map->height + 1));
+	// cv_map = malloc(sizeof(char *) * (game->map->height + 1));
+	cv_map = ft_malloc(game, sizeof(char *), (game->map->height + 1));
 	if (!cv_map)
 		return (FALSE);
 	i = 0;
 	while (i < game->map->height)
 	{
-		cv_map[i] = malloc(sizeof(char) * (game->map->width + 1));
+		// cv_map[i] = malloc(sizeof(char) * (game->map->width + 1));
+		cv_map[i] = ft_malloc(game, sizeof(char), (game->map->width + 1));
 		if (!cv_map[i])
 			return (FALSE);
 		ft_memset(cv_map[i], ' ', game->map->width);

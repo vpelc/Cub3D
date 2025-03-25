@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/12 14:38:07 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/25 15:06:34 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,11 +181,11 @@ int						check_map_fully_enclosed(t_game *game);
 int						check_line_contain_map(char *line);
 int						check_texture_is_fill(t_game *game);
 int						check_doublon_flag(char *flag, t_game *game);
-int						check_line_contain_flag(char *line);
+int						check_line_contain_flag(t_game *game, char *line);
 int						check_is_empty_line(char *line);
 
 // extract path
-char					*extract_path(char *line, char *flag);
+char					*extract_path(t_game *game, char *line, char *flag);
 
 // fill data
 void					fill_map(char *line, t_game *game);
@@ -236,5 +236,12 @@ void					init_player(t_game *game);
 void					init_texture(t_game *game);
 void					ft_strcpy(char *dst, const char *src);
 int						convert_map(t_game *game);
+
+char					*ft_strdup_list(t_game *game, const char *s1);
+char					*ft_substr_list(t_game *game, char const *s,
+							unsigned int start, size_t len);
+char					*ft_strtrim_list(t_game *game, char const *s1,
+							char const *set);
+char					**ft_split_list(t_game *game, char const *str, char c);
 
 #endif

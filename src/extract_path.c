@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/06 15:19:48 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:12:44 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	is_valid_rgb_format(char *line)
 	return (TRUE);
 }
 
-static char	*extract_colour(char *line)
+static char	*extract_colour(t_game *game, char *line)
 {
 	int	i;
 	int	start;
@@ -76,10 +76,10 @@ static char	*extract_colour(char *line)
 		ft_putstr_fd("Error: Invalid RGB format.\n", 2);
 		return (NULL);
 	}
-	return (ft_strdup(line + start));
+	return (ft_strdup_list(game, line + start));
 }
 
-static char	*extract_texture(char *line)
+static char	*extract_texture(t_game *game, char *line)
 {
 	int	i;
 	int	start;
@@ -95,10 +95,10 @@ static char	*extract_texture(char *line)
 	while (line[i] && !ft_isspace(line[i]))
 		i++;
 	end = i - 1;
-	return (ft_substr(line, start, end - start + 1));
+	return (ft_substr_list(game, line, start, end - start + 1));
 }
 
-char	*extract_path(char *line, char *flag)
+char	*extract_path(t_game *game, char *line, char *flag)
 {
 	int	i;
 
@@ -107,9 +107,9 @@ char	*extract_path(char *line, char *flag)
 		i++;
 	if (!ft_strncmp(flag, "NO", 3) || !ft_strncmp(flag, "SO", 3)
 		|| !ft_strncmp(flag, "WE", 3) || !ft_strncmp(flag, "EA", 3))
-		return (extract_texture(line));
+		return (extract_texture(game, line));
 	else if (flag[i] == 'F' || flag[i] == 'C')
-		return (extract_colour(line));
+		return (extract_colour(game, line));
 	else
 		return (NULL);
 }

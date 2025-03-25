@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:38:04 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/11 16:43:34 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/25 15:06:16 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,6 @@ char	*identify_flag(char *line)
 	return (NULL);
 }
 
-void	*ft_malloc(t_game *game, size_t size, size_t count)
-{
-	void	*ptr;
-	t_free	*tmp;
-	t_free	*new_ptr;
-	size_t	buff;
-
-	buff = count * size;
-	if (buff > INT_MAX || (size != 0 && (buff / size) != count))
-		return (NULL);
-	ptr = malloc(buff);
-	if (!ptr)
-		return (NULL);
-	tmp = game->to_free;
-	new_ptr = malloc(sizeof(t_free) * 1);
-	if (!new_ptr)
-		return (NULL);
-	new_ptr->content = ptr;
-	new_ptr->next = tmp;
-	game->to_free = new_ptr;
-	return (ptr);
-}
 
 void	free_list(t_game *game)
 {
@@ -133,6 +111,9 @@ int	close_window(t_game *game)
 	mlx_clear_window(game->mlx, game->win);
 	free_img(game);
 	mlx_destroy_window(game->mlx, game->win);
-	// free_list(game);
-	return (1);
+	free_list(game);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	exit(0);
+	return 1;
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/12 14:38:39 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/25 14:41:52 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	init_texinfo(t_game *game)
 {
-	game->texinfo = malloc(sizeof(t_texinfo));
+	// game->texinfo = malloc(sizeof(t_texinfo));
+	game->texinfo = ft_malloc(game, sizeof(t_texinfo), 1);
 	if (!game->texinfo)
 		return (ft_putstr_fd("Error : Mallox init_texinfo\n", 2));
 	game->texinfo->NO_path = NULL;
@@ -85,6 +86,7 @@ int	init_game(t_game *game)
 	t_map		*map;
 	t_player	*player;
 
+	game->to_free = NULL;
 	player = ft_malloc(game, sizeof(t_player), 1);
 	game->player = player;
 	map = ft_malloc(game, sizeof(t_map), 1);

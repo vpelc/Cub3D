@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:39 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/10 15:21:11 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:45:28 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	**copy_map(char **map, int height)
 
 	i = 0;
 	new_map = malloc(sizeof(char *) * (height + 1));
+	// new_map = ft_malloc(game, sizeof(char *), (height + 1));
 	if (!new_map)
 		return (NULL);
 	while (i < height)

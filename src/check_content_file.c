@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/10 16:24:14 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/03/25 14:30:01 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	check_empty_file(t_game *game, char *filename)
 	close(game->map->fd);
 	if (line == NULL)
 		return (FALSE);
+	free(line);
 	return (TRUE);
 }
 
@@ -41,29 +42,34 @@ static int	check_texture(t_game *game, char *filename)
 			free(line);
 			continue ;
 		}
-		if (check_line_contain_flag(line) == TRUE)
+		if (check_line_contain_flag(game, line) == TRUE)
 		{
 			flag = identify_flag(line);
 			if (!flag)
+			{
+				free(line); 	
 				return (FALSE);
+			}
 			if (check_doublon_flag(flag, game) == TRUE)
 			{
 				free(line);
 				ft_putstr_fd("Error: Duplicate texture detected.\n", 2);
 				return (FALSE);
 			}
-			path = extract_path(line, flag);
+			path = extract_path(game, line, flag);
 			if (fill_texture(path, flag, game) == FALSE)
 			{
 				free(line);
 				return (FALSE);
 			}
+			free(line);
 			continue ;
 		}
 		if ((check_texture_is_fill(game) == TRUE)
 			&& (check_line_contain_map(line) == TRUE))
 		{
 			fill_map(line, game);
+			free(line);
 			continue ;
 		}
 		else
@@ -111,8 +117,9 @@ int	check_content_file(t_game *game, char *filename)
 	game->map->fd = open(filename, O_RDONLY);
 	game->map->height = count_line_map(game->map->fd);
 	close(game->map->fd);
-	game->map->tab = malloc((sizeof(char *)
-				* (game->map->height + 1)));
+	// game->map->tab = malloc((sizeof(char *)
+	// 			* (game->map->height + 1)));
+	game->map->tab = ft_malloc(game, (sizeof(char *)), (game->map->height + 1));
 	if (!game->map->tab)
 		return (ft_putstr_fd("Error :malloc map", 2), FALSE);
 	init_map(game, game->map->height);

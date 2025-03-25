@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:23:58 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/05 22:36:52 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:30:05 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int	check_doublon_flag(char *flag, t_game *game)
 	return (FALSE);
 }
 
-int	check_line_contain_flag(char *line)
+int	check_line_contain_flag(t_game *game, char *line)
 {
 	int		i;
 	char	**line_tab;
 	char	*trimmed_path;
 
 	i = 0;
-	trimmed_path = ft_strtrim((const char *)line, " 	\n");
-	line_tab = ft_split(trimmed_path, ' ');
+	trimmed_path = ft_strtrim_list(game, (const char *)line, " 	\n");
+	line_tab = ft_split_list(game, trimmed_path, ' ');
 	while (line_tab[i])
 		i++;
 	if (i != 2)

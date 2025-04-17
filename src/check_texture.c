@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:23:58 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/25 13:30:05 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/16 15:50:48 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	check_line_contain_map(char *line)
 
 	i = 0;
 	if (check_is_empty_line(line) == TRUE || !line)
+	{
 		return (FALSE);
+	}
+	
 	while (line[i])
 	{
 		if (ft_isspace(line[i]) == FALSE && line[i] != '1' && line[i] != '0'
@@ -30,15 +33,14 @@ int	check_line_contain_map(char *line)
 	return (TRUE);
 }
 
-int	check_texture_is_fill(t_game *game)
+void	check_texture_is_fill(t_game *game)
 {
 	if (!game || !game->texinfo->NO_path || !game->texinfo->SO_path
 		|| !game->texinfo->WE_path || !game->texinfo->EA_path)
-		return (FALSE);
+		exit_prog("Error : Missing Texture/image\n",2,game);
 	if (check_tab_empty(game->texinfo->floor) == FALSE
 		|| check_tab_empty(game->texinfo->ceiling) == FALSE)
-		return (FALSE);
-	return (TRUE);
+		exit_prog("Error : Missing Texture/RGB\n",2,game);
 }
 
 int	check_doublon_flag(char *flag, t_game *game)
@@ -71,8 +73,8 @@ int	check_line_contain_flag(t_game *game, char *line)
 	line_tab = ft_split_list(game, trimmed_path, ' ');
 	while (line_tab[i])
 		i++;
-	if (i != 2)
-		return (FALSE);
+	// if (i != 2)
+	// 	return (FALSE);
 	if (!ft_strncmp(line_tab[0], "NO", 3) || !ft_strncmp(line_tab[0], "SO", 3)
 		|| !ft_strncmp(line_tab[0], "WE", 3) || !ft_strncmp(line_tab[0], "EA",
 			3) || !ft_strncmp(line_tab[0], "F", 3) || !ft_strncmp(line_tab[0],

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/24 15:53:44 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:33:00 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void	draw_player(t_game *game)
 /* dessine les differentes cases (murs ou sol) pour la map */
 void	draw_square(t_game *game, int x, int y, char sqr_type)
 {
-	t_player	*player;
+	//t_player	*player;
 	int			color;
 	int			i;
 	int			j;
 
-	player = game->player;
+	//player = game->player;
 	i = 0;
 	color = 0x000000;
 	if (sqr_type == '0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/25 14:41:52 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/16 11:21:34 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	init_texinfo(t_game *game)
 	// game->texinfo = malloc(sizeof(t_texinfo));
 	game->texinfo = ft_malloc(game, sizeof(t_texinfo), 1);
 	if (!game->texinfo)
-		return (ft_putstr_fd("Error : Mallox init_texinfo\n", 2));
+		return (exit_prog("Error : Malloc init_texinfo\n", 1,game));
 	game->texinfo->NO_path = NULL;
 	game->texinfo->SO_path = NULL;
 	game->texinfo->WE_path = NULL;

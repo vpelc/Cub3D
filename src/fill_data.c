@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/25 13:14:21 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/17 12:50:35 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ static int	fill_hexa(t_game *game)
 static int	parse_rgb(char *path, int index)
 {
 	char	**values;
+	char 	*trimmed;
 	int		result;
-
 	values = ft_split(path, ',');
 	if (!values)
 		return (-1);
-	result = ft_atoi(values[index]);
+	trimmed = ft_strtrim(values[index]," \t");
+	result = ft_atoi(trimmed);
 	free_tab(values);
 	return (result);
 }
 
-static int	fill_color_data(char *flag, char *path, t_game *game)
+static int	 fill_color_data(char *flag, char *path, t_game *game)
 {
 	if (flag[0] == 'F')
 	{
@@ -53,10 +54,15 @@ static int	fill_color_data(char *flag, char *path, t_game *game)
 	}
 	else
 		return (FALSE);
+
+
 	if (fill_hexa(game) == FALSE)
+	{
 		return (FALSE);
+	}
 	return (TRUE);
 }
+
 
 int	fill_texture(char *path, char *flag, t_game *game)
 {
@@ -71,7 +77,9 @@ int	fill_texture(char *path, char *flag, t_game *game)
 	else if (flag[0] == 'C' || flag[0] == 'F')
 		return (fill_color_data(flag, path, game));
 	else
+	{
 		return (FALSE);
+	}
 	return (TRUE);
 }
 

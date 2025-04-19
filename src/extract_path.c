@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/17 12:30:59 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:45:48 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,50 @@ static char	*extract_colour(t_game *game, char *line)
 	return (ft_strdup_list(game, line + start));
 }
 
-static char	*extract_texture(t_game *game, char *line)
+// static char	*extract_texture(t_game *game, char *line)
+// {
+// 	int	i;
+// 	int	start;
+// 	int	end;
+
+// 	i = 0;
+// 	while (ft_isspace(line[i]))
+// 		i++;
+// 	i += 2;
+// 	while (ft_isspace(line[i]))
+// 		i++;
+// 	start = i;
+// 	while (line[i] && !ft_isspace(line[i]))
+// 		i++;
+// 	end = i - 1;
+// 	return (ft_substr_list(game, line, start, end - start + 1));
+// }
+
+static char *extract_texture(t_game *game, char *line)
 {
-	int	i;
-	int	start;
-	int	end;
+	int		i;
+	int		j;
+	char	*path;
 
 	i = 0;
+
 	while (ft_isspace(line[i]))
 		i++;
 	i += 2;
 	while (ft_isspace(line[i]))
 		i++;
-	start = i;
-	while (line[i] && !ft_isspace(line[i]))
-		i++;
-	end = i - 1;
-	return (ft_substr_list(game, line, start, end - start + 1));
+	path = ft_strtrim(line + i, " \t\n");	
+	j = 0;
+	while (path[j])
+	{
+		if (ft_isspace(path[j]))
+		{
+			free(path);
+			exit_prog("Error: Invalid texture path, spaces are not allowed.\n", 2, game);
+		}
+		j++;
+	}
+	return (path);
 }
 
 char	*extract_path(t_game *game, char *line, char *flag)

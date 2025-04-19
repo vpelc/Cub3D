@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/16 15:42:40 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:19:22 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_texinfo
 	unsigned long		hex_ceiling;
 	int					floor[3];
 	int					ceiling[3];
+	int					ceilling_check;
+	int					floor_check;
 	char				*NO_path;
 	char				*SO_path;
 	char				*WE_path;

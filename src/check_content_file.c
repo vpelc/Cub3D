@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/17 16:51:12 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/19 14:37:30 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,31 @@ static void check_texture_is_reachable(t_game *game)
 	int fd_WE;
 	int fd_EA;
 
-	// if (is_file_xpm(game) == FALSE)
-	// 	exit_prog("Error: assets not xpm file.\n",1,game);
 	fd_NO = open (game->texinfo->NO_path,O_RDONLY);
 	fd_SO = open (game->texinfo->SO_path,O_RDONLY);
 	fd_WE = open (game->texinfo->WE_path,O_RDONLY);
 	fd_EA = open (game->texinfo->EA_path,O_RDONLY);
 	if (fd_NO == -1 || fd_SO == -1 || fd_WE == -1 || fd_EA == -1)
-		exit_prog("Error : texture not reachable.\n",2,game);
+		exit_prog("Error : texture/image not reachable.\n",2,game);
 	close(fd_NO);
 	close(fd_SO);
 	close(fd_WE);
 	close(fd_EA);
+}
+
+int has_valid_extension(char *path)
+{
+    int len ;
+	len = ft_strlen(path);
+    return (len > 4 && ft_strncmp(path + len - 4, ".xpm",ft_strlen(path)) == 0);
+}
+
+int is_texture_image(char *flag)
+{
+	if (!ft_strncmp("NO",flag,ft_strlen(flag)) || !ft_strncmp("SO",flag,ft_strlen(flag)) 
+	|| !ft_strncmp("WE",flag,ft_strlen(flag)) || !ft_strncmp("EA",flag,ft_strlen(flag)))
+		return (TRUE);
+	return (FALSE);
 }
 
 static void	check_texture(t_game *game, char *filename)
@@ -97,6 +110,11 @@ static void	check_texture(t_game *game, char *filename)
 				exit_prog("Error: Duplicate texture detected.\n", 2,game);
 			}
 			path = extract_path(game, line, flag);
+			if (!has_valid_extension(path) && is_texture_image(flag) == TRUE)
+			{
+				free(line);
+                exit_prog("Error: Texture must have .xpm extension.\n", 2, game);
+			}
 			if (fill_texture(path, flag, game) == FALSE)
 			{
 				free(line);
@@ -122,7 +140,10 @@ static void	check_texture(t_game *game, char *filename)
 	}
 	close(fd);
 	if(map_started == FALSE)
+	{
+		
 		exit_prog("Error: No map in .cub file.\n",2,game);
+	}
 	free(line);
 }
 

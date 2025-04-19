@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/16 11:21:34 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:22:00 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	init_texinfo(t_game *game)
 	game->texinfo->ceiling[2] = -1;
 	game->texinfo->hex_floor = 0x0;
 	game->texinfo->hex_ceiling = 0x0;
+	game->texinfo->floor_check = FALSE;
+	game->texinfo->ceilling_check = FALSE;
 }
 
 void	get_player_dir(t_game *game)

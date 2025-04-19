@@ -1,23 +1,22 @@
+    WE                          ./images/we_cool.xpm 
 
-NO 4./images/so_cool.xpm                    
-WE ./images/we_cool.xpm                        
+
+NO                          ./images/no_cool.xpm
+
+
+
+SO ./images/so_cool.xpm 
+
+F               18,53,25
+
 EA ./images/ea_cool.xpm
-SO ./images/no_cool.xpm
-F 48,60,32
-C 90,233,235
 
+C 153,204,255
 
-
-11111
-10001
-10001
-10001
-10001
-1S001
-11001
-10001
-10001
-10001
-10001
-10001
-11111
+         1
+        1S1
+       10001
+      1000001
+     100000001
+    10000000001
+   1111111111111

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:23:58 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/16 15:50:48 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:22:18 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	check_doublon_flag(char *flag, t_game *game)
 		return (TRUE);
 	if (!ft_strncmp(flag, "EA", 2) && (game->texinfo->EA_path))
 		return (TRUE);
-	if (flag[0] == 'F' && (game->texinfo->floor) == 0)
+	if (flag[0] == 'F' && (game->texinfo->floor_check) == TRUE)
 		return (TRUE);
-	if (flag[0] == 'C' && (game->texinfo->ceiling) == 0)
+	if (flag[0] == 'C' && (game->texinfo->ceilling_check) == TRUE)
 		return (TRUE);
 	return (FALSE);
 }

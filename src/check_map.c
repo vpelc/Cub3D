@@ -121,7 +121,7 @@ void	check_double_pos_start(t_game *game)
 
 void	flood_fill(char **map, int x, int y, t_game *game)
 {
-	if ((x < 0 || y < 0) || (x >= game->map->width) || y >= (game->map->height) || map[y][x] == ' ' )
+	if ((x < 0 || y < 0) || (x >= (int)ft_strlen(map[y]) || y >= (game->map->height) || map[y][x] == ' ' ))
 		 exit_prog("Error: Invalid Map.\n",2,game);
 	if (map[y][x] == '1' || map[y][x] == 'x')
 		return ;

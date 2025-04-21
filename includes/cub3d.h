@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/19 13:19:22 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/21 13:49:28 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,5 +246,6 @@ char					*ft_strtrim_list(t_game *game, char const *s1,
 							char const *set);
 char					**ft_split_list(t_game *game, char const *str, char c);
 void exit_prog(char *msg, int error,t_game *game);
+void	free_list(t_game *game);
 
 #endif

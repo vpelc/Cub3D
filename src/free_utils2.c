@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:24:18 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/16 11:32:12 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/21 13:49:48 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void exit_prog(char *msg, int error,t_game *game)
 	(void)game;
 	if (error == 1)
 	{
+		free_list(game);
 		ft_putstr_fd(msg,2);
 		exit(1);
 	}

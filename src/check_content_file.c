@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/19 14:37:30 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/21 13:54:41 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,27 @@ int is_texture_image(char *flag)
 		return (TRUE);
 	return (FALSE);
 }
-
+int line_contain_char(char *line)
+{
+	int i;
+    char current_char;
+    
+	i = 0;  
+    while (line[i]) 
+    {
+        current_char = line[i];  
+        if (current_char != '0' &&
+            current_char != '1' &&
+            current_char != 'N' &&
+            current_char != 'S' &&
+            current_char != 'E' &&
+            current_char != 'W' &&
+            ft_isspace(current_char) == FALSE)
+            return (TRUE);
+        i++;
+    }
+    return (FALSE);
+}
 static void	check_texture(t_game *game, char *filename)
 {
 	char	*line;
@@ -94,10 +114,18 @@ static void	check_texture(t_game *game, char *filename)
 			if (map_started)
 			{
 				free(line);
-				exit_prog("Error: Empty line inside the map.\n",2,game);
+				exit_prog("Error: Empty line inside the map.\n",1,game);
 			}
 			free(line);
 			continue ;
+		}
+		if (map_started == TRUE)
+		{
+		 	if (line_contain_char(line) == TRUE)
+		 	{
+		 		free(line);
+		 		exit_prog("Error: Char not allowed in map.\n", 1, game);
+		 	}
 		}
 		if (map_started == FALSE && check_line_contain_flag(game, line) == TRUE)
 		{
@@ -107,18 +135,18 @@ static void	check_texture(t_game *game, char *filename)
 			if (check_doublon_flag(flag, game) == TRUE)
 			{
 				free(line);
-				exit_prog("Error: Duplicate texture detected.\n", 2,game);
+				exit_prog("Error: Duplicate texture detected.\n", 1,game);
 			}
 			path = extract_path(game, line, flag);
 			if (!has_valid_extension(path) && is_texture_image(flag) == TRUE)
 			{
 				free(line);
-                exit_prog("Error: Texture must have .xpm extension.\n", 2, game);
+                exit_prog("Error: Texture must have .xpm extension.\n", 1, game);
 			}
 			if (fill_texture(path, flag, game) == FALSE)
 			{
 				free(line);
-				exit_prog("Error: Failed to load texture path.\n",2,game);
+				exit_prog("Error: Failed to load texture path.\n",1,game);
 			}
 			free(line);
 			continue ;
@@ -136,13 +164,13 @@ static void	check_texture(t_game *game, char *filename)
 			continue ;
 		}
 		free(line);
-		exit_prog("Error: Invalid data in .cub file.\n", 2, game);
+		exit_prog("Error: Invalid data in .cub file.\n", 1, game);
 	}
 	close(fd);
 	if(map_started == FALSE)
 	{
 		
-		exit_prog("Error: No map in .cub file.\n",2,game);
+		exit_prog("Error: No map in .cub file.\n",1,game);
 	}
 	free(line);
 }

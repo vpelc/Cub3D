@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/24 15:53:44 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/22 14:25:43 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	create_map_img(t_game *game)
 {
 	t_texture	*tex;
 
-	// tex = malloc(sizeof(t_texture) * 1);
 	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = game->map->width << 6;
 	tex->height = game->map->height << 6;
@@ -37,7 +36,6 @@ void	create_mini_map_img(t_game *game)
 {
 	t_texture	*tex;
 
-	// tex = malloc(sizeof(t_texture) * 1);
 	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = 512;
 	tex->height = 512;
@@ -55,25 +53,21 @@ void	create_mini_map_img(t_game *game)
 /* dessine le joueur sur la minimap */
 void	draw_player(t_game *game)
 {
-	t_player	*player;
-	int			size;
-	int			i;
-	int			j;
-	float		k;
+	int		size;
+	int		i;
+	int		j;
+	float	k;
 
-	player = game->player;
 	size = (P_SIZE) / 2;
-	i = -size;
-	while (i < size)
+	i = -size - 1;
+	while (++i < size)
 	{
-		j = -size;
-		while (j < size)
+		j = -size - 1;
+		while (++j < size)
 		{
-			put_pixel_to_image(game->map_img, (player->posx + j), (player->posy
-					+ i), 0x0000FF);
-			j++;
+			put_pixel_to_image(game->map_img, (game->player->posx + j),
+				(game->player->posy + i), 0x0000FF);
 		}
-		i++;
 	}
 	k = 0;
 	while (k < 6)
@@ -94,16 +88,16 @@ void	draw_square(t_game *game, int x, int y, char sqr_type)
 	int			j;
 
 	player = game->player;
-	i = 0;
+	i = -1;
 	color = 0x000000;
 	if (sqr_type == '0')
 		color = 0xFFFFFF;
 	if (sqr_type == '1')
 		color = 0x505050;
-	while (i < SQR_SIZE)
+	while (++i < SQR_SIZE)
 	{
-		j = 0;
-		while (j < SQR_SIZE)
+		j = -1;
+		while (++j < SQR_SIZE)
 		{
 			if (j == 0 || i == 0)
 				put_pixel_to_image(game->map_img, (x * SQR_SIZE) + j, (y
@@ -111,9 +105,7 @@ void	draw_square(t_game *game, int x, int y, char sqr_type)
 			else
 				put_pixel_to_image(game->map_img, (x * SQR_SIZE) + j, (y
 						* SQR_SIZE) + i, color);
-			j++;
 		}
-		i++;
 	}
 }
 
@@ -136,45 +128,4 @@ void	draw_map(t_game *game)
 		i++;
 	}
 	draw_player(game);
-	// mlx_put_image_to_window(game->mlx, game->win, game->map_img->img, 0, 0);
-}
-/*  */
-int	get_pixel_color_mini(t_texture *tex, int x, int y)
-{
-	int	color;
-	int	pixel_index;
-
-	pixel_index = y * tex->size_line + x * (tex->bpp / 8);
-	color = *(unsigned int *)(tex->addr + pixel_index);
-	return (color);
-}
-
-/* decoupe la partie de la map qui sera affichee et affiche */
-void	draw_mini_map(t_game *game)
-{
-	float	img_x;
-	float	img_y;
-	int		i;
-	int		j;
-
-	draw_map(game);
-	img_x = game->player->posx - 256;
-	img_y = game->player->posy - 256;
-	if (game->player->posx > (game->map->width * SQR_SIZE) - 256)
-		img_x = (game->map->width * SQR_SIZE) - 512;
-	if (game->player->posy > (game->map->height * SQR_SIZE) - 256)
-		img_y = (game->map->height * SQR_SIZE) - 512;
-	if (game->player->posx < 256 || (game->map->width * SQR_SIZE) < 512)
-		img_x = 0;
-	if (game->player->posy < 256 || (game->map->height * SQR_SIZE) < 512)
-		img_y = 0;
-	i = -1;
-	while (++i < 512 && i < game->map->height * SQR_SIZE)
-	{
-		j = -1;
-		while (++j < 512 && j < game->map->width * SQR_SIZE)
-			put_pixel_to_image(game->minimap_img, j, i,
-				get_pixel_color_mini(game->map_img, img_x + j, img_y + i));
-	}
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap_img->img, 0, 0);
 }

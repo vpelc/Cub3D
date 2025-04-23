@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:39 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/24 17:45:28 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/22 14:30:57 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	get_map_width(char **map)
 	}
 	return (max_width);
 }
-
 
 void	ft_strcpy(char *dst, const char *src)
 {

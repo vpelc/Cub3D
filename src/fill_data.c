@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/19 14:34:55 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/23 14:39:17 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	parse_rgb(char *path, int index)
 // 	return (result);
 // }
 
-static int	 fill_color_data(char *flag, char *path, t_game *game)
+static int	 fill_color_data(char *flag, char *path, t_game *game,char *line)
 {
 	if (flag[0] == 'F')
 	{
@@ -94,7 +94,10 @@ static int	 fill_color_data(char *flag, char *path, t_game *game)
 		game->texinfo->floor[2] = parse_rgb(path, 2);
 		game->texinfo->floor_check = TRUE;
 		if (game->texinfo->floor[0] == -1|| game->texinfo->floor[1] == -1|| game->texinfo->floor[0] == -1)
-			exit_prog("Error: Missing RGB value.\n", 2, game);		
+		{
+			free(line);
+			exit_prog("Error: Missing RGB value floor.\n", 1, game);		
+		}
 	}
 	else if (flag[0] == 'C')
 	{
@@ -103,7 +106,10 @@ static int	 fill_color_data(char *flag, char *path, t_game *game)
 		game->texinfo->ceiling[2] = parse_rgb(path, 2);
 		game->texinfo->ceilling_check = TRUE;
 		if (game->texinfo->ceiling[0] == -1|| game->texinfo->ceiling[1] == -1|| game->texinfo->ceiling[0] == -1)
-			exit_prog("Error: Missing RGB value.\n", 2, game);		
+		{
+			free(line);
+			exit_prog("Error: Missing RGB value ceiling.\n", 1, game);		
+		}
 	}
 	else
 		return (FALSE);
@@ -117,7 +123,7 @@ static int	 fill_color_data(char *flag, char *path, t_game *game)
 }
 
 
-int	fill_texture(char *path, char *flag, t_game *game)
+int	fill_texture(char *path, char *flag, t_game *game,char *line)
 {
 	if (!ft_strncmp(flag, "NO", 3))
 		game->texinfo->NO_path = path;
@@ -128,7 +134,7 @@ int	fill_texture(char *path, char *flag, t_game *game)
 	else if (!ft_strncmp(flag, "EA", 3))
 		game->texinfo->EA_path = path;
 	else if (flag[0] == 'C' || flag[0] == 'F')
-		return (fill_color_data(flag, path, game));
+		return (fill_color_data(flag, path, game,line));
 	else
 	{
 		return (FALSE);

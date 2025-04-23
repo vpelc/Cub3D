@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/21 13:54:41 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/23 14:39:01 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static void	check_texture(t_game *game, char *filename)
 				free(line);
                 exit_prog("Error: Texture must have .xpm extension.\n", 1, game);
 			}
-			if (fill_texture(path, flag, game) == FALSE)
+			if (fill_texture(path, flag, game,line) == FALSE)
 			{
 				free(line);
 				exit_prog("Error: Failed to load texture path.\n",1,game);
@@ -177,7 +177,7 @@ static void	check_texture(t_game *game, char *filename)
 
 static void	check_validity_map(t_game *game)
 {
-	check_char_map(game);
+	define_size_x_map(game);
 	check_double_pos_start(game);
 	check_map_fully_enclosed(game);
 }

@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:39 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 13:24:02 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:49:46 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	get_map_width(char **map)
 	}
 	return (max_width);
 }
-
 
 void	ft_strcpy(char *dst, const char *src)
 {

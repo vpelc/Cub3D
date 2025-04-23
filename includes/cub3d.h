@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 14:39:49 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:48:18 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,16 +208,33 @@ int						get_pos_x_player(char **map);
 char					**copy_map(char **map, int height);
 int						get_map_width(char **map);
 
+// mini map
+
+void					create_map_img(t_game *game);
+void					create_mini_map_img(t_game *game);
+void					draw_mini_map(t_game *game);
+void					draw_map(t_game *game);
+void					draw_player(t_game *game);
+void					put_pixel_to_image(t_texture *tex, float x, float y,
+							int color);
+
+// ray cast
+
+void					draw_ray(t_game *game);
+double					ray_hor(t_game *game, t_rays *ray, double dist_h);
+double					ray_ver(t_game *game, t_rays *ray, double dist_v);
+void					ray_on_line(t_game *game, t_rays *ray, char dir);
+void					check_ver_hor(t_rays *ray, double dist_h,
+							double dist_v);
+void					check_ra(t_rays *ray);
+float					dist(float px, float py, float rx, float ry);
+
 void					print_game(t_game *game);
 void					print_map(char **map);
 void					*ft_malloc(t_game *game, size_t size, size_t count);
 int						close_window(t_game *game);
 int						init_game(t_game *game);
-void					draw_map(t_game *game);
-void					draw_player(t_game *game);
-void					draw_ray(t_game *game);
-void					put_pixel_to_image(t_texture *tex, float x, float y,
-							int color);
+
 void					load_win_texture(t_game *game);
 void					load_texture(t_game *game, t_image **img, char *name,
 							char *path);
@@ -230,9 +247,7 @@ void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
 int						get_pixel_color(t_texture *tex, int x, int y);
 int						get_pixel_color_r(t_texture *tex, int x, int y);
-void					create_map_img(t_game *game);
-void					create_mini_map_img(t_game *game);
-void					draw_mini_map(t_game *game);
+
 void					mouse_rotate(t_game *game, int move);
 void					init_player(t_game *game);
 void					init_texture(t_game *game);

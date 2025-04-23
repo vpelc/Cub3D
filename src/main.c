@@ -6,7 +6,11 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/04/14 14:42:33 by vpelc            ###   ########.fr       */
+=======
 /*   Updated: 2025/04/16 12:10:32 by dbajeux          ###   ########.fr       */
+>>>>>>> c742bd605b087ec500d96e2aaefb4b964623cb8e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +92,7 @@ int mouse_move(int x, int y, t_game *game)
     // printf("Mouse: %d, %d\n", x, y);
 
     if (x != center_x || y != center_y) // Reset position if mouse moves away
-        mlx_mouse_move(game->mlx, game->win, center_x, center_y);
+		mlx_mouse_move(game->mlx, game->win, center_x, center_y);
     (void)y;
 	delta_x = x - center_x;
 	// printf("Mouse movement: %d\n", delta_x);
@@ -111,7 +115,7 @@ int	main(int argc, char *argv[])
 	init_player(&game);
 	init_texture(&game);
 	// print_map(game.map->cv_tab);
-	mlx_mouse_hide(game.mlx, game.win);
+	// mlx_mouse_hide(game.mlx, game.win);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);

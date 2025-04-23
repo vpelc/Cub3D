@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:23:15 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/25 13:32:34 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/22 14:48:36 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	*ft_malloc(t_game *game, size_t size, size_t count)
 
 char	*ft_strdup_list(t_game *game, const char *s1)
 {
-	int i;
-	char *s1_dup;
+	int		i;
+	char	*s1_dup;
 
 	i = 0;
 	while (s1[i])
@@ -56,9 +56,10 @@ char	*ft_strdup_list(t_game *game, const char *s1)
 	return (s1_dup);
 }
 
-char	*ft_substr_list(t_game *game, char const *s, unsigned int start, size_t len)
+char	*ft_substr_list(t_game *game, char const *s, unsigned int start,
+		size_t len)
 {
-	char *substr;
+	char	*substr;
 
 	if (!s)
 		return (NULL);

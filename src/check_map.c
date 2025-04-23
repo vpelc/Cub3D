@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+ 		/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -37,7 +37,7 @@ int	convert_map(t_game *game)
 	return (TRUE);
 }
 
-int	check_char_map(t_game *game)
+void check_char_map(t_game *game)
 {
 	int	i;
 	int	j;
@@ -55,17 +55,16 @@ int	check_char_map(t_game *game)
 				&& game->map->tab[i][j] != 'E'
 				&& game->map->tab[i][j] != 'W'
 				&& !ft_isspace(game->map->tab[i][j]))
-				return (FALSE);
+				exit_prog("Error: Char not allowed in map.\n", 2,game);
 			j++;
 		}
 		if (game->map->width < j)
 			game->map->width = j;
 		i++;
 	}
-	return (TRUE);
 }
 
-int	check_double_pos_start(t_game *game)
+void	check_double_pos_start(t_game *game)
 {
 	int	i;
 	int	j;
@@ -84,8 +83,7 @@ int	check_double_pos_start(t_game *game)
 				|| game->map->tab[i][j] == 'W')
 			{
 				if (flag == 1)
-					return (ft_putstr_fd("Error : Found mutilple start pos\n",
-							2), FALSE);
+					exit_prog("Error: Found mutilple start pos.\n", 2,game);
 				flag = 1;
 			}
 			j++;
@@ -93,58 +91,70 @@ int	check_double_pos_start(t_game *game)
 		i++;
 	}
 	if (flag == -1)
-		return (ft_putstr_fd("Error : no start pos in Map\n", 2), FALSE);
-	return (TRUE);
+		exit_prog("Error: no start pos in Map.\n", 2,game);
 }
 
-void	fill_flood(char **map, int y, int x, int *flag, t_game *game)
+// void	fill_flood(char **map, int y, int x, int *flag, t_game *game)
+// {
+// 	if (y < 0 || y >= game->map->height || x < 0
+// 		|| x >= (int)ft_strlen(map[y]))
+// 		return ;
+// 	if (*flag == 1 && map[y][x] == ' ')
+// 		*flag = 0;
+// 	if (*flag == 1 && map[y][x] == '0' && (y == 0
+// 			|| y == game->map->height - 1 || x == 0
+// 			|| x == (int)ft_strlen(map[y]) - 1))
+// 		*flag = 0;
+// 	map[y][x] = 'F';
+// 	if (y + 1 < game->map->height && (int)ft_strlen(map[y + 1]) > x
+// 		&& map[y + 1][x] != 'F' && map[y + 1][x] != '1')
+// 		fill_flood(map, y + 1, x, flag, game);
+// 	if (y > 0 && (int)ft_strlen(map[y - 1]) > x && map[y - 1][x] != 'F' && map[y
+// 		- 1][x] != '1')
+// 		fill_flood(map, y - 1, x, flag, game);
+// 	if (x + 1 < (int)ft_strlen(map[y]) && map[y][x + 1] != 'F' && map[y][x
+// 		+ 1] != '1')
+// 		fill_flood(map, y, x + 1, flag, game);
+// 	if (x > 0 && map[y][x - 1] != 'F' && map[y][x - 1] != '1')
+// 		fill_flood(map, y, x - 1, flag, game);
+// }
+
+void	flood_fill(char **map, int x, int y, t_game *game)
 {
-	if (y < 0 || y >= game->map->height || x < 0
-		|| x >= (int)ft_strlen(map[y]))
+	if ((x < 0 || y < 0) || (x >= (int)ft_strlen(map[y]) || y >= (game->map->height) || map[y][x] == ' ' ))
+		 exit_prog("Error: Invalid Map.\n",2,game);
+	if (map[y][x] == '1' || map[y][x] == 'x')
 		return ;
-	if (*flag == 1 && map[y][x] == ' ')
-		*flag = 0;
-	if (*flag == 1 && map[y][x] == '0' && (y == 0
-			|| y == game->map->height - 1 || x == 0
-			|| x == (int)ft_strlen(map[y]) - 1))
-		*flag = 0;
-	map[y][x] = 'F';
-	if (y + 1 < game->map->height && (int)ft_strlen(map[y + 1]) > x
-		&& map[y + 1][x] != 'F' && map[y + 1][x] != '1')
-		fill_flood(map, y + 1, x, flag, game);
-	if (y > 0 && (int)ft_strlen(map[y - 1]) > x && map[y - 1][x] != 'F' && map[y
-		- 1][x] != '1')
-		fill_flood(map, y - 1, x, flag, game);
-	if (x + 1 < (int)ft_strlen(map[y]) && map[y][x + 1] != 'F' && map[y][x
-		+ 1] != '1')
-		fill_flood(map, y, x + 1, flag, game);
-	if (x > 0 && map[y][x - 1] != 'F' && map[y][x - 1] != '1')
-		fill_flood(map, y, x - 1, flag, game);
+	map[y][x] = 'x';
+	flood_fill(map, x + 1, y, game);
+	flood_fill(map, x - 1, y, game);
+	flood_fill(map, x, y + 1, game);
+	flood_fill(map, x, y - 1, game);
 }
 
-int	check_map_fully_enclosed(t_game *game)
+void	check_map_fully_enclosed(t_game *game)
 {
 	char	**map_copy;
-	int		flag;
+	//int		flag;
 	int		start_y;
 	int		start_x;
 
 	map_copy = copy_map(game->map->tab, game->map->height);
-	flag = 1;
+	//flag = 1;
 	if (!map_copy)
-		return (ft_putstr_fd("Error : malloc copy map\n", 2), FALSE);
+		exit_prog("Error: malloc copy map.\n", 2,game);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
 	game->player->posy = (start_y * 64) + 32;
 	game->player->posx = (start_x * 64) + 32;
-	fill_flood(map_copy, start_y, start_x, &flag, game);
-	if (flag == 0)
-	{
-		free_tab(map_copy);
-		return (ft_putstr_fd("Error map not fully enclosed\n", 2), FALSE);
-	}
+	//fill_flood(map_copy, start_y, start_x, &flag, game);
+	// if (flag == 0)
+	// {
+	// 	free_tab(map_copy);
+	// 	return (ft_putstr_fd("Error map not fully enclosed\n", 2), FALSE);
+	// }
+	flood_fill(map_copy,start_x,start_y,game);
 	game->texinfo->dir = game->map->tab[start_y][start_x];
 	game->map->tab[start_y][start_x] = '0';
 	free_tab(map_copy);
-	return (TRUE);
 }

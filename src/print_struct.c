@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:34:32 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/11 14:14:44 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/17 15:15:06 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,12 @@ void	print_map(char **map)
 	int	i;
 
 	i = 0;
-	printf("MAP\n");
+	printf("					MAP\n");
 	while (map[i])
 	{
-		printf("<%s>\n", map[i]);
+		printf("[%d]					<%s>\n",i, map[i]);
 		i++;
 	}
-	ft_printf("test");
 }
 
 void	print_game(t_game *game)

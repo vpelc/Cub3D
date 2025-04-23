@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/22 14:25:43 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/23 15:18:32 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,10 @@ void	draw_player(t_game *game)
 /* dessine les differentes cases (murs ou sol) pour la map */
 void	draw_square(t_game *game, int x, int y, char sqr_type)
 {
-	t_player	*player;
 	int			color;
 	int			i;
 	int			j;
 
-	player = game->player;
 	i = -1;
 	color = 0x000000;
 	if (sqr_type == '0')

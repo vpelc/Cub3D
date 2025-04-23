@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/25 13:12:44 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/19 13:45:48 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_valid_rgb_format(char *line)
 	i = 0;
 	while (values[i])
 	{
-		trimmed = ft_strtrim(values[i], " ");
+		trimmed = ft_strtrim(values[i], " \t\n");
 		free(values[i]);
 		values[i] = trimmed;
 		i++;
@@ -67,49 +67,80 @@ static char	*extract_colour(t_game *game, char *line)
 	i = 0;
 	while (ft_isspace(line[i]))
 		i++;
-	i += 1;
+	if (line[i] == 'F' || line[i] == 'C')
+		i++;
 	while (ft_isspace(line[i]))
 		i++;
 	start = i;
 	if (is_valid_rgb_format(line + start) == -1)
-	{
-		ft_putstr_fd("Error: Invalid RGB format.\n", 2);
-		return (NULL);
-	}
+		exit_prog("Error: Invalid RGB format.\n", 2,game);
 	return (ft_strdup_list(game, line + start));
 }
 
-static char	*extract_texture(t_game *game, char *line)
+// static char	*extract_texture(t_game *game, char *line)
+// {
+// 	int	i;
+// 	int	start;
+// 	int	end;
+
+// 	i = 0;
+// 	while (ft_isspace(line[i]))
+// 		i++;
+// 	i += 2;
+// 	while (ft_isspace(line[i]))
+// 		i++;
+// 	start = i;
+// 	while (line[i] && !ft_isspace(line[i]))
+// 		i++;
+// 	end = i - 1;
+// 	return (ft_substr_list(game, line, start, end - start + 1));
+// }
+
+static char *extract_texture(t_game *game, char *line)
 {
-	int	i;
-	int	start;
-	int	end;
+	int		i;
+	int		j;
+	char	*path;
 
 	i = 0;
+
 	while (ft_isspace(line[i]))
 		i++;
 	i += 2;
 	while (ft_isspace(line[i]))
 		i++;
-	start = i;
-	while (line[i] && !ft_isspace(line[i]))
-		i++;
-	end = i - 1;
-	return (ft_substr_list(game, line, start, end - start + 1));
+	path = ft_strtrim(line + i, " \t\n");	
+	j = 0;
+	while (path[j])
+	{
+		if (ft_isspace(path[j]))
+		{
+			free(path);
+			exit_prog("Error: Invalid texture path, spaces are not allowed.\n", 2, game);
+		}
+		j++;
+	}
+	return (path);
 }
 
 char	*extract_path(t_game *game, char *line, char *flag)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
-	while (ft_isspace(line[i]) == TRUE)
-		i++;
+	// i = 0;
+	// while (ft_isspace(line[i]) == TRUE)
+	// 	i++;
 	if (!ft_strncmp(flag, "NO", 3) || !ft_strncmp(flag, "SO", 3)
 		|| !ft_strncmp(flag, "WE", 3) || !ft_strncmp(flag, "EA", 3))
 		return (extract_texture(game, line));
-	else if (flag[i] == 'F' || flag[i] == 'C')
+	// else if (flag[i] == 'F' || flag[i] == 'C')
+	// {
+	// 	return (extract_colour(game, line));
+	// }
+	else if (!ft_strncmp(flag, "F", 2) || !ft_strncmp(flag, "C", 2))
+	{
 		return (extract_colour(game, line));
+	}
 	else
 		return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/22 14:46:00 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/23 15:17:00 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_texinfo
 	unsigned long		hex_ceiling;
 	int					floor[3];
 	int					ceiling[3];
+	int					ceilling_check;
+	int					floor_check;
 	char				*NO_path;
 	char				*SO_path;
 	char				*WE_path;
@@ -167,19 +169,19 @@ typedef struct s_free
 /* ************************************************************************** */
 
 // check_args
-int						check_args(int argc, char **argv);
+void						check_args(int argc, char **argv,t_game *game);
 
 // check content file
-int						check_content_file(t_game *game, char *filename);
+void						check_content_file(t_game *game, char *filename);
 
 // check map
-int						check_double_pos_start(t_game *game);
-int						check_char_map(t_game *game);
-int						check_map_fully_enclosed(t_game *game);
+void						check_double_pos_start(t_game *game);
+void						check_char_map(t_game *game);
+void						check_map_fully_enclosed(t_game *game);
 
 // check texture
 int						check_line_contain_map(char *line);
-int						check_texture_is_fill(t_game *game);
+void						check_texture_is_fill(t_game *game);
 int						check_doublon_flag(char *flag, t_game *game);
 int						check_line_contain_flag(t_game *game, char *line);
 int						check_is_empty_line(char *line);
@@ -258,5 +260,7 @@ char					*ft_substr_list(t_game *game, char const *s,
 char					*ft_strtrim_list(t_game *game, char const *s1,
 							char const *set);
 char					**ft_split_list(t_game *game, char const *str, char c);
+void exit_prog(char *msg, int error,t_game *game);
+void	free_list(t_game *game);
 
 #endif

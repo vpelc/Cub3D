@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:24:18 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/22 14:48:28 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/23 15:17:14 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static	int	ft_put_in_split(t_game *game, char **split, char const *str, char c)
 	return (1);
 }
 
+
 char	**ft_split_list(t_game *game, char const *str, char c)
 {
 	char	**split;
@@ -95,3 +96,19 @@ char	**ft_split_list(t_game *game, char const *str, char c)
 	split[size] = 0;
 	return (split);
 }
+
+void exit_prog(char *msg, int error,t_game *game)
+{
+	(void)game;
+	if (error == 1)
+	{
+		free_list(game);
+		ft_putstr_fd(msg,2);
+		exit(1);
+	}
+	if (error == 2)
+	{
+		ft_putstr_fd(msg,2);
+		exit(1);
+	}
+}																								

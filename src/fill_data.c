@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/03/25 13:14:21 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/19 14:34:55 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,95 @@ static int	fill_hexa(t_game *game)
 static int	parse_rgb(char *path, int index)
 {
 	char	**values;
+	char	*trimmed;
 	int		result;
+	int		i;
 
 	values = ft_split(path, ',');
 	if (!values)
 		return (-1);
-	result = ft_atoi(values[index]);
+
+	// ⚠️ Vérifie qu'il y a bien 3 éléments
+	i = 0;
+	while (values[i])
+		i++;
+	if (i != 3)
+	{
+		free_tab(values);
+		return (-1); // Erreur: RGB incomplet
+	}
+
+	// Vérifie que l'index demandé existe (index 0, 1, 2 max)
+	if (index < 0 || index > 2)
+	{
+		free_tab(values);
+		return (-1);
+	}
+
+	trimmed = ft_strtrim(values[index], " \t\n");
+	if (!trimmed || trimmed[0] == '\0')
+	{
+		free(trimmed);
+		free_tab(values);
+		return (-1); // Erreur: champ vide
+	}
+
+	result = ft_atoi(trimmed);
+
+	free(trimmed);
 	free_tab(values);
 	return (result);
 }
 
-static int	fill_color_data(char *flag, char *path, t_game *game)
+// static int	parse_rgb(char *path, int index)
+// {
+// 	char	**values;
+// 	char 	*trimmed;
+// 	int		result;
+// 	int i;
+
+// 	i = 0;
+// 	values = ft_split(path, ',');
+// 	if (!values)
+// 		return (-1);
+
+// 	trimmed = ft_strtrim(values[index]," \t");
+// 	result = ft_atoi(trimmed);
+// 	free_tab(values);
+// 	return (result);
+// }
+
+static int	 fill_color_data(char *flag, char *path, t_game *game)
 {
 	if (flag[0] == 'F')
 	{
 		game->texinfo->floor[0] = parse_rgb(path, 0);
 		game->texinfo->floor[1] = parse_rgb(path, 1);
 		game->texinfo->floor[2] = parse_rgb(path, 2);
+		game->texinfo->floor_check = TRUE;
+		if (game->texinfo->floor[0] == -1|| game->texinfo->floor[1] == -1|| game->texinfo->floor[0] == -1)
+			exit_prog("Error: Missing RGB value.\n", 2, game);		
 	}
 	else if (flag[0] == 'C')
 	{
 		game->texinfo->ceiling[0] = parse_rgb(path, 0);
 		game->texinfo->ceiling[1] = parse_rgb(path, 1);
 		game->texinfo->ceiling[2] = parse_rgb(path, 2);
+		game->texinfo->ceilling_check = TRUE;
+		if (game->texinfo->ceiling[0] == -1|| game->texinfo->ceiling[1] == -1|| game->texinfo->ceiling[0] == -1)
+			exit_prog("Error: Missing RGB value.\n", 2, game);		
 	}
 	else
 		return (FALSE);
+
+
 	if (fill_hexa(game) == FALSE)
+	{
 		return (FALSE);
+	}
 	return (TRUE);
 }
+
 
 int	fill_texture(char *path, char *flag, t_game *game)
 {
@@ -71,7 +130,9 @@ int	fill_texture(char *path, char *flag, t_game *game)
 	else if (flag[0] == 'C' || flag[0] == 'F')
 		return (fill_color_data(flag, path, game));
 	else
+	{
 		return (FALSE);
+	}
 	return (TRUE);
 }
 

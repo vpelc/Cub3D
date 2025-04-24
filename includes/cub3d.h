@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 15:17:00 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/23 15:48:18 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void						check_content_file(t_game *game, char *filename);
 
 // check map
 void						check_double_pos_start(t_game *game);
-void						check_char_map(t_game *game);
+void						define_size_x_map(t_game *game);
 void						check_map_fully_enclosed(t_game *game);
 
 // check texture
@@ -191,7 +191,7 @@ char					*extract_path(t_game *game, char *line, char *flag);
 
 // fill data
 void					fill_map(char *line, t_game *game);
-int						fill_texture(char *path, char *flag, t_game *game);
+int						fill_texture(char *path, char *flag, t_game *game,char* line);
 
 // init
 void					init_data(t_game *game);

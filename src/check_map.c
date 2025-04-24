@@ -37,7 +37,7 @@ int	convert_map(t_game *game)
 	return (TRUE);
 }
 
-void check_char_map(t_game *game)
+void define_size_x_map(t_game *game)
 {
 	int	i;
 	int	j;
@@ -48,14 +48,14 @@ void check_char_map(t_game *game)
 		j = 0;
 		while (game->map->tab[i][j])
 		{
-			if (game->map->tab[i][j] != '0'
-				&& game->map->tab[i][j] != '1'
-				&& game->map->tab[i][j] != 'N'
-				&& game->map->tab[i][j] != 'S'
-				&& game->map->tab[i][j] != 'E'
-				&& game->map->tab[i][j] != 'W'
-				&& !ft_isspace(game->map->tab[i][j]))
-				exit_prog("Error: Char not allowed in map.\n", 2,game);
+			// if (game->map->tab[i][j] != '0'
+			// 	&& game->map->tab[i][j] != '1'
+			// 	&& game->map->tab[i][j] != 'N'
+			// 	&& game->map->tab[i][j] != 'S'
+			// 	&& game->map->tab[i][j] != 'E'
+			// 	&& game->map->tab[i][j] != 'W'
+			// 	&& !ft_isspace(game->map->tab[i][j]))
+			// 	exit_prog("Error: Char not allowed in map.\n", 2,game);
 			j++;
 		}
 		if (game->map->width < j)
@@ -83,7 +83,7 @@ void	check_double_pos_start(t_game *game)
 				|| game->map->tab[i][j] == 'W')
 			{
 				if (flag == 1)
-					exit_prog("Error: Found mutilple start pos.\n", 2,game);
+					exit_prog("Error: Found mutilple start pos.\n", 1,game);
 				flag = 1;
 			}
 			j++;
@@ -91,7 +91,7 @@ void	check_double_pos_start(t_game *game)
 		i++;
 	}
 	if (flag == -1)
-		exit_prog("Error: no start pos in Map.\n", 2,game);
+		exit_prog("Error: no start pos in Map.\n", 1,game);
 }
 
 // void	fill_flood(char **map, int y, int x, int *flag, t_game *game)
@@ -122,7 +122,10 @@ void	check_double_pos_start(t_game *game)
 void	flood_fill(char **map, int x, int y, t_game *game)
 {
 	if ((x < 0 || y < 0) || (x >= (int)ft_strlen(map[y]) || y >= (game->map->height) || map[y][x] == ' ' ))
-		 exit_prog("Error: Invalid Map.\n",2,game);
+	{
+		free_tab(map);
+		exit_prog("Error: Invalid Map.\n",1,game);
+	}	
 	if (map[y][x] == '1' || map[y][x] == 'x')
 		return ;
 	map[y][x] = 'x';
@@ -142,7 +145,7 @@ void	check_map_fully_enclosed(t_game *game)
 	map_copy = copy_map(game->map->tab, game->map->height);
 	//flag = 1;
 	if (!map_copy)
-		exit_prog("Error: malloc copy map.\n", 2,game);
+		exit_prog("Error: malloc copy map.\n", 1,game);
 	start_y = get_pos_y_player(map_copy);
 	start_x = get_pos_x_player(map_copy);
 	game->player->posy = (start_y * 64) + 32;

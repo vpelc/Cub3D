@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/19 13:45:48 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/23 14:32:40 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static char	*extract_colour(t_game *game, char *line)
 		i++;
 	start = i;
 	if (is_valid_rgb_format(line + start) == -1)
-		exit_prog("Error: Invalid RGB format.\n", 2,game);
+	{
+		free(line);
+		exit_prog("Error: Invalid RGB format.\n", 1,game);
+	}
 	return (ft_strdup_list(game, line + start));
 }
 
@@ -109,14 +112,15 @@ static char *extract_texture(t_game *game, char *line)
 	i += 2;
 	while (ft_isspace(line[i]))
 		i++;
-	path = ft_strtrim(line + i, " \t\n");	
+	path = ft_strtrim_list(game,line + i, " \t\n");	
 	j = 0;
 	while (path[j])
 	{
 		if (ft_isspace(path[j]))
 		{
 			free(path);
-			exit_prog("Error: Invalid texture path, spaces are not allowed.\n", 2, game);
+			free(line);
+			exit_prog("Error: Invalid texture path, spaces are not allowed.\n", 1, game);
 		}
 		j++;
 	}

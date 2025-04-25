@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 12:15:19 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/21 13:50:46 by dbajeux          ###   ########.fr       */
+/*   Created: 2025/04/24 16:37:44 by dbajeux           #+#    #+#             */
+/*   Updated: 2025/04/24 16:37:47 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static int	check_filename(char *filename)
 	return (TRUE);
 }
 
-void	check_args(int argc, char **argv,t_game *game)
+void	check_args(int argc, char **argv, t_game *game)
 {
 	if (argc != 2)
-		exit_prog("Error: Invalid number of arguments.\n", 1,game);
+		exit_prog("Error: Invalid number of arguments.\n", 1, game);
 	if (check_is_dir(argv[1]) == TRUE)
-		exit_prog("Error: The given argument is a directory.\n", 1,game);
+		exit_prog("Error: The given argument is a directory.\n", 1, game);
 	if (check_filename(argv[1]) == FALSE)
-		exit_prog("Error: File does not exist or cannot be opened.\n", 1,game);
+		exit_prog("Error: File does not exist or cannot be opened.\n", 1, game);
 	if (check_extension(argv[1]) == FALSE)
-		exit_prog("Error: Invalid file extension, expected '.cub'.\n", 1,game);
+		exit_prog("Error: Invalid file extension, expected '.cub'.\n", 1, game);
 }

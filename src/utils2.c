@@ -6,16 +6,11 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:39 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 13:24:02 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 12:42:00 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int	rgb_to_hex(int r, int g, int b)
-{
-	return ((r << 16) | (g << 8) | b);
-}
 
 int	get_pos_y_player(char **map)
 {
@@ -68,7 +63,6 @@ char	**copy_map(char **map, int height)
 
 	i = 0;
 	new_map = malloc(sizeof(char *) * (height + 1));
-	// new_map = ft_malloc(game, sizeof(char *), (height + 1));
 	if (!new_map)
 		return (NULL);
 	while (i < height)
@@ -99,15 +93,25 @@ int	get_map_width(char **map)
 	return (max_width);
 }
 
-
-void	ft_strcpy(char *dst, const char *src)
+int	convert_map(t_game *game)
 {
-	size_t	i;
+	char	**cv_map;
+	int		i;
 
+	cv_map = ft_malloc(game, sizeof(char *), (game->map->height + 1));
+	if (!cv_map)
+		return (FALSE);
 	i = 0;
-	while (src[i] != '\0')
+	while (i < game->map->height)
 	{
-		dst[i] = src[i];
+		cv_map[i] = ft_malloc(game, sizeof(char), (game->map->width + 1));
+		if (!cv_map[i])
+			return (FALSE);
+		ft_memset(cv_map[i], ' ', game->map->width);
+		cv_map[i][game->map->width] = '\0';
+		ft_strcpy(cv_map[i], game->map->tab[i]);
 		i++;
 	}
+	game->map->cv_tab = cv_map;
+	return (TRUE);
 }

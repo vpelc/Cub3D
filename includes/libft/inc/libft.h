@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:51:58 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/02/14 12:55:57 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:13:49 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ int					ft_strchr_printf(const char *s, int c);
 #  define BUFFER_SIZE 10
 # endif
 
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *buffer, char *read_buffer);
-void	ft_free_gnl(char **buffer);
-int		ft_strchr_gnl(char *s);
-size_t	ft_strlen_gnl(char *c);
+char				*get_next_line(int fd);
+char				*ft_strjoin_gnl(char *buffer, char *read_buffer);
+void				ft_free_gnl(char **buffer);
+int					ft_strchr_gnl(char *s);
+size_t				ft_strlen_gnl(char *c);
 #endif

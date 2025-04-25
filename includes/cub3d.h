@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 14:39:49 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:07:49 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ typedef struct s_texinfo
 	int					ceiling[3];
 	int					ceilling_check;
 	int					floor_check;
-	char				*NO_path;
-	char				*SO_path;
-	char				*WE_path;
-	char				*EA_path;
+	char				*no_path;
+	char				*so_path;
+	char				*we_path;
+	char				*ea_path;
 	char				dir;
 }						t_texinfo;
 
@@ -168,51 +168,77 @@ typedef struct s_free
 /*                                 FUNCTION                                   */
 /* ************************************************************************** */
 
-// check_args
-void						check_args(int argc, char **argv,t_game *game);
+// check_args.c
+void					check_args(int argc, char **argv, t_game *game);
 
-// check content file
-void						check_content_file(t_game *game, char *filename);
+// check_content_file.c
+void					check_content_file(t_game *game, char *filename);
 
-// check map
-void						check_double_pos_start(t_game *game);
-void						define_size_x_map(t_game *game);
-void						check_map_fully_enclosed(t_game *game);
+// check_map.c
+void					define_size_x_map(t_game *game);
+void					check_double_pos_start(t_game *game);
+void					check_map_fully_enclosed(t_game *game);
 
-// check texture
+// check_texture_utils.c
 int						check_line_contain_map(char *line);
-void						check_texture_is_fill(t_game *game);
+void					check_texture_is_fill(t_game *game);
 int						check_doublon_flag(char *flag, t_game *game);
 int						check_line_contain_flag(t_game *game, char *line);
 int						check_is_empty_line(char *line);
 
-// extract path
+// check_texture_utils2.c
+int						check_empty_file(t_game *game, char *filename);
+void					check_texture_is_reachable(t_game *game);
+int						has_valid_extension(char *path);
+int						is_texture_image(char *flag);
+int						line_contain_char(char *line);
+// check_texture.c
+void					parse_line(t_game *game, char *line, int *map_started);
+
+// extract_path.c
 char					*extract_path(t_game *game, char *line, char *flag);
 
-// fill data
-void					fill_map(char *line, t_game *game);
-int						fill_texture(char *path, char *flag, t_game *game,char* line);
+// fill_data.c
+int						fill_texture(char *path, char *flag, t_game *game,
+							char *line);
 
-// init
-void					init_data(t_game *game);
+// init.c
+void					init_texinfo(t_game *game);
+void					init_player(t_game *game);
+void					init_texture(t_game *game);
+void					init_keys(t_game *game);
 
-// utils
-int						ft_isspace(char c);
+// init2.c
+int						init_game(t_game *game);
+
+// utils.c
 void					free_tab(char **tab);
-int						count_line_map(int fd);
-int						check_tab_empty(int tab[3]);
-char					*identify_flag(char *line);
-int						rgb_to_hex(int r, int g, int b);
+void					free_list(t_game *game);
+int						close_window(t_game *game);
+
+// utils2.c
 int						get_pos_y_player(char **map);
 int						get_pos_x_player(char **map);
 char					**copy_map(char **map, int height);
 int						get_map_width(char **map);
+int						convert_map(t_game *game);
 
-void					print_game(t_game *game);
-void					print_map(char **map);
+// utils3.c
+int						ft_isspace(char c);
+int						check_tab_empty(int tab[3]);
+char					*identify_flag(char *line);
+int						is_valid_index(int index);
+void					ft_strcpy(char *dst, const char *src);
+
+// utils4.c
+int						parse_rgb(char *path, int index);
+void					fill_map(char *line, t_game *game);
+int						rgb_to_hex(int r, int g, int b);
+
+// victor fonction a ranger comme j'ai fait pour un .h plus clair
+//void					init_data(t_game *game);
+
 void					*ft_malloc(t_game *game, size_t size, size_t count);
-int						close_window(t_game *game);
-int						init_game(t_game *game);
 void					draw_map(t_game *game);
 void					draw_player(t_game *game);
 void					draw_ray(t_game *game);
@@ -234,10 +260,6 @@ void					create_map_img(t_game *game);
 void					create_mini_map_img(t_game *game);
 void					draw_mini_map(t_game *game);
 void					mouse_rotate(t_game *game, int move);
-void					init_player(t_game *game);
-void					init_texture(t_game *game);
-void					ft_strcpy(char *dst, const char *src);
-int						convert_map(t_game *game);
 
 char					*ft_strdup_list(t_game *game, const char *s1);
 char					*ft_substr_list(t_game *game, char const *s,
@@ -245,7 +267,6 @@ char					*ft_substr_list(t_game *game, char const *s,
 char					*ft_strtrim_list(t_game *game, char const *s1,
 							char const *set);
 char					**ft_split_list(t_game *game, char const *str, char c);
-void exit_prog(char *msg, int error,t_game *game);
-void	free_list(t_game *game);
+void					exit_prog(char *msg, int error, t_game *game);
 
 #endif

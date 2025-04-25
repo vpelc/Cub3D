@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/23 14:39:17 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:33:49 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,134 +24,62 @@ static int	fill_hexa(t_game *game)
 		return (TRUE);
 }
 
-static int	parse_rgb(char *path, int index)
+static void	set_floor_rgb(char *path, t_game *game, char *line)
 {
-	char	**values;
-	char	*trimmed;
-	int		result;
-	int		i;
-
-	values = ft_split(path, ',');
-	if (!values)
-		return (-1);
-
-	// ⚠️ Vérifie qu'il y a bien 3 éléments
-	i = 0;
-	while (values[i])
-		i++;
-	if (i != 3)
+	game->texinfo->floor[0] = parse_rgb(path, 0);
+	game->texinfo->floor[1] = parse_rgb(path, 1);
+	game->texinfo->floor[2] = parse_rgb(path, 2);
+	game->texinfo->floor_check = TRUE;
+	if (game->texinfo->floor[0] == -1 || game->texinfo->floor[1] == -1
+		|| game->texinfo->floor[2] == -1)
 	{
-		free_tab(values);
-		return (-1); // Erreur: RGB incomplet
+		free(line);
+		exit_prog("Error: Missing RGB value floor.\n", 1, game);
 	}
-
-	// Vérifie que l'index demandé existe (index 0, 1, 2 max)
-	if (index < 0 || index > 2)
-	{
-		free_tab(values);
-		return (-1);
-	}
-
-	trimmed = ft_strtrim(values[index], " \t\n");
-	if (!trimmed || trimmed[0] == '\0')
-	{
-		free(trimmed);
-		free_tab(values);
-		return (-1); // Erreur: champ vide
-	}
-
-	result = ft_atoi(trimmed);
-
-	free(trimmed);
-	free_tab(values);
-	return (result);
 }
 
-// static int	parse_rgb(char *path, int index)
-// {
-// 	char	**values;
-// 	char 	*trimmed;
-// 	int		result;
-// 	int i;
+static void	set_ceiling_rgb(char *path, t_game *game, char *line)
+{
+	game->texinfo->ceiling[0] = parse_rgb(path, 0);
+	game->texinfo->ceiling[1] = parse_rgb(path, 1);
+	game->texinfo->ceiling[2] = parse_rgb(path, 2);
+	game->texinfo->ceilling_check = TRUE;
+	if (game->texinfo->ceiling[0] == -1 || game->texinfo->ceiling[1] == -1
+		|| game->texinfo->ceiling[2] == -1)
+	{
+		free(line);
+		exit_prog("Error: Missing RGB value ceiling.\n", 1, game);
+	}
+}
 
-// 	i = 0;
-// 	values = ft_split(path, ',');
-// 	if (!values)
-// 		return (-1);
-
-// 	trimmed = ft_strtrim(values[index]," \t");
-// 	result = ft_atoi(trimmed);
-// 	free_tab(values);
-// 	return (result);
-// }
-
-static int	 fill_color_data(char *flag, char *path, t_game *game,char *line)
+static int	fill_color_data(char *flag, char *path, t_game *game, char *line)
 {
 	if (flag[0] == 'F')
-	{
-		game->texinfo->floor[0] = parse_rgb(path, 0);
-		game->texinfo->floor[1] = parse_rgb(path, 1);
-		game->texinfo->floor[2] = parse_rgb(path, 2);
-		game->texinfo->floor_check = TRUE;
-		if (game->texinfo->floor[0] == -1|| game->texinfo->floor[1] == -1|| game->texinfo->floor[0] == -1)
-		{
-			free(line);
-			exit_prog("Error: Missing RGB value floor.\n", 1, game);		
-		}
-	}
+		set_floor_rgb(path, game, line);
 	else if (flag[0] == 'C')
-	{
-		game->texinfo->ceiling[0] = parse_rgb(path, 0);
-		game->texinfo->ceiling[1] = parse_rgb(path, 1);
-		game->texinfo->ceiling[2] = parse_rgb(path, 2);
-		game->texinfo->ceilling_check = TRUE;
-		if (game->texinfo->ceiling[0] == -1|| game->texinfo->ceiling[1] == -1|| game->texinfo->ceiling[0] == -1)
-		{
-			free(line);
-			exit_prog("Error: Missing RGB value ceiling.\n", 1, game);		
-		}
-	}
+		set_ceiling_rgb(path, game, line);
 	else
 		return (FALSE);
-
-
 	if (fill_hexa(game) == FALSE)
-	{
 		return (FALSE);
-	}
 	return (TRUE);
 }
 
-
-int	fill_texture(char *path, char *flag, t_game *game,char *line)
+int	fill_texture(char *path, char *flag, t_game *game, char *line)
 {
 	if (!ft_strncmp(flag, "NO", 3))
-		game->texinfo->NO_path = path;
+		game->texinfo->no_path = path;
 	else if (!ft_strncmp(flag, "SO", 3))
-		game->texinfo->SO_path = path;
+		game->texinfo->so_path = path;
 	else if (!ft_strncmp(flag, "WE", 3))
-		game->texinfo->WE_path = path;
+		game->texinfo->we_path = path;
 	else if (!ft_strncmp(flag, "EA", 3))
-		game->texinfo->EA_path = path;
+		game->texinfo->ea_path = path;
 	else if (flag[0] == 'C' || flag[0] == 'F')
-		return (fill_color_data(flag, path, game,line));
+		return (fill_color_data(flag, path, game, line));
 	else
 	{
 		return (FALSE);
 	}
 	return (TRUE);
-}
-
-void	fill_map(char *line, t_game *game)
-{
-	int		i;
-	char	*str_trim;
-
-	i = 0;
-	str_trim = NULL;
-	while (game->map->tab[i])
-		i++;
-	str_trim = ft_strtrim_list(game, line, "\n");
-	game->map->tab[i] = ft_strdup_list(game, str_trim);
-	game->map->tab[i + 1] = NULL;
 }

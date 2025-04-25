@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:37:32 by vpelc             #+#    #+#             */
-/*   Updated: 2025/03/24 16:04:30 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:54:20 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	load_win_texture(t_game *game)
 {
 	t_texture	*tex;
 
-	// tex = malloc(sizeof(t_texture) * 1);
 	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = 1000;
 	tex->height = 1000;
@@ -36,7 +35,6 @@ void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 	t_texture	*tex;
 	t_image		*img;
 
-	// tex = malloc(sizeof(t_texture) * 1);
 	tex = ft_malloc(game, sizeof(t_texture), 1);
 	tex->width = 64;
 	tex->height = 64;
@@ -49,7 +47,6 @@ void	load_texture(t_game *game, t_image **img_g, char *name, char *path)
 		return ;
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
 			&tex->endian);
-	// img = malloc(sizeof(t_image) * 1);
 	img = ft_malloc(game, sizeof(t_texture), 1);
 	img->texture = tex;
 	img->name = ft_strdup_list(game, name);

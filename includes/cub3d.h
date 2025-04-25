@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:07:49 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 14:06:24 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,10 @@ int						line_contain_char(char *line);
 // check_texture.c
 void					parse_line(t_game *game, char *line, int *map_started);
 
+// exit.c
+void					free_list(t_game *game);
+int						close_window(t_game *game);
+
 // extract_path.c
 char					*extract_path(t_game *game, char *line, char *flag);
 
@@ -213,8 +217,6 @@ int						init_game(t_game *game);
 
 // utils.c
 void					free_tab(char **tab);
-void					free_list(t_game *game);
-int						close_window(t_game *game);
 
 // utils2.c
 int						get_pos_y_player(char **map);
@@ -235,15 +237,27 @@ int						parse_rgb(char *path, int index);
 void					fill_map(char *line, t_game *game);
 int						rgb_to_hex(int r, int g, int b);
 
-// victor fonction a ranger comme j'ai fait pour un .h plus clair
-//void					init_data(t_game *game);
+// mini map
 
-void					*ft_malloc(t_game *game, size_t size, size_t count);
+void					create_map_img(t_game *game);
+void					create_mini_map_img(t_game *game);
+void					draw_mini_map(t_game *game);
 void					draw_map(t_game *game);
 void					draw_player(t_game *game);
-void					draw_ray(t_game *game);
 void					put_pixel_to_image(t_texture *tex, float x, float y,
 							int color);
+
+// ray cast
+
+void					draw_ray(t_game *game);
+double					ray_hor(t_game *game, t_rays *ray, double dist_h);
+double					ray_ver(t_game *game, t_rays *ray, double dist_v);
+void					ray_on_line(t_game *game, t_rays *ray, char dir);
+void					check_ver_hor(t_rays *ray, double dist_h,
+							double dist_v);
+void					check_ra(t_rays *ray);
+float					dist(float px, float py, float rx, float ry);
+void					*ft_malloc(t_game *game, size_t size, size_t count);
 void					load_win_texture(t_game *game);
 void					load_texture(t_game *game, t_image **img, char *name,
 							char *path);
@@ -256,11 +270,7 @@ void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
 int						get_pixel_color(t_texture *tex, int x, int y);
 int						get_pixel_color_r(t_texture *tex, int x, int y);
-void					create_map_img(t_game *game);
-void					create_mini_map_img(t_game *game);
-void					draw_mini_map(t_game *game);
 void					mouse_rotate(t_game *game, int move);
-
 char					*ft_strdup_list(t_game *game, const char *s1);
 char					*ft_substr_list(t_game *game, char const *s,
 							unsigned int start, size_t len);

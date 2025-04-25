@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_content_file_utils.c                         :+:      :+:    :+:   */
+/*   check_texture_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:33:06 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 12:32:41 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 13:54:45 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// int	is_file_xpm(t_game *game)
-// {
-// 	if (!game->texinfo->no_path || !ft_strnstr(game->texinfo->no_path, EXT_XPM,
-// 			ft_strlen(game->texinfo->no_path)))
-// 		return (FALSE);
-// 	if (!game->texinfo->so_path || !ft_strnstr(game->texinfo->so_path, EXT_XPM,
-// 			ft_strlen(game->texinfo->so_path)))
-// 		return (FALSE);
-// 	if (!game->texinfo->we_path || !ft_strnstr(game->texinfo->we_path, EXT_XPM,
-// 			ft_strlen(game->texinfo->we_path)))
-// 		return (FALSE);
-// 	if (!game->texinfo->ea_path || !ft_strnstr(game->texinfo->ea_path, EXT_XPM,
-// 			ft_strlen(game->texinfo->ea_path)))
-// 		return (FALSE);
-// 	return (TRUE);
-// }
 
 int	check_empty_file(t_game *game, char *filename)
 {

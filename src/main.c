@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:34:02 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/24 17:51:03 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/24 17:56:10 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,35 +76,35 @@ int	key_loop(t_game *game)
 	return (0);
 }
 
-int mouse_move(int x, int y, t_game *game)
+int	mouse_move(int x, int y, t_game *game)
 {
-	int delta_x;
-	int center_x = 512 + (game->win_img->width / 2);
-	int center_y = game->win_img->height / 2;
+	int	delta_x;
+	int	center_x;
+	int	center_y;
 
+	center_x = 512 + (game->win_img->width / 2);
+	center_y = game->win_img->height / 2;
 	if (x != center_x || y != center_y)
 		mlx_mouse_move(game->mlx, game->win, center_x, center_y);
-    (void)y;
+	(void)y;
 	delta_x = x - center_x;
 	mouse_rotate(game, delta_x);
-    return (0);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_game	game;
 
-
 	(void)argc;
 	(void)argv;
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, 1512, 1000, "Cub3D");
 	init_game(&game);
-	check_args(argc, argv,&game);
-	check_content_file(&game,argv[1]);
+	check_args(argc, argv, &game);
+	check_content_file(&game, argv[1]);
 	init_player(&game);
 	init_texture(&game);
-	// print_map(game.map->cv_tab);
 	mlx_mouse_hide(game.mlx, game.win);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);

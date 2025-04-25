@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:51:30 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/23 15:20:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/25 13:56:28 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_list(t_game *game)
 	}
 }
 
-void	free_img(t_game *game)
+static void	free_img(t_game *game)
 {
 	mlx_destroy_image(game->mlx, game->img_ea->texture->img);
 	mlx_destroy_image(game->mlx, game->img_no->texture->img);

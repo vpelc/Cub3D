@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:47:11 by dbajeux           #+#    #+#             */
-/*   Updated: 2024/07/30 15:04:12 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:17:13 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void	ft_fill_res(int len, int offset, int c, char *str)
 
 char	*ft_itoa(int c)
 {
-	char *res;
-	int len;
-	int offset;
+	char	*res;
+	int		len;
+	int		offset;
 
 	len = count_size_malloc(c);
 	offset = 0;

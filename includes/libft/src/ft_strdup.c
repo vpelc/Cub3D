@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:36:37 by dbajeux           #+#    #+#             */
-/*   Updated: 2024/07/30 15:06:33 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:21:11 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strdup(const char *s1)
 {
-	int i;
-	char *s1_dup;
+	int		i;
+	char	*s1_dup;
 
 	i = 0;
 	while (s1[i])

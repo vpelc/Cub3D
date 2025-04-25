@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.19.be>            +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:34:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2024/07/30 15:05:10 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:19:21 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	ft_print_type(char to_test, unsigned int count, va_list arg)
 
 int	ft_printf(const char *str, ...)
 {
-	va_list arg;
-	int count;
-	int i;
+	va_list	arg;
+	int		count;
+	int		i;
 
 	i = 0;
 	count = 0;

@@ -5,98 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 16:23:58 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/19 13:22:18 by dbajeux          ###   ########.fr       */
+/*   Created: 2025/04/25 11:50:07 by dbajeux           #+#    #+#             */
+/*   Updated: 2025/04/25 12:52:30 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	check_line_contain_map(char *line)
+void	exit_invalid_map_char(char *line, t_game *game)
 {
-	int	i;
+	free(line);
+	exit_prog("Error: Char not allowed in map.\n", 1, game);
+}
 
-	i = 0;
-	if (check_is_empty_line(line) == TRUE || !line)
+void	process_texture_line(t_game *game, char *line)
+{
+	char	*flag;
+	char	*path;
+
+	flag = identify_flag(line);
+	if (!flag)
+		free(line);
+	if (check_doublon_flag(flag, game) == TRUE)
 	{
-		return (FALSE);
+		free(line);
+		exit_prog("Error: Duplicate texture detected.\n", 1, game);
 	}
-	
-	while (line[i])
+	path = extract_path(game, line, flag);
+	if (!has_valid_extension(path) && is_texture_image(flag) == TRUE)
 	{
-		if (ft_isspace(line[i]) == FALSE && line[i] != '1' && line[i] != '0'
-			&& line[i] != 'N' && line[i] != 'E' && line[i] != 'W'
-			&& line[i] != 'S')
-			return (FALSE);
-		i++;
+		free(line);
+		exit_prog("Error: Texture must have .xpm extension.\n", 1, game);
 	}
-	return (TRUE);
-}
-
-void	check_texture_is_fill(t_game *game)
-{
-	if (!game || !game->texinfo->NO_path || !game->texinfo->SO_path
-		|| !game->texinfo->WE_path || !game->texinfo->EA_path)
-		exit_prog("Error : Missing Texture/image\n",2,game);
-	if (check_tab_empty(game->texinfo->floor) == FALSE
-		|| check_tab_empty(game->texinfo->ceiling) == FALSE)
-		exit_prog("Error : Missing Texture/RGB\n",2,game);
-}
-
-int	check_doublon_flag(char *flag, t_game *game)
-{
-	if (!flag || !game || !game->texinfo)
-		return (FALSE);
-	if (!ft_strncmp(flag, "NO", 2) && (game->texinfo->NO_path))
-		return (TRUE);
-	if (!ft_strncmp(flag, "SO", 2) && (game->texinfo->SO_path))
-		return (TRUE);
-	if (!ft_strncmp(flag, "WE", 2) && (game->texinfo->WE_path))
-		return (TRUE);
-	if (!ft_strncmp(flag, "EA", 2) && (game->texinfo->EA_path))
-		return (TRUE);
-	if (flag[0] == 'F' && (game->texinfo->floor_check) == TRUE)
-		return (TRUE);
-	if (flag[0] == 'C' && (game->texinfo->ceilling_check) == TRUE)
-		return (TRUE);
-	return (FALSE);
-}
-
-int	check_line_contain_flag(t_game *game, char *line)
-{
-	int		i;
-	char	**line_tab;
-	char	*trimmed_path;
-
-	i = 0;
-	trimmed_path = ft_strtrim_list(game, (const char *)line, " 	\n");
-	line_tab = ft_split_list(game, trimmed_path, ' ');
-	while (line_tab[i])
-		i++;
-	// if (i != 2)
-	// 	return (FALSE);
-	if (!ft_strncmp(line_tab[0], "NO", 3) || !ft_strncmp(line_tab[0], "SO", 3)
-		|| !ft_strncmp(line_tab[0], "WE", 3) || !ft_strncmp(line_tab[0], "EA",
-			3) || !ft_strncmp(line_tab[0], "F", 3) || !ft_strncmp(line_tab[0],
-			"C", 3))
+	if (fill_texture(path, flag, game, line) == FALSE)
 	{
-		return (TRUE);
+		free(line);
+		exit_prog("Error: Failed to load texture path.\n", 1, game);
 	}
-	else
-		return (FALSE);
+	free(line);
 }
 
-int	check_is_empty_line(char *line)
+void	handle_map_line(char *line, t_game *game, int *map_started)
 {
-	int	i;
+	if (*map_started == FALSE)
+	{
+		check_texture_is_fill(game);
+		check_texture_is_reachable(game);
+		*map_started = TRUE;
+	}
+	fill_map(line, game);
+	free(line);
+}
 
-	i = 0;
-	if (line[0] == '\n' || line[0] == '\0')
-		return (TRUE);
-	while (line[i] && ft_isspace(line[i]) == TRUE)
-		i++;
-	if (line[i] == '\0')
-		return (TRUE);
-	else
-		return (FALSE);
+void	parse_line(t_game *game, char *line, int *map_started)
+{
+	if (check_is_empty_line(line) == TRUE)
+	{
+		if (*map_started)
+		{
+			free(line);
+			exit_prog("Error: Empty line inside the map.\n", 1, game);
+		}
+		free(line);
+		return ;
+	}
+	if (*map_started && line_contain_char(line) == TRUE)
+		exit_invalid_map_char(line, game);
+	if (!*map_started && check_line_contain_flag(game, line) == TRUE)
+	{
+		process_texture_line(game, line);
+		return ;
+	}
+	if (check_line_contain_map(line) == TRUE)
+	{
+		handle_map_line(line, game, map_started);
+		return ;
+	}
+	free(line);
+	exit_prog("Error: Invalid data in .cub file.\n", 1, game);
 }

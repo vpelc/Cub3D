@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 14:06:24 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/25 15:17:41 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ typedef struct s_draw
 	float				ty;
 	float				ty_step;
 	float				ty_off;
-	float				lineH;
-	float				lineO;
+	float				line_h;
+	float				line_o;
 }						t_draw;
 
 typedef struct s_texture
@@ -237,46 +237,70 @@ int						parse_rgb(char *path, int index);
 void					fill_map(char *line, t_game *game);
 int						rgb_to_hex(int r, int g, int b);
 
-// mini map
+// display.c
 
 void					create_map_img(t_game *game);
-void					create_mini_map_img(t_game *game);
-void					draw_mini_map(t_game *game);
 void					draw_map(t_game *game);
 void					draw_player(t_game *game);
 void					put_pixel_to_image(t_texture *tex, float x, float y,
 							int color);
 
-// ray cast
+// display_mini.c
+
+void					create_mini_map_img(t_game *game);
+void					draw_mini_map(t_game *game);
+
+// ray_cast.c
 
 void					draw_ray(t_game *game);
+
+// ray_cast_2.c
+
 double					ray_hor(t_game *game, t_rays *ray, double dist_h);
 double					ray_ver(t_game *game, t_rays *ray, double dist_v);
+
+// ray_cast_3.c
+
 void					ray_on_line(t_game *game, t_rays *ray, char dir);
 void					check_ver_hor(t_rays *ray, double dist_h,
 							double dist_v);
 void					check_ra(t_rays *ray);
 float					dist(float px, float py, float rx, float ry);
+
+// free_utils.c
+
 void					*ft_malloc(t_game *game, size_t size, size_t count);
-void					load_win_texture(t_game *game);
-void					load_texture(t_game *game, t_image **img, char *name,
-							char *path);
-void					clear_image(t_texture *tex);
-void					move_up(t_game *game);
-void					move_down(t_game *game);
-void					move_left(t_game *game);
-void					move_right(t_game *game);
-void					rotate_left(t_game *game);
-void					rotate_right(t_game *game);
-int						get_pixel_color(t_texture *tex, int x, int y);
-int						get_pixel_color_r(t_texture *tex, int x, int y);
-void					mouse_rotate(t_game *game, int move);
 char					*ft_strdup_list(t_game *game, const char *s1);
 char					*ft_substr_list(t_game *game, char const *s,
 							unsigned int start, size_t len);
 char					*ft_strtrim_list(t_game *game, char const *s1,
 							char const *set);
+
+// free_utils_2.c
+
 char					**ft_split_list(t_game *game, char const *str, char c);
 void					exit_prog(char *msg, int error, t_game *game);
+
+// texture.c
+
+void					load_win_texture(t_game *game);
+void					load_texture(t_game *game, t_image **img, char *name,
+							char *path);
+void					clear_image(t_texture *tex);
+int						get_pixel_color(t_texture *tex, int x, int y);
+int						get_pixel_color_r(t_texture *tex, int x, int y);
+
+// movement.c
+
+void					move_up(t_game *game);
+void					move_down(t_game *game);
+void					move_left(t_game *game);
+void					move_right(t_game *game);
+
+// movement_2.c
+
+void					rotate_left(t_game *game);
+void					rotate_right(t_game *game);
+void					mouse_rotate(t_game *game, int move);
 
 #endif

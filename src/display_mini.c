@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map_2.c                                       :+:      :+:    :+:   */
+/*   display_mini.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:37 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/22 14:48:04 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/25 15:08:21 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 /*  */
-int	get_pixel_color_mini(t_texture *tex, int x, int y)
+static int	get_pixel_color_mini(t_texture *tex, int x, int y)
 {
 	int	color;
 	int	pixel_index;
@@ -53,22 +53,21 @@ void	draw_mini_map(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap_img->img, 0, 0);
 }
 
-/* fonction qui remplace mlx_put_pixel place 
-	la couleur sur le pixel de l'image*/
-
-void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
+/* cree l'image qui prendra la partie qui sera affiche de la map */
+void	create_mini_map_img(t_game *game)
 {
-	int		pixel_x;
-	int		pixel_y;
-	char	*pixel;
+	t_texture	*tex;
 
-	pixel_x = (int)(x + 0.5);
-	pixel_y = (int)(y + 0.5);
-	if (pixel_x >= 0 && pixel_x < tex->width && pixel_y >= 0
-		&& pixel_y < tex->height)
-	{
-		pixel = tex->addr + (pixel_y * tex->size_line) + (pixel_x * (tex->bpp
-					/ 8));
-		*(int *)pixel = color;
-	}
+	tex = ft_malloc(game, sizeof(t_texture), 1);
+	tex->width = 512;
+	tex->height = 512;
+	tex->bpp = 32;
+	tex->size_line = 2400;
+	tex->endian = 0;
+	tex->img = mlx_new_image(game->mlx, tex->width, tex->height);
+	if (!tex->img)
+		return ;
+	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
+			&tex->endian);
+	game->minimap_img = tex;
 }

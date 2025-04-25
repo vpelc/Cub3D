@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map.c                                         :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/23 15:18:32 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/25 15:18:04 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,28 @@ void	create_map_img(t_game *game)
 	game->map_img = tex;
 }
 
-/* cree l'image qui prendra la partie qui sera affiche de la map */
-void	create_mini_map_img(t_game *game)
-{
-	t_texture	*tex;
+/* fonction qui remplace mlx_put_pixel place 
+	la couleur sur le pixel de l'image*/
 
-	tex = ft_malloc(game, sizeof(t_texture), 1);
-	tex->width = 512;
-	tex->height = 512;
-	tex->bpp = 32;
-	tex->size_line = 2400;
-	tex->endian = 0;
-	tex->img = mlx_new_image(game->mlx, tex->width, tex->height);
-	if (!tex->img)
-		return ;
-	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
-			&tex->endian);
-	game->minimap_img = tex;
+void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
+{
+	int		pixel_x;
+	int		pixel_y;
+	char	*pixel;
+
+	pixel_x = (int)(x + 0.5);
+	pixel_y = (int)(y + 0.5);
+	if (pixel_x >= 0 && pixel_x < tex->width && pixel_y >= 0
+		&& pixel_y < tex->height)
+	{
+		pixel = tex->addr + (pixel_y * tex->size_line) + (pixel_x * (tex->bpp
+					/ 8));
+		*(int *)pixel = color;
+	}
 }
 
 /* dessine le joueur sur la minimap */
-void	draw_player(t_game *game)
+static void	draw_player(t_game *game)
 {
 	int		size;
 	int		i;
@@ -80,7 +81,7 @@ void	draw_player(t_game *game)
 }
 
 /* dessine les differentes cases (murs ou sol) pour la map */
-void	draw_square(t_game *game, int x, int y, char sqr_type)
+static void	draw_square(t_game *game, int x, int y, char sqr_type)
 {
 	int			color;
 	int			i;

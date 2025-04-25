@@ -6,13 +6,13 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:55:56 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/22 14:46:28 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/25 15:17:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	calc_draw(t_game *game, t_rays *ray, t_draw *draw)
+static void	calc_draw(t_game *game, t_rays *ray, t_draw *draw)
 {
 	float	ca;
 
@@ -23,18 +23,18 @@ void	calc_draw(t_game *game, t_rays *ray, t_draw *draw)
 	else if (ca > PI * 2)
 		ca -= PI * 2;
 	ray->dray = ray->dray * cos(ca);
-	draw->lineH = (SCR_HEIGHT << 6) / ray->dray;
-	draw->ty_step = 64 / draw->lineH;
-	if (draw->lineH > SCR_HEIGHT)
+	draw->line_h = (SCR_HEIGHT << 6) / ray->dray;
+	draw->ty_step = 64 / draw->line_h;
+	if (draw->line_h > SCR_HEIGHT)
 	{
-		draw->ty_off = (draw->lineH - SCR_HEIGHT) / 2.0;
-		draw->lineH = SCR_HEIGHT;
+		draw->ty_off = (draw->line_h - SCR_HEIGHT) / 2.0;
+		draw->line_h = SCR_HEIGHT;
 	}
-	draw->lineO = (SCR_HEIGHT >> 1) - draw->lineH / 2;
+	draw->line_o = (SCR_HEIGHT >> 1) - draw->line_h / 2;
 	draw->ty = draw->ty_off * draw->ty_step;
 }
 
-int	draw_walls(t_game *game, t_rays *ray, t_draw *draw)
+static int	draw_walls(t_game *game, t_rays *ray, t_draw *draw)
 {
 	int	color;
 
@@ -60,7 +60,7 @@ int	draw_walls(t_game *game, t_rays *ray, t_draw *draw)
 	return (color);
 }
 
-void	draw_3dray(t_game *game, t_rays *ray)
+static void	draw_3dray(t_game *game, t_rays *ray)
 {
 	int		j;
 	int		color;
@@ -68,17 +68,17 @@ void	draw_3dray(t_game *game, t_rays *ray)
 
 	calc_draw(game, ray, &draw);
 	j = -1;
-	while (++j < draw.lineO)
+	while (++j < draw.line_o)
 		put_pixel_to_image(game->win_img, ray->r, j,
 			game->texinfo->hex_ceiling);
 	while (--j > 0)
 		put_pixel_to_image(game->win_img, ray->r, SCR_HEIGHT - j,
 			game->texinfo->hex_floor);
 	j = -1;
-	while (++j < draw.lineH)
+	while (++j < draw.line_h)
 	{
 		color = draw_walls(game, ray, &draw);
-		put_pixel_to_image(game->win_img, ray->r, (draw.lineO + j), color);
+		put_pixel_to_image(game->win_img, ray->r, (draw.line_o + j), color);
 		draw.ty += draw.ty_step;
 	}
 }

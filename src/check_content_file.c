@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_content_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:05:18 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 17:48:42 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	init_map(t_game *game, int height)
 void	check_content_file(t_game *game, char *filename)
 {
 	if (check_empty_file(game, filename) == FALSE)
-		exit_prog("Error: File empty.\n", 1, game);
+		exit_prog("Error: File .cub is empty.\n", 1, game);
 	game->map->fd = open(filename, O_RDONLY);
 	game->map->height = count_line_map(game, game->map->fd);
 	close(game->map->fd);

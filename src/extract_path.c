@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:06:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 18:34:12 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,8 @@ static char	*extract_texture(t_game *game, char *line)
 	while (path[j])
 	{
 		if (ft_isspace(path[j]))
-		{
-			free(path);
 			exit_prog("Error: Invalid texture path, spaces are not allowed.\n",
 				1, game);
-		}
 		j++;
 	}
 	return (path);

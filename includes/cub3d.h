@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:10:32 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 19:04:37 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # include "libft/inc/libft.h"
 # include "minilibx/mlx.h"
 # include <fcntl.h>
+# include <limits.h>
 # include <math.h>
+# include <stddef.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 /* ************************************************************************** */
@@ -192,18 +195,40 @@ void					check_texture_is_reachable(t_game *game);
 int						has_valid_extension(char *path);
 int						is_texture_image(char *flag);
 int						line_contain_char(char *line);
+
 // check_texture.c
 void					parse_line(t_game *game, char *line, int *map_started);
+
+// display_mini.c
+void					create_mini_map_img(t_game *game);
+void					draw_mini_map(t_game *game);
+
+// display.c
+void					create_map_img(t_game *game);
+void					put_pixel_to_image(t_texture *tex, float x, float y,
+							int color);
+void					draw_map(t_game *game);
 
 // exit.c
 void					free_list(t_game *game);
 int						close_window(t_game *game);
+void					exit_prog(char *msg, int error, t_game *game);
 
 // extract_path.c
 char					*extract_path(t_game *game, char *line, char *flag);
 
 // fill_data.c
 int						fill_texture(char *path, char *flag, t_game *game);
+
+// free_utils.c
+void					*ft_malloc(t_game *game, size_t size, size_t count);
+
+// get_next_line_utils.c
+char					*ft_strjoin_gnl_list(t_game *game, char *buffer,
+							char *read_buffer);
+
+// get_next_line++.c
+char					*get_next_line_list(int fd, t_game *game);
 
 // init.c
 void					init_texinfo(t_game *game);
@@ -214,8 +239,54 @@ void					init_keys(t_game *game);
 // init2.c
 int						init_game(t_game *game);
 
+// libft++.c
+char					*ft_strtrim_list(t_game *game, char const *s1,
+							char const *set);
+char					*ft_substr_list(t_game *game, char const *s,
+							unsigned int start, size_t len);
+char					*ft_strdup_list(t_game *game, const char *s1);
+
+// movement_2.c
+void					rotate_left(t_game *game);
+void					rotate_right(t_game *game);
+void					mouse_rotate(t_game *game, int move);
+
+// movement.c
+void					move_up(t_game *game);
+void					move_down(t_game *game);
+void					move_left(t_game *game);
+void					move_right(t_game *game);
+
+// ray_cast_2.c
+double					ray_hor(t_game *game, t_rays *ray, double dist_h);
+double					ray_ver(t_game *game, t_rays *ray, double dist_v);
+
+// ray_cast_3.c
+void					ray_on_line(t_game *game, t_rays *ray, char dir);
+void					check_ver_hor(t_rays *ray, double dist_h,
+							double dist_v);
+void					check_ra(t_rays *ray);
+float					dist(float px, float py, float rx, float ry);
+
+// ray_cast.c
+void					draw_ray(t_game *game);
+
+// split++.c
+char					**ft_split_list(t_game *game, char const *str, char c);
+
+// texture.c
+void					load_win_texture(t_game *game);
+void					load_texture(t_game *game, t_image **img, char *name,
+							char *path);
+void					clear_image(t_texture *tex);
+int						get_pixel_color(t_texture *tex, int x, int y);
+int						get_pixel_color_r(t_texture *tex, int x, int y);
+
 // utils.c
 void					free_tab(char **tab);
+int						parse_rgb(char *path, int index);
+void					fill_map(char *line, t_game *game);
+int						rgb_to_hex(int r, int g, int b);
 
 // utils2.c
 int						get_pos_y_player(char **map);
@@ -231,80 +302,21 @@ char					*identify_flag(char *line);
 int						is_valid_index(int index);
 void					ft_strcpy(char *dst, const char *src);
 
-// utils4.c
-int						parse_rgb(char *path, int index);
-void					fill_map(char *line, t_game *game);
-int						rgb_to_hex(int r, int g, int b);
+// gnl_dylan
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
-// display.c
-
-void					create_map_img(t_game *game);
-void					draw_map(t_game *game);
-void					put_pixel_to_image(t_texture *tex, float x, float y,
-							int color);
-
-// display_mini.c
-
-void					create_mini_map_img(t_game *game);
-void					draw_mini_map(t_game *game);
-
-// ray_cast.c
-
-void					draw_ray(t_game *game);
-
-// ray_cast_2.c
-
-double					ray_hor(t_game *game, t_rays *ray, double dist_h);
-double					ray_ver(t_game *game, t_rays *ray, double dist_v);
-
-// ray_cast_3.c
-
-void					ray_on_line(t_game *game, t_rays *ray, char dir);
-void					check_ver_hor(t_rays *ray, double dist_h,
-							double dist_v);
-void					check_ra(t_rays *ray);
-float					dist(float px, float py, float rx, float ry);
-
-// free_utils.c
-
-void					*ft_malloc(t_game *game, size_t size, size_t count);
-char					*ft_strdup_list(t_game *game, const char *s1);
-char					*ft_substr_list(t_game *game, char const *s,
-							unsigned int start, size_t len);
-char					*ft_strtrim_list(t_game *game, char const *s1,
-							char const *set);
-
-// free_utils_2.c
-
-char					**ft_split_list(t_game *game, char const *str, char c);
-void					exit_prog(char *msg, int error, t_game *game);
-
-// texture.c
-
-void					load_win_texture(t_game *game);
-void					load_texture(t_game *game, t_image **img, char *name,
-							char *path);
-void					clear_image(t_texture *tex);
-int						get_pixel_color(t_texture *tex, int x, int y);
-int						get_pixel_color_r(t_texture *tex, int x, int y);
-
-// movement.c
-
-void					move_up(t_game *game);
-void					move_down(t_game *game);
-void					move_left(t_game *game);
-void					move_right(t_game *game);
-
-// movement_2.c
-
-void					rotate_left(t_game *game);
-void					rotate_right(t_game *game);
-void					mouse_rotate(t_game *game, int move);
-
-// gnl++
-
-char					*get_next_line_list(int fd, t_game *game);
-char					*ft_strjoin_gnl_list(t_game *game, char *buffer,
-							char *read_buffer);
+size_t					ft_strlen_dylan(char *str);
+char					*ft_strjoin_dylan(char *s1, char *s2);
+char					*ft_strchr_dylan(char *s, int c);
+char					*ft_substr_dylan(char *s, unsigned int start,
+							size_t len);
+char					*ft_fill_storage_dylan(int fd, char *storage);
+char					*ft_clean_line_dylan(char *storage);
+char					*ft_clean_storage_dylan(char *storage);
+char					*get_next_line_dylan(int fd);
+char					*ft_free_dylan(char **str);
+// end of gnl_dylan
 
 #endif

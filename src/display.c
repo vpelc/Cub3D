@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:43:17 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/25 15:18:04 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 13:57:56 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	put_pixel_to_image(t_texture *tex, float x, float y, int color)
 }
 
 /* dessine le joueur sur la minimap */
-static void	draw_player(t_game *game)
+void	draw_player(t_game *game)
 {
 	int		size;
 	int		i;

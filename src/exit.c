@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:51:30 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/25 13:56:28 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:57:32 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,20 @@ int	close_window(t_game *game)
 	free(game->mlx);
 	exit(0);
 	return (1);
+}
+
+void	exit_prog(char *msg, int error, t_game *game)
+{
+	(void)game;
+	if (error == 1)
+	{
+		free_list(game);
+		ft_putstr_fd(msg, 2);
+		exit(1);
+	}
+	if (error == 2)
+	{
+		ft_putstr_fd(msg, 2);
+		exit(1);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:23:15 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/26 13:10:38 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 18:57:15 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,4 @@ void	*ft_malloc(t_game *game, size_t size, size_t count)
 	new_ptr->next = tmp;
 	game->to_free = new_ptr;
 	return (ptr);
-}
-
-void	exit_prog(char *msg, int error, t_game *game)
-{
-	(void)game;
-	if (error == 1)
-	{
-		free_list(game);
-		ft_putstr_fd(msg, 2);
-		exit(1);
-	}
-	if (error == 2)
-	{
-		ft_putstr_fd(msg, 2);
-		exit(1);
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:33:06 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:05:23 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 18:39:47 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_texture_is_reachable(t_game *game)
 	fd_we = open(game->texinfo->we_path, O_RDONLY);
 	fd_ea = open(game->texinfo->ea_path, O_RDONLY);
 	if (fd_no == -1 || fd_so == -1 || fd_we == -1 || fd_ea == -1)
-		exit_prog("Error : texture/image not reachable.\n", 2, game);
+		exit_prog("Error: texture/image not reachable.\n", 1, game);
 	close(fd_no);
 	close(fd_so);
 	close(fd_we);

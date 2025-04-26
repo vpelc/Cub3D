@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:15:19 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:22:35 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:16:01 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	check_texture_is_fill(t_game *game)
 {
 	if (!game || !game->texinfo->no_path || !game->texinfo->so_path
 		|| !game->texinfo->we_path || !game->texinfo->ea_path)
-		exit_prog("Error : Missing Texture/image\n", 2, game);
+		exit_prog("Error: Missing Texture/image\n", 1, game);
 	if (check_tab_empty(game->texinfo->floor) == FALSE
 		|| check_tab_empty(game->texinfo->ceiling) == FALSE)
-		exit_prog("Error : Missing Texture/RGB\n", 2, game);
+		exit_prog("Error: Missing Texture/RGB\n", 1, game);
 }
 
 int	check_doublon_flag(char *flag, t_game *game)

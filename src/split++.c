@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils_2.c                                     :+:      :+:    :+:   */
+/*   split++.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 13:24:18 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/25 15:13:22 by vpelc            ###   ########.fr       */
+/*   Created: 2025/04/26 13:06:24 by vpelc             #+#    #+#             */
+/*   Updated: 2025/04/26 13:11:14 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 static	int	ft_nbrstr(char const *str, char c)
 {
@@ -94,20 +94,4 @@ char	**ft_split_list(t_game *game, char const *str, char c)
 	}
 	split[size] = 0;
 	return (split);
-}
-
-void	exit_prog(char *msg, int error, t_game *game)
-{
-	(void)game;
-	if (error == 1)
-	{
-		free_list(game);
-		ft_putstr_fd(msg, 2);
-		exit(1);
-	}
-	if (error == 2)
-	{
-		ft_putstr_fd(msg, 2);
-		exit(1);
-	}
 }

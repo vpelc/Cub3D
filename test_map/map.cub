@@ -7,11 +7,11 @@ NO                          ./images/no_cool.xpm
 SO ./images/so_cool.xpm 
 
 
-F              18    , 65,       25
+F              18    ,1 ,       25
 
 EA ./images/ea_cool.xpm
 
-                C 153, 32 ,              228
+                C , 1 ,              228
 
 
         1111111111111111111111111

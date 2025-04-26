@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line++.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:32:31 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/26 13:56:01 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 14:07:05 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "../../includes/cub3d.h"
 
 static char	*ft_fill_buff(char *buffer, int fd)
 {
@@ -60,7 +60,7 @@ static char	*ft_fill_line(char *buffer)
 	return (line);
 }
 
-static char	*ft_fill_nextbuff(char *buffer)
+static char	*ft_fill_nextbuff(t_game *game, char *buffer)
 {
 	char	*next_buffer;
 	int		i;
@@ -74,7 +74,7 @@ static char	*ft_fill_nextbuff(char *buffer)
 		i++;
 	if (buffer[i] == '\n' || ft_strlen(buffer) - i + j == 0)
 		j++;
-	next_buffer = malloc(ft_strlen(buffer) - i + j);
+	next_buffer = ft_malloc(game, sizeof(char), ft_strlen(buffer) - i + j);
 	if (!next_buffer)
 		return (ft_free_gnl(&buffer), NULL);
 	if (buffer[i] == '\n')
@@ -87,7 +87,7 @@ static char	*ft_fill_nextbuff(char *buffer)
 	return (next_buffer);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_list(int fd, t_game *game)
 {
 	static char	*buffer;
 	char		*line;
@@ -105,25 +105,8 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	line = ft_fill_line(buffer);
-	buffer = ft_fill_nextbuff(buffer);
+	buffer = ft_fill_nextbuff(game, buffer);
 	if (!(ft_strchr_gnl(line)))
 		ft_free_gnl(&buffer);
 	return (line);
 }
-
-/* #include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int	fd;
-	char	*s;
-
-	fd = open("test", O_RDONLY);
-	while ((s = get_next_line(FD_COPY)) != NULL)
-	{
-		printf("%s", s);
-		free(s);
-	}
-	return (0);
-} */

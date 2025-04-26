@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:38:13 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:59:12 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static char	*extract_colour(t_game *game, char *line)
 	if (is_valid_rgb_format(line + start) == -1)
 	{
 		free(line);
+		line = NULL;
 		exit_prog("Error: Invalid RGB format.\n", 1, game);
 	}
 	return (ft_strdup_list(game, line + start));

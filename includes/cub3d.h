@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 15:17:41 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 13:52:20 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,6 @@ int						rgb_to_hex(int r, int g, int b);
 
 void					create_map_img(t_game *game);
 void					draw_map(t_game *game);
-void					draw_player(t_game *game);
 void					put_pixel_to_image(t_texture *tex, float x, float y,
 							int color);
 
@@ -302,5 +301,9 @@ void					move_right(t_game *game);
 void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
 void					mouse_rotate(t_game *game, int move);
+
+// gnl++
+
+char					*get_next_line_list(int fd, t_game *game);
 
 #endif

@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   check_content_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:45:18 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:03:45 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	count_line_map(int fd)
+static int	count_line_map(t_game *game, int fd)
 {
 	char	*line;
 	int		map_number_line;
 
-	line = get_next_line(fd);
+	line = get_next_line_list(fd, game);
 	map_number_line = 0;
 	while (line != NULL)
 	{
 		if (check_line_contain_map(line) == TRUE)
 			map_number_line++;
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line_list(fd, game);
 	}
 	close(fd);
 	return (map_number_line);
@@ -40,11 +40,11 @@ static void	check_texture(t_game *game, char *filename)
 	map_started = FALSE;
 	if (fd < 0)
 		exit_prog("Error: Failed to open file.\n", 1, game);
-	line = get_next_line(fd);
+	line = get_next_line_list(fd, game);
 	while (line != NULL)
 	{
 		parse_line(game, line, &map_started);
-		line = get_next_line(fd);
+		line = get_next_line_list(fd, game);
 	}
 	close(fd);
 	if (map_started == FALSE)
@@ -75,7 +75,7 @@ void	check_content_file(t_game *game, char *filename)
 	if (check_empty_file(game, filename) == FALSE)
 		exit_prog("Error: File empty.\n", 1, game);
 	game->map->fd = open(filename, O_RDONLY);
-	game->map->height = count_line_map(game->map->fd);
+	game->map->height = count_line_map(game, game->map->fd);
 	close(game->map->fd);
 	game->map->tab = ft_malloc(game, (sizeof(char *)), (game->map->height + 1));
 	if (!game->map->tab)

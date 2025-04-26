@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:33:06 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:54:45 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:04:06 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_empty_file(t_game *game, char *filename)
 	char	*line;
 
 	game->map->fd = open(filename, O_RDONLY);
-	line = get_next_line(game->map->fd);
+	line = get_next_line_list(game->map->fd, game);
 	close(game->map->fd);
 	if (line == NULL)
 		return (FALSE);

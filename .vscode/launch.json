@@ -10,7 +10,7 @@
         "program": "${workspaceFolder}/cub3D",
         "args": ["test_map/map.cub"],
         "stopAtEntry": true,
-        "cwd": "${fileDirname}",
+        "cwd": "${workspaceFolder}",
         "environment": [],
         "externalConsole": false,
         "MIMode": "gdb",

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:33:49 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	set_floor_rgb(char *path, t_game *game, char *line)
 	if (game->texinfo->floor[0] == -1 || game->texinfo->floor[1] == -1
 		|| game->texinfo->floor[2] == -1)
 	{
-		free(line);
+		// free(line);
+		(void)line;
 		exit_prog("Error: Missing RGB value floor.\n", 1, game);
 	}
 }
@@ -47,7 +48,8 @@ static void	set_ceiling_rgb(char *path, t_game *game, char *line)
 	if (game->texinfo->ceiling[0] == -1 || game->texinfo->ceiling[1] == -1
 		|| game->texinfo->ceiling[2] == -1)
 	{
-		free(line);
+		// free(line);
+		(void)line;
 		exit_prog("Error: Missing RGB value ceiling.\n", 1, game);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:50:07 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 12:52:30 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	exit_invalid_map_char(char *line, t_game *game)
 {
-	free(line);
+	// free(line);
+	(void)line;
 	exit_prog("Error: Char not allowed in map.\n", 1, game);
 }
 
@@ -25,24 +26,24 @@ void	process_texture_line(t_game *game, char *line)
 
 	flag = identify_flag(line);
 	if (!flag)
-		free(line);
+		// free(line);
 	if (check_doublon_flag(flag, game) == TRUE)
 	{
-		free(line);
+		// free(line);
 		exit_prog("Error: Duplicate texture detected.\n", 1, game);
 	}
 	path = extract_path(game, line, flag);
 	if (!has_valid_extension(path) && is_texture_image(flag) == TRUE)
 	{
-		free(line);
+		// free(line);
 		exit_prog("Error: Texture must have .xpm extension.\n", 1, game);
 	}
 	if (fill_texture(path, flag, game, line) == FALSE)
 	{
-		free(line);
+		// free(line);
 		exit_prog("Error: Failed to load texture path.\n", 1, game);
 	}
-	free(line);
+	// free(line);
 }
 
 void	handle_map_line(char *line, t_game *game, int *map_started)
@@ -54,7 +55,7 @@ void	handle_map_line(char *line, t_game *game, int *map_started)
 		*map_started = TRUE;
 	}
 	fill_map(line, game);
-	free(line);
+	// free(line);
 }
 
 void	parse_line(t_game *game, char *line, int *map_started)
@@ -63,10 +64,10 @@ void	parse_line(t_game *game, char *line, int *map_started)
 	{
 		if (*map_started)
 		{
-			free(line);
+			// free(line);
 			exit_prog("Error: Empty line inside the map.\n", 1, game);
 		}
-		free(line);
+		// free(line);
 		return ;
 	}
 	if (*map_started && line_contain_char(line) == TRUE)
@@ -81,6 +82,6 @@ void	parse_line(t_game *game, char *line, int *map_started)
 		handle_map_line(line, game, map_started);
 		return ;
 	}
-	free(line);
+	// free(line);
 	exit_prog("Error: Invalid data in .cub file.\n", 1, game);
 }

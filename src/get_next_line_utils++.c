@@ -12,29 +12,18 @@
 
 #include "../../includes/cub3d.h"
 
-size_t	ft_strlen_gnl(char *c)
-{
-	size_t	i;
-
-	i = 0;
-	if (!c)
-		return (0);
-	while (c[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin_gnl(char *buffer, char *read_buffer)
+char	*ft_strjoin_gnl_list(t_game *game, char *buffer, char *read_buffer)
 {
 	char	*join;
 	size_t	i;
 	size_t	j;
 
 	if (!buffer || !read_buffer)
-		return (ft_free_gnl(&buffer), ft_free_gnl(&read_buffer), NULL);
-	join = malloc((ft_strlen_gnl(buffer) + ft_strlen_gnl(read_buffer) + 1));
+		return (ft_free_gnl(&read_buffer), NULL);
+	join = ft_malloc(game, sizeof(char), (ft_strlen_gnl(buffer)
+				+ ft_strlen_gnl(read_buffer) + 1));
 	if (!join)
-		return (ft_free_gnl(&buffer), NULL);
+		return (NULL);
 	i = 0;
 	while (buffer && buffer[i])
 	{
@@ -48,25 +37,7 @@ char	*ft_strjoin_gnl(char *buffer, char *read_buffer)
 		j++;
 	}
 	join[i + j] = '\0';
-	return (ft_free_gnl(&buffer), join);
+	return (join);
 }
 
-int	ft_strchr_gnl(char *s)
-{
-	int	i;
 
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		return (1);
-	return (0);
-}
-
-void	ft_free_gnl(char **buffer)
-{
-	free(*buffer);
-	*buffer = NULL;
-}

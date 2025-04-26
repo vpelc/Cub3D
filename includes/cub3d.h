@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 13:52:20 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 14:58:08 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,5 +305,7 @@ void					mouse_rotate(t_game *game, int move);
 // gnl++
 
 char					*get_next_line_list(int fd, t_game *game);
+char					*ft_strjoin_gnl_list(t_game *game, char *buffer,
+							char *read_buffer);
 
 #endif

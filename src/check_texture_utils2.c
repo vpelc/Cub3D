@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:33:06 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:54:45 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:43:38 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_empty_file(t_game *game, char *filename)
 	game->map->fd = open(filename, O_RDONLY);
 	line = get_next_line(game->map->fd);
 	close(game->map->fd);
-	if (line == NULL)
+	if (line == NULL || line[0] == '\0' || (line[0] == '\n' && line[1] == '\0'))
 		return (FALSE);
 	free(line);
 	return (TRUE);

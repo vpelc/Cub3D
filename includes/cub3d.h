@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
+/*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 15:17:41 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 17:45:25 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <math.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
+# include <stddef.h>
+# include <stdlib.h>
 
 /* ************************************************************************** */
 /*                                 MACRO                                      */
@@ -198,6 +201,9 @@ void					parse_line(t_game *game, char *line, int *map_started);
 // exit.c
 void					free_list(t_game *game);
 int						close_window(t_game *game);
+void					exit_texture_error(char *line, char *message,
+							t_game *game);
+void					exit_invalid_map_char(char *line, t_game *game);
 
 // extract_path.c
 char					*extract_path(t_game *game, char *line, char *flag);
@@ -303,4 +309,22 @@ void					rotate_left(t_game *game);
 void					rotate_right(t_game *game);
 void					mouse_rotate(t_game *game, int move);
 
+// gnl_dylan
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+
+size_t					ft_strlen_dylan(char *str);
+char					*ft_strjoin_dylan(char *s1, char *s2);
+char					*ft_strchr_dylan(char *s, int c);
+char					*ft_substr_dylan(char *s, unsigned int start,
+							size_t len);
+char					*ft_fill_storage_dylan(int fd, char *storage);
+char					*ft_clean_line_dylan(char *storage);
+char					*ft_clean_storage_dylan(char *storage);
+char					*get_next_line_dylan(int fd);
+char					*ft_free_dylan(char **str);
+
+// end of gnl_dylan
 #endif

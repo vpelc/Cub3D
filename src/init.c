@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:36:09 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/25 12:27:48 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:17:18 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	get_player_dir(t_game *game)
 
 void	init_player(t_game *game)
 {
-	get_player_dir(game);
 	game->player->posa = 0;
+	get_player_dir(game);
 	game->player->posdx = cos(game->player->posa) * 5;
 	game->player->posdy = sin(game->player->posa) * 5;
 	game->player->posdxp = cos(game->player->posa + (90 * RAD_DEG)) * 5;

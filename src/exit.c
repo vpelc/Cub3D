@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:51:30 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/25 13:56:28 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:23:56 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,16 @@ int	close_window(t_game *game)
 	free(game->mlx);
 	exit(0);
 	return (1);
+}
+
+void	exit_texture_error(char *line, char *message, t_game *game)
+{
+	free(line);
+	exit_prog(message, 1, game);
+}
+
+void	exit_invalid_map_char(char *line, t_game *game)
+{
+	free(line);
+	exit_prog("Error: Char not allowed in map.\n", 1, game);
 }

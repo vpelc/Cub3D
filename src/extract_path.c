@@ -6,7 +6,7 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 13:38:13 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:16:51 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ static char	*extract_texture(t_game *game, char *line)
 	{
 		if (ft_isspace(path[j]))
 		{
-			free(path);
 			free(line);
 			exit_prog("Error: Invalid texture path, spaces are not allowed.\n",
 				1, game);

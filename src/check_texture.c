@@ -6,16 +6,49 @@
 /*   By: dbajeux <dbajeux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:50:07 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/25 12:52:30 by dbajeux          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:39:50 by dbajeux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	exit_invalid_map_char(char *line, t_game *game)
+int	check_empty_xpm_file(char *path, t_game *game)
 {
-	free(line);
-	exit_prog("Error: Char not allowed in map.\n", 1, game);
+	int		fd;
+	char	*line_xpm;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		exit_prog("Error: File .xpm does not exist or cannot be opened.\n", 1,
+			game);
+	line_xpm = get_next_line_dylan(fd);
+	close(fd);
+	if (!line_xpm)
+		return (FALSE);
+	if (ft_strncmp(line_xpm, "/* XPM */", 8) == 0)
+	{
+		free(line_xpm);
+		return (TRUE);
+	}
+	free(line_xpm);
+	return (FALSE);
+}
+
+static void	check_texture_errors(t_game *game, char *line, char *flag,
+		char *path)
+{
+	if (check_doublon_flag(flag, game) == TRUE)
+		exit_texture_error(line, "Error: Duplicate texture detected.\n", game);
+	if (is_texture_image(flag) == TRUE)
+	{
+		if (check_empty_xpm_file(path, game) == FALSE)
+			exit_texture_error(line, "Error: .xpm file is not valid.\n", game);
+		if (!has_valid_extension(path))
+			exit_texture_error(line,
+				"Error: Texture must have .xpm extension.\n", game);
+	}
+	if (fill_texture(path, flag, game, line) == FALSE)
+		exit_texture_error(line, "Error: Failed to load texture path.\n", game);
 }
 
 void	process_texture_line(t_game *game, char *line)
@@ -25,23 +58,9 @@ void	process_texture_line(t_game *game, char *line)
 
 	flag = identify_flag(line);
 	if (!flag)
-		free(line);
-	if (check_doublon_flag(flag, game) == TRUE)
-	{
-		free(line);
-		exit_prog("Error: Duplicate texture detected.\n", 1, game);
-	}
+		exit_texture_error(line, "Error: Missing flag.\n", game);
 	path = extract_path(game, line, flag);
-	if (!has_valid_extension(path) && is_texture_image(flag) == TRUE)
-	{
-		free(line);
-		exit_prog("Error: Texture must have .xpm extension.\n", 1, game);
-	}
-	if (fill_texture(path, flag, game, line) == FALSE)
-	{
-		free(line);
-		exit_prog("Error: Failed to load texture path.\n", 1, game);
-	}
+	check_texture_errors(game, line, flag, path);
 	free(line);
 }
 

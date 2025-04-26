@@ -39,5 +39,3 @@ char	*ft_strjoin_gnl_list(t_game *game, char *buffer, char *read_buffer)
 	join[i + j] = '\0';
 	return (join);
 }
-
-

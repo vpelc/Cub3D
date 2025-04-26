@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:23:15 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/26 13:11:24 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:07:22 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,3 @@ char	*ft_strtrim_list(t_game *game, char const *s1, char const *set)
 		end--;
 	return (ft_substr_list(game, s1, start, end - start));
 }
-

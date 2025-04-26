@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:20:15 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:10:03 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	fill_hexa(t_game *game)
 		return (TRUE);
 }
 
-static void	set_floor_rgb(char *path, t_game *game, char *line)
+static void	set_floor_rgb(char *path, t_game *game)
 {
 	game->texinfo->floor[0] = parse_rgb(path, 0);
 	game->texinfo->floor[1] = parse_rgb(path, 1);
@@ -33,13 +33,11 @@ static void	set_floor_rgb(char *path, t_game *game, char *line)
 	if (game->texinfo->floor[0] == -1 || game->texinfo->floor[1] == -1
 		|| game->texinfo->floor[2] == -1)
 	{
-		// free(line);
-		(void)line;
 		exit_prog("Error: Missing RGB value floor.\n", 1, game);
 	}
 }
 
-static void	set_ceiling_rgb(char *path, t_game *game, char *line)
+static void	set_ceiling_rgb(char *path, t_game *game)
 {
 	game->texinfo->ceiling[0] = parse_rgb(path, 0);
 	game->texinfo->ceiling[1] = parse_rgb(path, 1);
@@ -48,18 +46,16 @@ static void	set_ceiling_rgb(char *path, t_game *game, char *line)
 	if (game->texinfo->ceiling[0] == -1 || game->texinfo->ceiling[1] == -1
 		|| game->texinfo->ceiling[2] == -1)
 	{
-		// free(line);
-		(void)line;
 		exit_prog("Error: Missing RGB value ceiling.\n", 1, game);
 	}
 }
 
-static int	fill_color_data(char *flag, char *path, t_game *game, char *line)
+static int	fill_color_data(char *flag, char *path, t_game *game)
 {
 	if (flag[0] == 'F')
-		set_floor_rgb(path, game, line);
+		set_floor_rgb(path, game);
 	else if (flag[0] == 'C')
-		set_ceiling_rgb(path, game, line);
+		set_ceiling_rgb(path, game);
 	else
 		return (FALSE);
 	if (fill_hexa(game) == FALSE)
@@ -67,7 +63,7 @@ static int	fill_color_data(char *flag, char *path, t_game *game, char *line)
 	return (TRUE);
 }
 
-int	fill_texture(char *path, char *flag, t_game *game, char *line)
+int	fill_texture(char *path, char *flag, t_game *game)
 {
 	if (!ft_strncmp(flag, "NO", 3))
 		game->texinfo->no_path = path;
@@ -78,7 +74,7 @@ int	fill_texture(char *path, char *flag, t_game *game, char *line)
 	else if (!ft_strncmp(flag, "EA", 3))
 		game->texinfo->ea_path = path;
 	else if (flag[0] == 'C' || flag[0] == 'F')
-		return (fill_color_data(flag, path, game, line));
+		return (fill_color_data(flag, path, game));
 	else
 	{
 		return (FALSE);

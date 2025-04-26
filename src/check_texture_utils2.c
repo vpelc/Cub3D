@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:33:06 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:05:23 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	check_empty_file(t_game *game, char *filename)
 	close(game->map->fd);
 	if (line == NULL)
 		return (FALSE);
-	// free(line);
 	return (TRUE);
 }
 

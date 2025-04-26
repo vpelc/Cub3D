@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:32:31 by vpelc             #+#    #+#             */
-/*   Updated: 2025/04/26 14:59:56 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:08:07 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static char	*ft_fill_nextbuff(t_game *game, char *buffer)
 	while (buffer[i])
 		next_buffer[j++] = buffer[i++];
 	next_buffer[j] = '\0';
-	// ft_free_gnl(&buffer);
 	return (next_buffer);
 }
 
@@ -106,7 +105,5 @@ char	*get_next_line_list(int fd, t_game *game)
 		return (NULL);
 	line = ft_fill_line(game, buffer);
 	buffer = ft_fill_nextbuff(game, buffer);
-	// if (!(ft_strchr_gnl(line)))
-	// 	ft_free_gnl(&buffer);
 	return (line);
 }

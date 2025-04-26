@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:46:49 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 14:58:08 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:10:32 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,7 @@ int						close_window(t_game *game);
 char					*extract_path(t_game *game, char *line, char *flag);
 
 // fill_data.c
-int						fill_texture(char *path, char *flag, t_game *game,
-							char *line);
+int						fill_texture(char *path, char *flag, t_game *game);
 
 // init.c
 void					init_texinfo(t_game *game);

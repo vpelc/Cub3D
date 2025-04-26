@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:28:59 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:06:29 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static char	*extract_colour(t_game *game, char *line)
 	start = i;
 	if (is_valid_rgb_format(line + start) == -1)
 	{
-		// free(line);
 		line = NULL;
 		exit_prog("Error: Invalid RGB format.\n", 1, game);
 	}
@@ -102,7 +101,6 @@ static char	*extract_texture(t_game *game, char *line)
 		if (ft_isspace(path[j]))
 		{
 			free(path);
-			// free(line);
 			exit_prog("Error: Invalid texture path, spaces are not allowed.\n",
 				1, game);
 		}

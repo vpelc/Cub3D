@@ -6,7 +6,7 @@
 /*   By: vpelc <vpelc@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:52:50 by dbajeux           #+#    #+#             */
-/*   Updated: 2025/04/26 15:01:29 by vpelc            ###   ########.fr       */
+/*   Updated: 2025/04/26 15:05:18 by vpelc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	count_line_map(t_game *game, int fd)
 	{
 		if (check_line_contain_map(line) == TRUE)
 			map_number_line++;
-		// free(line);
 		line = get_next_line_list(fd, game);
 	}
 	close(fd);
